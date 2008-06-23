@@ -1,0 +1,63 @@
+Some basic setup notes:
+
+Required environment variables:
+NMLI_PATH=C:\path\to\nmli
+NMLI_IMPL=MKL or ACML
+
+
+Directory structure:
+
+
++---bin
+¦   +---x64
+¦   ¦   +---ACML
+¦   ¦   +---MKL
+¦   +---x86
+¦       +---ACML
+¦       +---MKL
++---custom-dll-builder
++---src
+    +---Nmli
+    ¦   +---Acml
+    ¦   +---bin
+    ¦   ¦   +---Debug
+    ¦   ¦   +---x64
+    ¦   +---Extended
+    ¦   +---Managed
+    ¦   +---Mkl
+    ¦   +---obj
+    ¦   ¦   +---Debug
+    ¦   ¦       +---Refactor
+    ¦   ¦       +---TempPE
+    ¦   +---Properties
+    +---NmliTests
+    ¦   +---bin
+    ¦   ¦   +---Debug
+    ¦   +---obj
+    ¦   ¦   +---Debug
+    ¦   ¦       +---Refactor
+    ¦   ¦       +---TempPE
+    ¦   +---Properties
+    +---Standalone Tester
+
+
+C:\Programs\Nmli\bin>dir /s /b
+C:\Programs\Nmli\bin\Nmli.dll
+C:\Programs\Nmli\bin\x64
+C:\Programs\Nmli\bin\x86
+C:\Programs\Nmli\bin\x64\ACML
+C:\Programs\Nmli\bin\x64\MKL
+C:\Programs\Nmli\bin\x64\ACML\libacml_dll.dll
+C:\Programs\Nmli\bin\x64\ACML\libacml_mv_dll.dll
+C:\Programs\Nmli\bin\x64\ACML\libguide40.dll
+C:\Programs\Nmli\bin\x64\ACML\libifcoremd.dll
+C:\Programs\Nmli\bin\x64\ACML\libmmd.dll
+C:\Programs\Nmli\bin\x64\MKL\libguide40.dll
+C:\Programs\Nmli\bin\x64\MKL\mkl.dll
+C:\Programs\Nmli\bin\x86\ACML
+C:\Programs\Nmli\bin\x86\MKL
+C:\Programs\Nmli\bin\x86\ACML\libacml_dll.dll
+C:\Programs\Nmli\bin\x86\ACML\libifcoremd.dll
+C:\Programs\Nmli\bin\x86\ACML\libmmd.dll
+C:\Programs\Nmli\bin\x86\MKL\libguide40.dll
+C:\Programs\Nmli\bin\x86\MKL\mkl.dll
