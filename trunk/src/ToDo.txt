@@ -1,1 +1,2 @@
 
+Add memory-release functionality for Workspace.  Perhaps expose to client code?
