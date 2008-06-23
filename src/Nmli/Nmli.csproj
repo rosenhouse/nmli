@@ -53,7 +53,6 @@
     <Compile Include="Acml\Vml.cs" />
     <Compile Include="Extended\CommonExtensions.cs" />
     <Compile Include="Extended\MultinormalPdf.cs" />
-    <Compile Include="Extended\MultinormalPdfExponent.cs" />
     <Compile Include="Extended\Vectorized2DNormalPDF.cs" />
     <Compile Include="ISml.cs" />
     <Compile Include="Extended\CholeskyInvert.cs" />

@@ -10,12 +10,12 @@ namespace Nmli.Extended
     /// <typeparam name="N"></typeparam>
     public class Vectorized2DNormalPDF<N> : ExtendingFunc<N>
     {
-        private readonly N[] One1;
+        private readonly N[] Onex2;
 
         public Vectorized2DNormalPDF(IMathLibrary<N> ml)
             : base(ml)
         {
-            One1 = new N[] { _1, _1 };
+            Onex2 = new N[] { _1, _1 };
         }
 
 
@@ -42,7 +42,7 @@ namespace Nmli.Extended
 
             SquareScaleAdd(2 * n, diff2, _1, temp, _0);
 
-            blas.gemv(Transpose.Trans, 2, n, scalar, temp, 2, One1, 1, _0, output, 1);
+            blas.gemv(Transpose.Trans, 2, n, scalar, temp, 2, Onex2, 1, _0, output, 1);
         }
 
         public void ComputePDFs(int n, N[] diff2, double variance, N[] output)
@@ -55,20 +55,10 @@ namespace Nmli.Extended
             RSquareds(n, diff2, output, scalar1);
 
             // adds scalar2 to every element of output
-            blas.axpy(n, scalar2, One1, 0, output, 1);
+            blas.axpy(n, scalar2, Onex2, 0, output, 1);
 
             vml.Exp(n, output, output);
         }
 
-        /*
-         * 
-avgx,avgy  ;  valx,valy
-
-diffx=avgx-valx
-diffy=avgy-valy
-
-sqr_dist=diffx^2+diffy^2
-scale1*Exp(scale0*sqr_dist)
-         * */
     }
 }
