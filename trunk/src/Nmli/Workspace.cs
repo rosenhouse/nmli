@@ -8,7 +8,7 @@ namespace Nmli
 
         /// <summary>
         /// Returns an array of T's which is guaranteed to be at least as large as size.
-        /// Memory allocations are amoritized.
+        /// Memory allocations are amortized.
         /// </summary>
         /// <param name="size">The minimum number of elements in the returned array</param>
         /// <returns>A buffer at least as large as specified by the argument</returns>
