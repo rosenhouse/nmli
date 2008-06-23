@@ -5,7 +5,7 @@ using System.Text;
 namespace Nmli.Extended
 {
     /// <summary>
-    /// Exposes the probability density function of a multidimentional normal distribution
+    /// Evaluates the probability density function of a multidimentional normal distribution
     /// </summary>
     /// <typeparam name="T">The numeric type</typeparam>
     public class MultinormalPdf<N>: ExtendingFunc<N>
