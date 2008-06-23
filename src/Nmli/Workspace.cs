@@ -22,4 +22,8 @@ namespace Nmli
             return buffer;
         }
     }
+
+
+
+    // TODO: provide a memory-release mechanism?  Expose it to client code?
 }
