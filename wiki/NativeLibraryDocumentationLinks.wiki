@@ -10,9 +10,17 @@ http://www.intel.com/software/products/mkl/data/vml/vmldata.htm
 http://www.intel.com/software/products/mkl/data/vml/functions/_listfunc.html
 
 
+
 =ACML=
 http://www.amd.com/acml
 
 http://developer.amd.com/assets/acml_userguide.pdf
 
 http://developer.amd.com/cpu/Libraries/acml/downloads/Pages/default.aspx#docs
+
+
+
+=References=
+http://www.netlib.org/blas/
+
+http://www.netlib.org/lapack/
