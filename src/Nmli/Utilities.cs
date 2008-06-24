@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace Nmli
 {
-    static class Utilities
+    public static class Utilities
     {
         /// <summary>
         /// Convert an (MKL-centric) UpLo type into an ASCII byte suitable for Fortran interfaces
@@ -98,11 +98,6 @@ namespace Nmli
                 return (LibraryImplementations)Enum.Parse(typeof(LibraryImplementations), 
                     DefaultImp(), true);
             }
-        }
-
-        public static void SetNumOpenMPThreads(int numThreads)
-        {
-            Environment.SetEnvironmentVariable("OMP_NUM_THREADS", numThreads.ToString(), EnvironmentVariableTarget.Process);
         }
     }
 }
