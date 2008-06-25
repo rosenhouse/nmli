@@ -8,15 +8,13 @@ namespace Nmli.Extended
     /// Evaluates the probability density function of a multidimentional normal distribution
     /// </summary>
     /// <typeparam name="T">The numeric type</typeparam>
-    public class MultinormalPdf<N>: ExtendingFunc<N>
+    public class MultinormalPdf<N> : Extensions1<N>
     {
         readonly CholeskyInverter<N> inverter;
-        readonly CommonExtensions<N> ce;
 
         public MultinormalPdf(IMathLibrary<N> ml) : base(ml)
         {
             this.inverter = new CholeskyInverter<N>(ml);
-            this.ce = new CommonExtensions<N>(ml);
         }
 
 
@@ -110,11 +108,11 @@ namespace Nmli.Extended
             int T = diffs.Length;
             N[] tempVector = scratchProvider.Get(T);
 
-            ce.SquareInto(T, scalingFactors, 1, _1, tempVector);
+            extras.SquareInto(T, scalingFactors, 1, _1, tempVector);
 
 
             vml.Ln(T, tempVector, tempVector);  // inplace natural log
-            N mlndet = ce.Sum(T, tempVector, 1); // add up log terms
+            N mlndet = extras.Sum(T, tempVector, 1); // add up log terms
             double lndet = -sml.ToDouble(mlndet);  
             if (double.IsInfinity(lndet) || double.IsNaN(lndet))
                 throw new Exception("Determinant isn't real, so the matrix is singular!  We can't invert it.");
@@ -142,11 +140,11 @@ namespace Nmli.Extended
             N[] tempVector = scratchProvider.Get(T);
 
             vml.Ln(T, variance, tempVector);
-            double lnDet = sml.ToDouble(ce.Sum(T, tempVector));
+            double lnDet = sml.ToDouble(extras.Sum(T, tempVector));
             // ln[determinant] = ln[prod variance diagonal x's] = sum_diagonal ln[x]
 
             // inverse of diagonal matrix just inverts the elements along diagonal
-            ce.ManagedInplaceInvert(T, variance);
+            extras.ManagedInplaceInvert(T, variance);
 
             // compute difference of x and mean
             blas.axpy(T, sml.Negate(_1), x, 1, mean, 1);

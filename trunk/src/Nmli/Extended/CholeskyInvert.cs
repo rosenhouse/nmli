@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Nmli.Extended
 {
-    public class CholeskyInverter<T> : ExtendingFunc<T>
+    public class CholeskyInverter<T> : Extensions1<T>
     {
         public class NonPositiveDefiniteBlockException : Exception
         {
@@ -16,9 +16,7 @@ namespace Nmli.Extended
             public int Order { get { return order; } }
         }
 
-        readonly CommonExtensions<T> ce;
-
-        public CholeskyInverter(IMathLibrary<T> ml) : base(ml) { ce = new CommonExtensions<T>(ml);  }
+        public CholeskyInverter(IMathLibrary<T> ml) : base(ml) {  }
 
         [ThreadStatic]
         static Workspace<T> scratchProvider;
@@ -45,11 +43,11 @@ namespace Nmli.Extended
             // ln(det) = ln(a1^2) + ... + ln(an^2)
             T[] scratch = GetScratch(n);
 
-            ce.SquareInto(n, choleskyDecomposed, n + 1, _1, scratch);
+            extras.SquareInto(n, choleskyDecomposed, n + 1, _1, scratch);
             // scratch now contains square of diagonal elements of decomposed matrix
 
             vml.Ln(n, scratch, scratch);  // inplace natural log
-            T g_lndet = ce.Sum(n, scratch); // add up log terms
+            T g_lndet = extras.Sum(n, scratch); // add up log terms
 
             return sml.ToDouble(g_lndet);
         }
