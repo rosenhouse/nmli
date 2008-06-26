@@ -25,6 +25,30 @@ namespace Nmli.Mkl
         internal static extern void vsExp(int n, [In] float[] x, [In, Out] float[] y);
 
 
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vsAdd(int n, [In] float[] a, [In] float[] b, [In, Out] float[] y);
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vdAdd(int n, [In] double[] a, [In] double[] b, [In, Out] double[] y);
+
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vsSub(int n, [In] float[] a, [In] float[] b, [In, Out] float[] y);
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vdSub(int n, [In] double[] a, [In] double[] b, [In, Out] double[] y);
+
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vsSqr(int n, [In] float[] a, [In, Out] float[] y);
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vdSqr(int n, [In] double[] a, [In, Out] double[] y);
+
+
+
+
         #endregion
 
         #region CBlas

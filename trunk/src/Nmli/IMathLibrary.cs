@@ -7,6 +7,7 @@ namespace Nmli
         ILapack<T> Lapack { get; }
         IVml<T> Vml { get; }
         ISml<T> Sml { get; }
+        IIO<T> Io { get; }
     }
 
     public interface IMathLibrary : IMathLibrary<float>, IMathLibrary<double>
@@ -15,6 +16,7 @@ namespace Nmli
         new ILapack Lapack { get; }
         new IVml Vml { get; }
         new ISml Sml { get; }
+        new IIO Io { get; }
     }
 
 

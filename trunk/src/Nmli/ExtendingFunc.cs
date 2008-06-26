@@ -11,6 +11,7 @@ namespace Nmli
         protected readonly ILapack<T> lapack;
         protected readonly IVml<T> vml;
         protected readonly ISml<T> sml;
+        protected readonly IIO<T> io;
 
         /// <summary>
         /// The scalar 0 typed for this class
@@ -29,6 +30,7 @@ namespace Nmli
             this.lapack = ml.Lapack;
             this.vml = ml.Vml;
             this.sml = ml.Sml;
+            this.io = ml.Io;
 
             this._0 = sml.Zero;
             this._1 = sml.One;
