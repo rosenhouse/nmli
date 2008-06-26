@@ -14,18 +14,21 @@ namespace Nmli
             readonly ILapack lapack;
             readonly IVml vml;
             readonly ISml sml;
+            readonly IIO io;
 
             public IBlas Blas { get { return blas; } }
             public ILapack Lapack { get { return lapack; } }
             public IVml Vml { get { return vml; } }
             public ISml Sml { get { return sml; } }
+            public IIO Io { get { return io; } }
 
-            internal MathLibrary(IBlas blas, ILapack lapack, IVml vml)
+            internal MathLibrary(IBlas blas, ILapack lapack, IVml vml, ISml sml, IIO io)
             {
                 this.blas = blas;
                 this.lapack = lapack;
                 this.vml = vml;
-                this.sml = new Managed.BaseSml();
+                this.sml = sml;
+                this.io = io;
             }
 
             #region Interfaces
@@ -33,11 +36,13 @@ namespace Nmli
             ILapack<float> IMathLibrary<float>.Lapack { get { return lapack; } }
             IVml<float> IMathLibrary<float>.Vml { get { return vml; } }
             ISml<float> IMathLibrary<float>.Sml { get { return sml; } }
+            IIO<float> IMathLibrary<float>.Io { get { return io; } }
 
             IBlas<double> IMathLibrary<double>.Blas { get { return blas; } }
             ILapack<double> IMathLibrary<double>.Lapack { get { return lapack; } }
             IVml<double> IMathLibrary<double>.Vml { get { return vml; } }
             ISml<double> IMathLibrary<double>.Sml { get { return sml; } }
+            IIO<double> IMathLibrary<double>.Io { get { return io; } }
 
             #endregion
         }
@@ -56,6 +61,8 @@ namespace Nmli
         static readonly MathLibrary mkl;
         static readonly MathLibrary acml;
         static readonly ISml sml;
+        static readonly IIO io;
+
 
         static bool loadedMkl = false;
         static bool loadedAcml = false;
@@ -112,13 +119,14 @@ namespace Nmli
             }
         }
 
-        public static ISml Sml { get { return sml; } }
-
         static Libraries()
         {
-            mkl = new MathLibrary(new Mkl.Blas(), new Mkl.Lapack(), new Mkl.Vml());
-            acml = new MathLibrary(new Acml.Blas(), new Acml.Lapack(), new Acml.Vml());
             sml = new Managed.BaseSml();
+            io = new IO.ManagedIO();
+
+            mkl = new MathLibrary(new Mkl.Blas(), new Mkl.Lapack(), new Mkl.Vml(), sml, io);
+            acml = new MathLibrary(new Acml.Blas(), new Acml.Lapack(), new Acml.Vml(), sml, io);
+            
             Console.WriteLine("Native Math Library Interface is loading on " + _bitness);
         }
 

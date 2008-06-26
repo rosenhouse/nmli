@@ -54,6 +54,8 @@
     <Compile Include="Extended\CommonExtensions.cs" />
     <Compile Include="Extended\MultinormalPdf.cs" />
     <Compile Include="Extended\Vectorized2DNormalPDF.cs" />
+    <Compile Include="IO\IIO.cs" />
+    <Compile Include="IO\ManagedIO.cs" />
     <Compile Include="ISml.cs" />
     <Compile Include="Extended\CholeskyInvert.cs" />
     <Compile Include="ExtendingFunc.cs" />
