@@ -50,3 +50,9 @@ vdLn
 vsLn
 vdExp
 vsExp
+vsAdd
+vdAdd
+vsSub
+vdSub
+vsSqr
+vdSqr
