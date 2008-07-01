@@ -69,7 +69,20 @@ namespace Nmli.Managed
                 y[i] = a[i] * a[i];
         }
 
-        
+
+        public void Inv(int n, double[] a, double[] y)
+        {
+            for (int i = 0; i < n; i++)
+                y[i] = 1.0/a[i];
+        }
+
+
+        public void Inv(int n, float[] a, float[] y)
+        {
+            for (int i = 0; i < n; i++)
+                y[i] = 1.0f / a[i];
+        }
+
     }
     
 }

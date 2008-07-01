@@ -11,7 +11,7 @@ namespace NmliTests
     {
         public abstract class GenericTest<N, L> : GenericNumericTest<N, L>
         {
-            protected readonly CommonExtensions<N> obj = new CommonExtensions<N>(Lib);
+            protected readonly Extensions1<N>.ExtraFunctions obj = new Extensions1<N>.ExtraFunctions(Lib);
 
             [Test]
             public void TestSquareInto()
@@ -31,7 +31,6 @@ namespace NmliTests
                     N sqrd = sml.Multiply(toSquare[i], toSquare[i]);
                     expected[i/stepSize] = sml.Multiply(alpha, sqrd);
                 }
-
                 obj.SquareInto(n, toSquare, stepSize, alpha, output);
 
                 AssertArrayEqual(expected, output, delta);

@@ -11,7 +11,7 @@ namespace Nmli.Extended
 
             private readonly N[] OneVec;
 
-            internal ExtraFunctions(IMathLibrary<N> ml)
+            public ExtraFunctions(IMathLibrary<N> ml)
                 : base(ml) { OneVec = new N[] { _1 }; }
 
             public void SquareInto(int n, N[] x, int incX, N scalar, N[] output)
@@ -34,13 +34,6 @@ namespace Nmli.Extended
             public N Sum(int n, N[] x, int incX)
             {
                 return blas.dot(n, x, incX, OneVec, 0);
-            }
-
-
-            public void ManagedInplaceInvert(int n, N[] x)
-            {
-                for (int i = 0; i < n; i++)
-                    x[i] = sml.Invert(x[i]);
             }
 
         }

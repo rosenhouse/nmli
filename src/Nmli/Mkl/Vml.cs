@@ -24,6 +24,7 @@ namespace Nmli.Mkl
 
         public void Sqr(int n, float[] a, float[] y) { Externs.vsSqr(n, a, y); }
 
+        public void Inv(int n, float[] a, float[] y) { Externs.vsInv(n, a, y); }
 
 
         public void Add(int n, double[] a, double[] b, double[] y) { Externs.vdAdd(n, a, b, y); }
@@ -32,5 +33,8 @@ namespace Nmli.Mkl
 
         public void Sqr(int n, double[] a, double[] y) { Externs.vdSqr(n, a, y); }
 
+        public void Inv(int n, double[] a, double[] y) { Externs.vdInv(n, a, y); }
+
+        
     }
 }

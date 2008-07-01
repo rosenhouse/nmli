@@ -144,7 +144,7 @@ namespace Nmli.Extended
             // ln[determinant] = ln[prod variance diagonal x's] = sum_diagonal ln[x]
 
             // inverse of diagonal matrix just inverts the elements along diagonal
-            extras.ManagedInplaceInvert(T, variance);
+            vml.Inv(T, variance, variance);
 
             // compute difference of x and mean
             blas.axpy(T, sml.Negate(_1), x, 1, mean, 1);

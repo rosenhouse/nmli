@@ -63,7 +63,6 @@ namespace Nmli
         static readonly ISml sml;
         static readonly IIO io;
 
-
         static bool loadedMkl = false;
         static bool loadedAcml = false;
 
@@ -118,6 +117,9 @@ namespace Nmli
                 return acml;
             }
         }
+
+        public static ISml Sml { get { return sml; } }
+        public static IIO IO { get { return io; } }
 
         static Libraries()
         {
