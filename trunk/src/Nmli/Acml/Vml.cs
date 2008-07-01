@@ -76,5 +76,7 @@ namespace Nmli.Acml
             blas.sbmv(UpLo.Lower, n, 0, 1, a, 1, a, 1, 0, y, 1);
         }
 
+        public void Inv(int n, double[] a, double[] y) { managed.Inv(n, a, y); }
+        public void Inv(int n, float[] a, float[] y) { managed.Inv(n, a, y); }
     }
 }

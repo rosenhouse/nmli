@@ -51,6 +51,15 @@ namespace Nmli
         /// <param name="y">Output (squared)</param>
         void Sqr(int n, T[] a, T[] y);
 
+
+        /// <summary>
+        /// Inverts each element of a vector
+        /// </summary>
+        /// <param name="n">Number of elements</param>
+        /// <param name="a">Input (to be inverted)</param>
+        /// <param name="y">Output (inverse of input)</param>
+        void Inv(int n, T[] a, T[] y);
+
     }
 
     public interface IVml : IVml<float>, IVml<double> { }
