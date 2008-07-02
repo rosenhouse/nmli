@@ -41,6 +41,13 @@ namespace Nmli.Mkl
 
 
         [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vsMul(int n, [In] float[] a, [In] float[] b, [In, Out] float[] y);
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vdMul(int n, [In] double[] a, [In] double[] b, [In, Out] double[] y);
+
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void vsSqr(int n, [In] float[] a, [In, Out] float[] y);
 
         [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
@@ -209,6 +216,20 @@ namespace Nmli.Mkl
 
 
         #endregion
+
+    }
+
+
+    unsafe internal static class UnsafeExterns
+    {
+        internal const string dllName = Externs.dllName;
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vsMul(int n, float* a, float* b, float* y);
+
+        [DllImport(dllName, ExactSpelling = true, SetLastError = false, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vdMul(int n, double* a, double* b, double* y);
+
 
     }
 }

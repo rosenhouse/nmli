@@ -63,7 +63,7 @@ namespace Nmli.Extended
             Array.Clear(output, 0, sz);
 
             vml.Inv(nGaussians, stdevs, stdevs);
-            
+
             // build outer product...
             //    nRows (inner dim), nCols, scalar,    x,   incX, y, incY,outer prod, lda
             blas.ger(nGaussians,    nPoints, _1,    stdevs,   1,  y,   1,  output,  nGaussians);
@@ -77,11 +77,19 @@ namespace Nmli.Extended
             // exponentiate
             vml.Exp(sz, output, output);
 
-
             throw new NotImplementedException();
+
+            // scale up each single-point multi-gaussian column by the amplitude vector
+            for(int p=0; p<nPoints; p++)
+            {
+                WithOffsets.OA<N> targetSection = WithOffsets.OA._(output, p * nGaussians);
+                //vml.Mul(nGaussians, amplitude, targetSection, targetSection);
+            }
+            
             // rescale by amplitude
             //blas.scal(sz, 
             // maybe ?lagtm
+            // laqge
 
 
         }
