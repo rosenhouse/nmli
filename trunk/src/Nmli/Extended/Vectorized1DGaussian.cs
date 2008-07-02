@@ -47,18 +47,12 @@ namespace Nmli.Extended
             vml.Exp(sz, output, output);
 
 
-            // scale up each single-point multi-gaussian column by the amplitude vector
+            // scale up each single-point, multi-gaussian column by the amplitude vector
             for(int p=0; p<nPoints; p++)
             {
                 WithOffsets.OA<N> targetSection = WithOffsets.OA.O(output, p * nGaussians);
                 wo_testLib.Mul(nGaussians, amplitude, targetSection, targetSection);
             }
-            
-            // rescale by amplitude
-            //blas.scal(sz, 
-            // maybe ?lagtm
-            // laqge
-
 
         }
     }
