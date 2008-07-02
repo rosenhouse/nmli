@@ -10,41 +10,10 @@ namespace Nmli.Extended
     /// <typeparam name="N"></typeparam>
     public class Vectorized1DGaussian<N> : ExtendingFunc<N>
     {
-        private readonly N[] Onex2;
+        private readonly Nmli.WithOffsets.IMultOffsets<N> wo_testLib
+            = Nmli.WithOffsets.Libraries<N>.TestLib;
 
-        public Vectorized1DGaussian(IMathLibrary<N> ml)
-            : base(ml)
-        {
-            Onex2 = new N[] { _1, _1 };
-        }
-
-
-        [ThreadStatic]
-        static Workspace<N> scratchProvider;
-
-        private static readonly double ln2pi = Math.Log(2 * Math.PI);
-
-
-        public void SquareScaleAdd(int n, N[] toSquare, N alpha, N[] addResultToThis, N beta)
-        {
-            blas.sbmv(UpLo.Lower, n, 0, alpha, toSquare, 1, toSquare, 1, beta, addResultToThis, 1);
-        }
-
-        /// <summary>
-        /// output[i] = scalar * ( diff2[2*i]^2  + diff2[2*i+1]^2 )
-        /// </summary>
-        public void RSquareds(int n, N[] diff2, N[] output, N scalar)
-        {
-            if (scratchProvider == null)
-                scratchProvider = new Workspace<N>();
-
-            N[] temp = scratchProvider.Get(2 * n);
-
-            SquareScaleAdd(2 * n, diff2, _1, temp, _0);
-
-            blas.gemv(Transpose.Trans, 2, n, scalar, temp, 2, Onex2, 1, _0, output, 1);
-        }
-
+        public Vectorized1DGaussian(IMathLibrary<N> ml) : base(ml) { }
 
         /// <summary>
         /// Computes the prob density func of a vector of gaussians over a separate vector of test points.
@@ -77,13 +46,12 @@ namespace Nmli.Extended
             // exponentiate
             vml.Exp(sz, output, output);
 
-            throw new NotImplementedException();
 
             // scale up each single-point multi-gaussian column by the amplitude vector
             for(int p=0; p<nPoints; p++)
             {
-                WithOffsets.OA<N> targetSection = WithOffsets.OA._(output, p * nGaussians);
-                //vml.Mul(nGaussians, amplitude, targetSection, targetSection);
+                WithOffsets.OA<N> targetSection = WithOffsets.OA.O(output, p * nGaussians);
+                wo_testLib.Mul(nGaussians, amplitude, targetSection, targetSection);
             }
             
             // rescale by amplitude

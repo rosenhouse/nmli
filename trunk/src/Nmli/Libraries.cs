@@ -5,7 +5,6 @@ using System.IO;
 
 namespace Nmli
 {
-
     public static class Libraries
     {
         class MathLibrary : IMathLibrary
@@ -146,5 +145,40 @@ namespace Nmli
                     throw new Exception("Unrecognized library is preferred.");
             }
         }
+    }
+
+
+    /// <summary>
+    /// Provides a data type-agnostic view of native math library implementations
+    /// </summary>
+    /// <typeparam name="N">Primitive data type.  Currently only float or double.</typeparam>
+    /// <remarks>
+    /// In this future, we plan on supporting complex float and complex double types also 
+    /// </remarks>
+    public static class Libraries<N>
+    {
+        static bool IsSingle { get { return (typeof(N) == typeof(float)); } }
+        static bool IsDouble { get { return (typeof(N) == typeof(double)); } }
+
+        static void ValidateType()
+        {
+            const string msg = "Data type '{0}' is not supported by NMLI";
+            if (!IsSingle && !IsDouble)
+                throw new NotSupportedException(
+                    string.Format(msg, (typeof(N)).FullName));
+        }
+
+        static Libraries() { ValidateType(); }
+
+
+        public static IMathLibrary<N> Default { get { return (IMathLibrary<N>)(Libraries.Default); } }
+
+        public static IMathLibrary<N> Mkl { get { return (IMathLibrary<N>)(Libraries.Mkl); } }
+
+        public static IMathLibrary<N> Acml { get { return (IMathLibrary<N>)(Libraries.Acml); } }
+
+        public static ISml<N> Sml { get { return (ISml<N>)(Libraries.Sml); } }
+
+        public static IIO<N> IO { get { return (IIO<N>)(Libraries.IO); } }
     }
 }
