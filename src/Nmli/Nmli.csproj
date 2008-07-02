@@ -18,6 +18,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -53,6 +54,7 @@
     <Compile Include="Acml\Lapack.cs" />
     <Compile Include="Acml\Externs.cs" />
     <Compile Include="Acml\Vml.cs" />
+    <Compile Include="CollectionAgnostic\IVml.cs" />
     <Compile Include="Extended\CommonExtensions.cs" />
     <Compile Include="Extended\MultinormalPdf.cs" />
     <Compile Include="Extended\Vectorized1DGaussian.cs" />
