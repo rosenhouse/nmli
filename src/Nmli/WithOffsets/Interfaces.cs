@@ -11,6 +11,24 @@ namespace Nmli.WithOffsets
 
     unsafe public class MklWithOffsets : IMultOffsets
     {
+        void TestMultiDim()
+        {
+            int n = 2;
+            double[,] a = new double[2, 2];
+            double[] b = new double[4];
+            double[] y = new double[4];
+
+            Array foo = a;
+            
+
+            fixed (double* pa = &a[1,0],
+                            pb = &b[2],
+                            py = &y[2])
+            {
+                Mkl.UnsafeExterns.vdMul(n, pa, pb, py);
+            }
+        }
+
         public void Mul(int n, OA<float> a, OA<float> b, OA<float> y)
         {
             fixed (float* pa = &a.array[a.offset],
