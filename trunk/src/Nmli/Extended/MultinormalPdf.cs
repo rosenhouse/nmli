@@ -38,6 +38,9 @@ namespace Nmli.Extended
         /// <param name="mean">On input: The mean of the distribution.  On exit, (mean - x)</param>
         /// <param name="covariance">The covariance matrix of the distribution.  On exit: The inverse of this covariance matrix </param>
         /// <returns>The natural log of the PDF</returns>
+        /// <remarks>This function computes the full inverse of the covariance matrix.
+        /// LogPDF_Fast gets the same answer without computing the full inverse.
+        /// </remarks>
         public double LogPDF(N[] x, N[] mean, N[] covariance)
         {
             int n = x.Length;
@@ -63,7 +66,16 @@ namespace Nmli.Extended
         }
 
 
-
+        /// <summary>
+        /// Computes the natural log of the probability density function of a multi-normal distribution
+        /// </summary>
+        /// <param name="x">The point at which to compute the probability density.  Unchanged on exit.</param>
+        /// <param name="mean">On input: The mean of the distribution.  On exit, (mean - x)</param>
+        /// <param name="covariance">The covariance matrix of the distribution.  On exit: The inverse of this covariance matrix </param>
+        /// <returns>The natural log of the PDF</returns>
+        /// <remarks>
+        /// This function is a somewhat faster, slightly less acurate version of LogPDF
+        /// </remarks>
         public double LogPDF_Fast(N[] x, N[] mean, N[] covariance)
         {
             int n = x.Length;
