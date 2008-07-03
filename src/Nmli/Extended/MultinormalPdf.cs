@@ -21,15 +21,7 @@ namespace Nmli.Extended
         [ThreadStatic]
         static Workspace<N> scratchProvider;
 
-        static N[] GetScratch(int size)
-        {
-            if (scratchProvider == null)
-                scratchProvider = new Workspace<N>();
-
-            return scratchProvider.Get(size);
-        }
-
-        private static readonly double ln2pi = Math.Log(2 * Math.PI);
+        static readonly double ln2pi = Math.Log(2 * Math.PI);
 
         /// <summary>
         /// Computes the natural log of the probability density function of a multi-normal distribution
@@ -48,7 +40,7 @@ namespace Nmli.Extended
                 throw new ArgumentException("The mean and covariance arrays must be of appropriate size!");
 
 
-            N[] tempVector = GetScratch(n);
+            N[] tempVector = Workspace<N>.Get(ref scratchProvider, n);
 
             // inverts covariance in-place and returns the log of the determinant
             double lnDet = inverter.Invert(n, covariance);
@@ -87,7 +79,7 @@ namespace Nmli.Extended
             blas.axpy(n, sml.Negate(_1), x, 1, mean, 1);
 
             // make a copy
-            N[] tempVector = GetScratch(n);
+            N[] tempVector = Workspace<N>.Get(ref scratchProvider, n);
             blas.copy(n, mean, 1, tempVector, 1);
 
 
@@ -114,11 +106,8 @@ namespace Nmli.Extended
         
         public double LogScaledSSE(N[] diffs, N[] scalingFactors)
         {
-            if (scratchProvider == null)
-                scratchProvider = new Workspace<N>();
-
             int T = diffs.Length;
-            N[] tempVector = scratchProvider.Get(T);
+            N[] tempVector = Workspace<N>.Get(ref scratchProvider, T);
 
             extras.SquareInto(T, scalingFactors, 1, _1, tempVector);
 
@@ -146,10 +135,7 @@ namespace Nmli.Extended
             if (mean.Length < T || variance.Length < T)
                 throw new ArgumentException("The mean and covariance arrays must be of appropriate size!");
 
-            if (scratchProvider == null)
-                scratchProvider = new Workspace<N>();
-
-            N[] tempVector = scratchProvider.Get(T);
+            N[] tempVector = Workspace<N>.Get(ref scratchProvider, T);
 
             vml.Ln(T, variance, tempVector);
             double lnDet = sml.ToDouble(extras.Sum(T, tempVector));

@@ -9,10 +9,7 @@ namespace Nmli.Extended
         public class NonPositiveDefiniteBlockException : Exception
         {
             readonly int order;
-            public NonPositiveDefiniteBlockException(int order)
-            {
-                this.order = order;
-            }
+            public NonPositiveDefiniteBlockException(int order) { this.order = order; }
             public int Order { get { return order; } }
         }
 
@@ -20,17 +17,6 @@ namespace Nmli.Extended
 
         [ThreadStatic]
         static Workspace<T> scratchProvider;
-
-        static T[] GetScratch(int size)
-        {
-            if (scratchProvider == null)
-                scratchProvider = new Workspace<T>();
-
-            return scratchProvider.Get(size);
-        }
-
-
-
 
         public double LnDeterminantOfFactoredMatrix(int n, T[] choleskyDecomposed)
         {
@@ -41,7 +27,7 @@ namespace Nmli.Extended
              * */
             // det = a1^2 * ... * an^2
             // ln(det) = ln(a1^2) + ... + ln(an^2)
-            T[] scratch = GetScratch(n);
+            T[] scratch = Workspace<T>.Get(ref scratchProvider, n);
 
             extras.SquareInto(n, choleskyDecomposed, n + 1, _1, scratch);
             // scratch now contains square of diagonal elements of decomposed matrix

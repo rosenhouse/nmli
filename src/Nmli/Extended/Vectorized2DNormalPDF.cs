@@ -35,10 +35,7 @@ namespace Nmli.Extended
         /// </summary>
         public void RSquareds(int n, N[] diff2, N[] output, N scalar)
         {
-            if (scratchProvider == null)
-                scratchProvider = new Workspace<N>();
-
-            N[] temp = scratchProvider.Get(2*n);
+            N[] temp = Workspace<N>.Get(ref scratchProvider, 2 * n);
 
             SquareScaleAdd(2 * n, diff2, _1, temp, _0);
 
