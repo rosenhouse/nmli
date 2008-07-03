@@ -22,13 +22,7 @@ namespace Nmli
 
         T[] buffer;
 
-        /// <summary>
-        /// Returns an array of T's which is guaranteed to be at least as large as size.
-        /// Memory allocations are amortized.
-        /// </summary>
-        /// <param name="size">The minimum number of elements in the returned array</param>
-        /// <returns>A buffer at least as large as specified by the argument</returns>
-        T[] Get(int size)
+        T[] get_local(int size)
         {
             if (buffer == null)
                 buffer = new T[size];
@@ -38,20 +32,42 @@ namespace Nmli
             return buffer;
         }
 
-
         /// <summary>
         /// Ensures that the pointed-to workspace is non-null, and returns a buffer
-        /// at least as large as the specified size. 
+        /// at least as large as the specified size.  Memory allocations are amortized.
         /// </summary>
-        /// <param name="workspaceField">Persistent storage for the workspace.</param>
+        /// <param name="field">Persistent storage for the workspace.</param>
         /// <param name="size">The minimum array size necessary.</param>
         /// <returns>A buffer at least as large as the given size.</returns>
-        public static T[] Get(ref Workspace<T> workspaceField, int size)
+        public static T[] Get(ref Workspace<T> field, int size)
         {
-            if (workspaceField == null)
-                workspaceField = new Workspace<T>();
+            if (field == null)
+                field = new Workspace<T>();
 
-            return workspaceField.Get(size);
+            return field.get_local(size);
+        }
+
+        /// <summary>
+        /// Releases any allocated memory encapsulated in the given workspace, 
+        /// allowing it to be garbage collected.
+        /// </summary>
+        /// <param name="field">The workspace to empty</param>
+        public static void Empty(ref Workspace<T> field)
+        {
+            field.buffer = null;
+            field = null;
+        }
+
+        /// <summary>
+        /// Returns the number of elements in the backing array of the referenced workspace.
+        /// If the reference is null or is an unused Workspace, returns 0.
+        /// </summary>
+        public static int GetCurrentSize(ref Workspace<T> field)
+        {
+            if ((field == null) || (field.buffer == null))
+                return 0;
+            else
+                return field.buffer.Length;
         }
     }
 
