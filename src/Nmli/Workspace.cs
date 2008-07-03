@@ -70,8 +70,4 @@ namespace Nmli
                 return field.buffer.Length;
         }
     }
-
-
-
-    // TODO: provide a memory-release mechanism?  Expose it to client code?
 }
