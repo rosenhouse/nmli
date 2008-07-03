@@ -93,7 +93,7 @@ namespace Nmli.Extended
             double d = sml.ToDouble(blas.dot(n, mean, 1, tempVector, 1));
 
             // tempVector now contains y, and upper-triangle of covariance contains Cholesky-factor
-            double lnDet = inverter.DeterminantOfFactoredMatrix(n, covariance);  // ln[determinant]
+            double lnDet = inverter.LnDeterminantOfFactoredMatrix(n, covariance);  // ln[determinant]
 
             return -0.5 * (n * ln2pi + lnDet + d);
         }

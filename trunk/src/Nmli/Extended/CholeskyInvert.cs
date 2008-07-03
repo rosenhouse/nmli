@@ -32,7 +32,7 @@ namespace Nmli.Extended
 
 
 
-        public double DeterminantOfFactoredMatrix(int n, T[] choleskyDecomposed)
+        public double LnDeterminantOfFactoredMatrix(int n, T[] choleskyDecomposed)
         {
             /*  If the symmetric positive definite matrix A is represented by its 
              *  Cholesky decomposition A = LL T or A = U TU, then the determinant 
@@ -78,7 +78,7 @@ namespace Nmli.Extended
             else if (errCode != 0)
                 throw new Exception("Failed on decompose!  Error=" + errCode);
 
-            double lndet = DeterminantOfFactoredMatrix(n, symmetricPositiveDefiniteMatrix);
+            double lndet = LnDeterminantOfFactoredMatrix(n, symmetricPositiveDefiniteMatrix);
 
             if (double.IsInfinity(lndet) || double.IsNaN(lndet))
                 throw new Exception("Determinant isn't real, so the matrix is singular!");
