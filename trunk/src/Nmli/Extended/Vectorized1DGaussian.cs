@@ -10,9 +10,6 @@ namespace Nmli.Extended
     /// <typeparam name="N"></typeparam>
     public class Vectorized1DGaussian<N> : ExtendingFunc<N>
     {
-        private readonly Nmli.WithOffsets.IMultOffsets<N> wo_testLib
-            = Nmli.WithOffsets.Libraries<N>.TestLib;
-
         public Vectorized1DGaussian(IMathLibrary<N> ml) : base(ml) { }
 
         /// <summary>
