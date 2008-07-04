@@ -5,6 +5,11 @@ namespace Nmli.WithOffsets
 {
     public interface IVml<T> : CollectionAgnostic.IVml<OA<T>> { }
 
+    public interface IBlas<T> : CollectionAgnostic.IBlas<T, OA<T>> { }
+
+    public interface ILapack<T> : CollectionAgnostic.ILapack<OA<T>> { }
+
+
     public interface IMultOffsets<T> : CollectionAgnostic.ITest<OA<T>> { }
 
     public interface IMultOffsets : IMultOffsets<float>, IMultOffsets<double> { }

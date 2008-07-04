@@ -8,6 +8,11 @@ namespace Nmli.CollectionAgnostic
         void Mul(int n, AT a, AT b, AT y);
     }
 
+
+    /// <summary>
+    /// Vector math library functions for a generic array type 
+    /// </summary>
+    /// <typeparam name="AT">Generic array type (eg pointer, managed array, etc)</typeparam>
     public interface IVml<AT>
     {
         /// <summary>
