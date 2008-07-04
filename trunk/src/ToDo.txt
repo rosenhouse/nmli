@@ -1,2 +1,3 @@
+Make full OffsetArray implementation
 
-Add memory-release functionality for Workspace.  Perhaps expose to client code?
+If we can guarantee inlining, etc, perhaps make mainline implementation just call through OffsetArray?

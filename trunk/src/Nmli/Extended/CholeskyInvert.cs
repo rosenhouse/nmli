@@ -29,8 +29,13 @@ namespace Nmli.Extended
             // ln(det) = ln(a1^2) + ... + ln(an^2)
             T[] scratch = Workspace<T>.Get(ref scratchProvider, n);
 
-            extras.SquareInto(n, choleskyDecomposed, n + 1, _1, scratch);
-            // scratch now contains square of diagonal elements of decomposed matrix
+
+            // take diagonal elements of cholsekyDecomposed,
+            // square them, and copy them into scratch.
+            int inc = n + 1;
+            blas.sbmv(UpLo.Lower, n, 0, _1, choleskyDecomposed, inc, 
+                choleskyDecomposed, inc, _0, scratch, 1);
+
 
             vml.Ln(n, scratch, scratch);  // inplace natural log
             T g_lndet = extras.Sum(n, scratch); // add up log terms

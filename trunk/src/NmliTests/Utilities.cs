@@ -19,8 +19,8 @@ namespace NmliTests
 
         public static void RunAll()
         {
-            Type[] fixtures = new Type[] { typeof(AcmlBlasTest), typeof(AcmlLapackTest), typeof(AcmlVmlTest),
-                typeof(MklBlasTest), typeof(MklLapackTest), typeof(MklVmlTest) };
+            Type[] fixtures = new Type[] { typeof(AcmlBlasTest), typeof(AcmlLapackTest),
+                typeof(MklBlasTest), typeof(MklLapackTest), typeof(VmlTest) };
 
             foreach (Type t in fixtures)
             {

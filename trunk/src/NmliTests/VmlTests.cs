@@ -5,81 +5,95 @@ using Nmli;
 
 namespace NmliTests
 {
-    [TestFixture]
-    [Category("VML")]
-    [Category("MKL")]
-    public class MklVmlTest : VmlTest { public MklVmlTest() : base(Libraries.Mkl.Vml) { } }
 
-    [TestFixture]
-    [Category("VML")]
-    [Category("ACML")]
-    public class AcmlVmlTest : VmlTest { public AcmlVmlTest() : base(Libraries.Acml.Vml) { } }
-
-    public abstract class VmlTest
+    public class VmlTest
     {
-        protected readonly IVml vml;
-        protected VmlTest(IVml vml) { this.vml = vml; }
-
-        private const float delta = 1e-4f;
-        private float[] farray = new float[] { -1.1f, -2.2f, -3.3f, 0f, 1.1f, 2.2f, -4.4f, 5.5f, 6.6f };
-        private double[] darray = new double[] { -1.1, -2.2, -3.3, 0, 1.1, 2.2, -4.4, 5.5, 6.6 };
-
-        [Test]
-        public void Sln()
+        public abstract class GenericTest<N, L> : GenericNumericTest<N, L>
         {
-            float[] es = new float[farray.Length];
-            float[] output = new float[es.Length];
-            for (int i = 0; i < es.Length; i++)
-                es[i] = (float)Math.Exp(farray[i]);
+            protected readonly IVml<N> obj = Lib.Vml;
 
-            vml.Ln(es.Length, es, output);
+            private double[] darray = new double[] { -1.1, -2.2, -3.3, 0, 0.1, 2.2, -4.4, 5.5, 6.6 };
+            private N[] data;
 
-            for (int i = 0; i < es.Length; i++)
-                Assert.AreEqual(farray[i], output[i], delta);
+            protected GenericTest() { data = Array.ConvertAll<double, N>(darray, base.of); }
+
+            [Test]
+            public void Ln()
+            {
+                N[] es = new N[data.Length];
+                N[] output = new N[es.Length];
+                for (int i = 0; i < es.Length; i++)
+                    es[i] = of(Math.Exp(darray[i]));
+
+                vml.Ln(es.Length, es, output);
+
+                AssertArrayEqual(data, output, delta);
+            }
+
+
+            [Test]
+            public void Exp()
+            {
+                N[] es = new N[data.Length];
+                N[] output = new N[es.Length];
+                for (int i = 0; i < es.Length; i++)
+                    es[i] = of(Math.Exp(darray[i]));
+
+                vml.Exp(es.Length, data, output);
+
+                AssertArrayEqual(es, output, delta);
+            }
+
+
+
+            [Test]
+            public void Sqr()
+            {
+                int n = 3;
+
+                N[] output = new N[n];
+                N[] expected = new N[n];
+
+                for (int i = 0; i < n; i++)
+                    expected[i] = sml.Multiply(data[i], data[i]);
+
+                vml.Sqr(n, data, output);
+
+                AssertArrayEqual(expected, output, delta);
+
+            }
         }
 
-        [Test]
-        public void Dln()
-        {
-            double[] es = new double[darray.Length];
-            double[] output = new double[es.Length];
-            for (int i = 0; i < es.Length; i++)
-                es[i] = Math.Exp(darray[i]);
+        #region Specific instances
 
-            vml.Ln(es.Length, es, output);
-
-            for (int i = 0; i < es.Length; i++)
-                Assert.AreEqual(darray[i], output[i], delta);
-        }
+        [TestFixture]
+        [Category("Extended")]
+        [Category("ACML")]
+        [Category("Double")]
+        public class DoubleACML : GenericTest<double, Libs.ACML> { }
 
 
+        [TestFixture]
+        [Category("Extended")]
+        [Category("ACML")]
+        [Category("Float")]
+        public class FloatACML : GenericTest<float, Libs.ACML> { }
 
 
-        [Test]
-        public void Sexp()
-        {
-            float[] es = (float[])farray.Clone();
-            float[] output = new float[es.Length];
-
-            vml.Exp(es.Length, es, output);
-
-            for (int i = 0; i < es.Length; i++)
-                Assert.AreEqual(Math.Exp(farray[i]), output[i], delta);
-        }
-
-        [Test]
-        public void Dexp()
-        {
-            double[] es = (double[])darray.Clone();
-            double[] output = new double[es.Length];
-
-            vml.Exp(es.Length, es, output);
-
-            for (int i = 0; i < es.Length; i++)
-                Assert.AreEqual(Math.Exp(darray[i]), output[i], delta);
-        }
+        [TestFixture]
+        [Category("Extended")]
+        [Category("MKL")]
+        [Category("Double")]
+        public class DoubleMKL : GenericTest<double, Libs.MKL> { }
 
 
+        [TestFixture]
+        [Category("Extended")]
+        [Category("MKL")]
+        [Category("Float")]
+        public class FloatMKL : GenericTest<float, Libs.MKL> { }
 
+        #endregion
     }
 }
+
