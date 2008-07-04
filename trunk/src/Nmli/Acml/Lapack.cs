@@ -4,6 +4,7 @@ namespace Nmli.Acml
 {
     class Lapack : ILapack
     {
+        #region Double
         public int potrf(UpLo uplo, int n, double[] a, int lda)
         {
             int info = 0;
@@ -28,13 +29,6 @@ namespace Nmli.Acml
             return info;
         }
 
-        public int posv(UpLo uplo, int n, int nrhs, float[] a, int lda, float[] b, int ldb)
-        {
-            int info = 0;
-            byte u = Utilities.EnumAsAscii(uplo);
-            Externs.SPOSV(ref u, ref n, ref nrhs, a, ref lda, b, ref ldb, ref info);
-            return info;
-        }
 
         public int getrf(int m, int n, double[] a, int lda, ref int[] ipiv)
         {
@@ -49,10 +43,18 @@ namespace Nmli.Acml
             Externs.DGETRI(ref n, a, ref lda, ipiv, work, ref lwork, ref info);
             return info;
         }
+        #endregion
 
 
+        #region Single
+        public int posv(UpLo uplo, int n, int nrhs, float[] a, int lda, float[] b, int ldb)
+        {
+            int info = 0;
+            byte u = Utilities.EnumAsAscii(uplo);
+            Externs.SPOSV(ref u, ref n, ref nrhs, a, ref lda, b, ref ldb, ref info);
+            return info;
+        }
 
- 
         public int potrf(UpLo uplo, int n, float[] a, int lda)
         {
             int info = 0;
@@ -82,6 +84,6 @@ namespace Nmli.Acml
             Externs.SGETRI(ref n, a, ref lda, ipiv, work, ref lwork, ref info);
             return info;
         }
-
+        #endregion
     }
 }

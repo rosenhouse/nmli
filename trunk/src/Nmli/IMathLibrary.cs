@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Nmli
 {
     public interface IMathLibrary<T>
@@ -8,6 +9,7 @@ namespace Nmli
         IVml<T> Vml { get; }
         ISml<T> Sml { get; }
         IIO<T> Io { get; }
+        WithOffsets.IBlas<T> WithOffsets_Blas{ get; }
     }
 
     public interface IMathLibrary : IMathLibrary<float>, IMathLibrary<double>
@@ -17,6 +19,7 @@ namespace Nmli
         new IVml Vml { get; }
         new ISml Sml { get; }
         new IIO Io { get; }
+        new WithOffsets.IBlas WithOffsets_Blas { get; }
     }
 
 
