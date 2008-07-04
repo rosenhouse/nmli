@@ -18,15 +18,15 @@ namespace Nmli.Extended
         /// <summary>
         /// Computes the prob density func of a vector of gaussians over a separate vector of test points.
         /// Output is the outer "product" of evaluating the gaussian at the test points, where
-        /// the Gaussian form changes most quickly (inner dim) and test points change most slowly (outer dim).
+        /// the Gaussian form changes slowly (outer dim) and test points change quickly (inner dim).
         /// </summary>
         /// <param name="nPoints">Number of test points</param>
-        /// <param name="y">De-meaned test points (length = nPoints)</param>
+        /// <param name="x">De-meaned test points (length = nPoints)</param>
         /// <param name="nGaussians">Number of gaussians to evaluate</param>
         /// <param name="amplitude">Gaussian amplitudes (length = nGaussians)</param>
         /// <param name="variance">Input: Gaussian stdevs (length = nGaussians).  Output: 1/stdevs</param>
-        /// <param name="output">Output: Every Gaussian evaluated at every point (length = nPoints * nGaussians)</param>
-        public void ComputePDFs(int nPoints, N[] y,
+        /// <param name="output">Output: Every Gaussian evaluated at every point (length = nGaussians * nPoints)</param>
+        public void ComputePDFs(int nPoints, N[] x,
             int nGaussians, N[] amplitude, N[] stdevs, N[] output)
         {
             int sz = nPoints * nGaussians;
@@ -35,10 +35,11 @@ namespace Nmli.Extended
             vml.Inv(nGaussians, stdevs, stdevs);
 
             // build outer product...
-            //    nRows (inner dim), nCols, scalar,    x,   incX, y, incY,outer prod, lda
-            blas.ger(nGaussians,    nPoints, _1,    stdevs,   1,  y,   1,  output,  nGaussians);
+            //        nRows,    nCols,   scalar, x, incX,   y,  incY, outer prod, lda
+            blas.ger(nPoints, nGaussians,  _1,   x,   1,  stdevs, 1,  output,  nPoints);
 
-            // square y/stdev quotient...
+
+            // square x/stdev quotient...
             vml.Sqr(sz, output, output);
 
             // scale by -0.5...
@@ -48,11 +49,13 @@ namespace Nmli.Extended
             vml.Exp(sz, output, output);
 
 
-            // scale up each single-point, multi-gaussian column by the amplitude vector
-            for(int p=0; p<nPoints; p++)
+            throw new NotImplementedException();
+
+            // scale up each multi-point, single-gaussian column by the appropriate amplitude
+            for (int g = 0; g < nGaussians; g++)
             {
-                WithOffsets.OA<N> targetSection = WithOffsets.OA.O(output, p * nGaussians);
-                wo_testLib.Mul(nGaussians, amplitude, targetSection, targetSection);
+                WithOffsets.OA<N> targetSection = WithOffsets.OA.O(output, g * nPoints);
+                //blas.scal(nPoints, amplitude[g], targetSection, 1);
             }
 
         }
