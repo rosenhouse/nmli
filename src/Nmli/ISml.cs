@@ -48,12 +48,24 @@ namespace Nmli
 
 
         /// <summary>
-        /// Converts the argument type to a 4-byte (32-bit) signed integer.
+        /// Converts the 32-bit integer to the generic type.
         /// Implementation should be small enough that the JITer inlines it.
         /// </summary>
         /// <param name="x">32-bit signed integer</param>
         /// <returns>Integer as a generic number type</returns>
         N OfInt(int x);
+
+
+        /// <summary>
+        /// Converts the generic type to a 32-bit signed integer.
+        /// Implementation should be small enough that the JITer inlines it.
+        /// </summary>
+        /// <param name="x">Generic number</param>
+        /// <returns>32-bit integer</returns>
+        int ToInt(N x);
+
+
+
     }
 
     public interface ISml : ISml<double>, ISml<float> { }

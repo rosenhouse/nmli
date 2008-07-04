@@ -28,8 +28,11 @@ namespace Nmli.Managed
 
         float ISml<float>.OfDouble(double x) { return (float)x; }
         public double ToDouble(float x) { return x; }
+
         public double OfInt(int x) { return x; }
         float ISml<float>.OfInt(int x) { return x; }
+
+        
 
         public float Invert(float x) { return 1.0f / x; }
 
@@ -46,6 +49,13 @@ namespace Nmli.Managed
         public float Subtract(float x, float y) { return x - y; }
 
         float ICalcAdditiveGroup<float>.Zero { get { return 0; } }
+
+
+        public int ToInt(double x) { return (int)x; }
+
+        public int ToInt(float x) { return (int)x; }
+
+        
 
     }
 }
