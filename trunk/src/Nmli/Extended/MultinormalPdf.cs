@@ -112,7 +112,7 @@ namespace Nmli.Extended
             vml.Sqr(T, scalingFactors, tempVector);
 
             vml.Ln(T, tempVector, tempVector);  // inplace natural log
-            N mlndet = extras.Sum(T, tempVector, 1); // add up log terms
+            N mlndet = extras.Sum(T, tempVector); // add up log terms
             double lndet = -sml.ToDouble(mlndet);  
             if (double.IsInfinity(lndet) || double.IsNaN(lndet))
                 throw new Exception("Determinant isn't real, so the matrix is singular!  We can't invert it.");
