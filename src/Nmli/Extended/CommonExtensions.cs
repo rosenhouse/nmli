@@ -19,23 +19,12 @@ namespace Nmli.Extended
                 ZeroVec = new N[] { _0 };
             }
 
-            public void SquareInto(int n, N[] x, int incX, N scalar, N[] output)
-            {
-                blas.sbmv(UpLo.Lower, n, 0, scalar, x, incX, x, incX, _0, output, 1);
-            }
-
-
-
 
             public N Sum(int n, N[] x)
             {
                 return blas.dot(n, x, 1, OneVec, 0);
             }
 
-            public N Sum(int n, N[] x, int incX)
-            {
-                return blas.dot(n, x, incX, OneVec, 0);
-            }
 
             /// <summary>
             /// Overwrites the vector with 0s
