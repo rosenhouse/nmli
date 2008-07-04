@@ -14,31 +14,6 @@ namespace NmliTests
             protected readonly Extensions1<N>.ExtraFunctions obj = new Extensions1<N>.ExtraFunctions(Lib);
 
             [Test]
-            public void TestSquareInto()
-            {
-                int stepSize = 2;
-                int n = 3;
-
-                N[] toSquare = new N[] { of(-4), of(-3), of(-0.5), of(0), of(.7), of(5) };
-                N[] output = new N[n];
-
-                N alpha = of(-0.25);
-
-                N[] expected = new N[n];
-
-                for (int i = 0; i < n*stepSize; i+=stepSize)
-                {
-                    N sqrd = sml.Multiply(toSquare[i], toSquare[i]);
-                    expected[i/stepSize] = sml.Multiply(alpha, sqrd);
-                }
-                obj.SquareInto(n, toSquare, stepSize, alpha, output);
-
-                AssertArrayEqual(expected, output, delta);
-
-            }
-
-
-            [Test]
             public void TestSum()
             {
                 int n = 3;

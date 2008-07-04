@@ -24,10 +24,6 @@ namespace Nmli.Extended
                 blas.sbmv(UpLo.Lower, n, 0, scalar, x, incX, x, incX, _0, output, 1);
             }
 
-            public void SquareInto(int n, N[] x, int incX, N[] output)
-            {
-                blas.sbmv(UpLo.Lower, n, 0, _1, x, incX, x, incX, _0, output, 1);
-            }
 
 
 

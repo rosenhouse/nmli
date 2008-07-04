@@ -16,25 +16,21 @@ namespace NmliTests
             Type n = typeof(N);
             Type l = typeof(L);
 
-            IMathLibrary ml;
+            IMathLibrary<N> ml;
             if (l == typeof(ACML))
-                ml = Libraries.Acml;
+                ml = Libraries<N>.Acml;
             else if (l == typeof(MKL))
-                ml = Libraries.Mkl;
+                ml = Libraries<N>.Mkl;
             else
                 throw new ArgumentException("Unrecognized library preference.");
 
-            if ((n == typeof(float)) || (n == typeof(double)))
-                return (IMathLibrary<N>)ml;
-            else
-                throw new ArgumentException("Unrecognized numeric type.");
-
+            return ml;
         }
     }
 
     public abstract class GenericNumericTest<N, L> : ExtendingFunc<N>
     {
-        public const double delta = BlasTest.delta;
+        public const double delta = 0.00390625f;
 
         public static IMathLibrary<N> Lib { get { return Libs.Get<N, L>(); } }
 

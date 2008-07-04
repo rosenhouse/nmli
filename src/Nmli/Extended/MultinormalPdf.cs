@@ -109,8 +109,7 @@ namespace Nmli.Extended
             int T = diffs.Length;
             N[] tempVector = Workspace<N>.Get(ref scratchProvider, T);
 
-            extras.SquareInto(T, scalingFactors, 1, _1, tempVector);
-
+            vml.Sqr(T, scalingFactors, tempVector);
 
             vml.Ln(T, tempVector, tempVector);  // inplace natural log
             N mlndet = extras.Sum(T, tempVector, 1); // add up log terms
