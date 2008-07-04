@@ -17,7 +17,8 @@ namespace Nmli.Extended
 
         /// <summary>
         /// Computes the prob density func of a vector of gaussians over a separate vector of test points.
-        /// Output is the outer "product" of evaluating the gaussian at the test points
+        /// Output is the outer "product" of evaluating the gaussian at the test points, where
+        /// the Gaussian form changes most quickly (inner dim) and test points change most slowly (outer dim).
         /// </summary>
         /// <param name="nPoints">Number of test points</param>
         /// <param name="y">De-meaned test points (length = nPoints)</param>
