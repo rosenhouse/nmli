@@ -10,9 +10,14 @@ namespace Nmli.Extended
         {
 
             private readonly N[] OneVec;
+            private readonly N[] ZeroVec;
 
             public ExtraFunctions(IMathLibrary<N> ml)
-                : base(ml) { OneVec = new N[] { _1 }; }
+                : base(ml)
+            {
+                OneVec = new N[] { _1 };
+                ZeroVec = new N[] { _0 };
+            }
 
             public void SquareInto(int n, N[] x, int incX, N scalar, N[] output)
             {
@@ -36,6 +41,10 @@ namespace Nmli.Extended
                 return blas.dot(n, x, incX, OneVec, 0);
             }
 
+            /// <summary>
+            /// Overwrites the vector with 0s
+            /// </summary>
+            public void Clear(int n, N[] y) { blas.copy(n, ZeroVec, 0, y, 1); }
         }
 
         protected readonly ExtraFunctions extras;
