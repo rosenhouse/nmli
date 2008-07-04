@@ -12,6 +12,7 @@ namespace Nmli
         protected readonly IVml<T> vml;
         protected readonly ISml<T> sml;
         protected readonly IIO<T> io;
+        protected readonly WithOffsets.IBlas<T> wo_blas;
 
         /// <summary>
         /// The scalar 0 typed for this class
@@ -31,6 +32,7 @@ namespace Nmli
             this.vml = ml.Vml;
             this.sml = ml.Sml;
             this.io = ml.Io;
+            this.wo_blas = ml.WithOffsets_Blas;
 
             this._0 = sml.Zero;
             this._1 = sml.One;

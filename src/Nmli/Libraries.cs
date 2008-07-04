@@ -14,20 +14,24 @@ namespace Nmli
             readonly IVml vml;
             readonly ISml sml;
             readonly IIO io;
+            readonly WithOffsets.IBlas wo_blas;
 
             public IBlas Blas { get { return blas; } }
             public ILapack Lapack { get { return lapack; } }
             public IVml Vml { get { return vml; } }
             public ISml Sml { get { return sml; } }
             public IIO Io { get { return io; } }
+            public WithOffsets.IBlas WithOffsets_Blas { get { return wo_blas; } }
 
-            internal MathLibrary(IBlas blas, ILapack lapack, IVml vml, ISml sml, IIO io)
+            internal MathLibrary(IBlas blas, ILapack lapack, IVml vml, ISml sml, IIO io,
+                WithOffsets.IBlas wo_blas)
             {
                 this.blas = blas;
                 this.lapack = lapack;
                 this.vml = vml;
                 this.sml = sml;
                 this.io = io;
+                this.wo_blas = wo_blas;
             }
 
             #region Interfaces
@@ -36,12 +40,14 @@ namespace Nmli
             IVml<float> IMathLibrary<float>.Vml { get { return vml; } }
             ISml<float> IMathLibrary<float>.Sml { get { return sml; } }
             IIO<float> IMathLibrary<float>.Io { get { return io; } }
+            WithOffsets.IBlas<float> IMathLibrary<float>.WithOffsets_Blas { get { return wo_blas; } }
 
             IBlas<double> IMathLibrary<double>.Blas { get { return blas; } }
             ILapack<double> IMathLibrary<double>.Lapack { get { return lapack; } }
             IVml<double> IMathLibrary<double>.Vml { get { return vml; } }
             ISml<double> IMathLibrary<double>.Sml { get { return sml; } }
             IIO<double> IMathLibrary<double>.Io { get { return io; } }
+            WithOffsets.IBlas<double> IMathLibrary<double>.WithOffsets_Blas { get { return wo_blas; } }
 
             #endregion
         }
@@ -125,26 +131,31 @@ namespace Nmli
             sml = new Managed.BaseSml();
             io = new IO.ManagedIO();
 
-            mkl = new MathLibrary(new Mkl.Blas(), new Mkl.Lapack(), new Mkl.Vml(), sml, io);
-            acml = new MathLibrary(new Acml.Blas(), new Acml.Lapack(), new Acml.Vml(), sml, io);
-            
+            mkl = new MathLibrary(new Mkl.Blas(), new Mkl.Lapack(), new Mkl.Vml(),
+                sml, io, new Nmli.WithOffsets.Mkl.Blas());
+            acml = new MathLibrary(new Acml.Blas(), new Acml.Lapack(), new Acml.Vml(),
+                sml, io, new Nmli.WithOffsets.Acml.Blas());
+
             Console.WriteLine("Native Math Library Interface is loading on " + _bitness);
+
+            defaultImp = Utilities.PreferredImplementation;
+            defaultFull = getDefault();
         }
 
-        public static IMathLibrary Default
+        internal static readonly LibraryImplementations defaultImp;
+        static readonly IMathLibrary defaultFull;
+
+        static IMathLibrary getDefault()
         {
-            get
-            {
-                LibraryImplementations def = Utilities.PreferredImplementation;
-
-                if (def == LibraryImplementations.ACML)
-                    return Acml;
-                else if (def == LibraryImplementations.MKL)
-                    return Mkl;
-                else
-                    throw new Exception("Unrecognized library is preferred.");
-            }
+            if (defaultImp == LibraryImplementations.ACML)
+                return Acml;
+            else if (defaultImp == LibraryImplementations.MKL)
+                return Mkl;
+            else
+                throw new Exception("Unrecognized library preference.");
         }
+
+        public static IMathLibrary Default { get { return defaultFull; } }
     }
 
 
@@ -180,5 +191,6 @@ namespace Nmli
         public static ISml<N> Sml { get { return (ISml<N>)(Libraries.Sml); } }
 
         public static IIO<N> IO { get { return (IIO<N>)(Libraries.IO); } }
+
     }
 }

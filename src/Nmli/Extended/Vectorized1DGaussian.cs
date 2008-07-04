@@ -45,14 +45,11 @@ namespace Nmli.Extended
             // exponentiate
             vml.Exp(sz, output, output);
 
-
-            throw new NotImplementedException();
-
             // scale up each multi-point, single-gaussian column by the appropriate amplitude
             for (int g = 0; g < nGaussians; g++)
-            {
+            {                
                 WithOffsets.OA<N> targetSection = WithOffsets.OA.O(output, g * nPoints);
-                //blas.scal(nPoints, amplitude[g], targetSection, 1);
+                wo_blas.scal(nPoints, amplitude[g], targetSection, 1);
             }
 
         }

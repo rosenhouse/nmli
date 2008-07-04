@@ -63,6 +63,7 @@
     <Compile Include="Extended\MultinormalPdf.cs" />
     <Compile Include="Extended\Vectorized1DGaussian.cs" />
     <Compile Include="Extended\Vectorized2DNormalPDF.cs" />
+    <Compile Include="Interfaces.cs" />
     <Compile Include="IO\IIO.cs" />
     <Compile Include="IO\ManagedIO.cs" />
     <Compile Include="ISml.cs" />
@@ -71,9 +72,6 @@
     <Compile Include="IMathLibrary.cs" />
     <Compile Include="Libraries.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="IBlas.cs" />
-    <Compile Include="ILapack.cs" />
-    <Compile Include="IVml.cs" />
     <Compile Include="Managed\BaseSml.cs" />
     <Compile Include="Managed\BaseVml.cs" />
     <Compile Include="Mkl\Blas.cs" />
@@ -83,9 +81,12 @@
     <Compile Include="Mkl\Vml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="WithOffsets\Acml\Blas.cs" />
     <Compile Include="WithOffsets\Interfaces.cs" />
     <Compile Include="WithOffsets\Libraries.cs" />
+    <Compile Include="WithOffsets\Mkl\Blas.cs" />
     <Compile Include="WithOffsets\OA.cs" />
+    <Compile Include="WithOffsets\Testbed.cs" />
     <Compile Include="Workspace.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
