@@ -8,7 +8,7 @@ namespace Nmli.Extended
     /// Evaluates the probability density function of a multidimentional normal distribution
     /// </summary>
     /// <typeparam name="T">The numeric type</typeparam>
-    public class MultinormalPdf<N> : Extensions1<N>
+    public class MultinormalPdf<N> : ExtendingFunc<N>
     {
         readonly CholeskyInverter<N> inverter;
 

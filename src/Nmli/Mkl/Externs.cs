@@ -61,6 +61,13 @@ namespace Nmli.Mkl
         internal static extern void vdInv(int n, double[] a, double[] y);
 
 
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vsSqrt(int n, float[] a, float[] y);
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void vdSqrt(int n, double[] a, double[] y);
+
+
 
 
 

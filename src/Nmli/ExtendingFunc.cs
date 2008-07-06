@@ -33,6 +33,10 @@ namespace Nmli
         protected double to_dbl(T x) { return sml.ToDouble(x); }
         protected int to_int(T x) { return sml.ToInt(x); }
 
+        /// <summary>
+        /// Initializes with a custom math library
+        /// </summary>
+        /// <param name="ml">The custom math library</param>
         protected ExtendingFunc(IMathLibrary<T> ml)
         {
             this.ml = ml;
@@ -45,6 +49,67 @@ namespace Nmli
 
             this._0 = sml.Zero;
             this._1 = sml.One;
+
+            this.extras = new ExtraFunctions(ml);
         }
+
+        /// <summary>
+        /// Initializes with the default math library, determined by the environment variable NMLI_IMPL
+        /// </summary>
+        protected ExtendingFunc() : this(Libraries<T>.Default) { }
+
+
+
+
+
+        public class ExtraFunctions : ExtendingFunc<T>
+        {
+
+            private readonly T[] OneVec;
+            private readonly T[] ZeroVec;
+
+            [ThreadStatic]
+            private static T[] setConstVec;
+
+            public ExtraFunctions(IMathLibrary<T> ml)
+                : base(ml)
+            {
+                OneVec = new T[] { _1 };
+                ZeroVec = new T[] { _0 };
+            }
+
+
+            public T Sum(int n, T[] x) { return blas.dot(n, x, 1, OneVec, 0); }
+
+
+            /// <summary>
+            /// Sets every element of a vector equal to a single constant value
+            /// </summary>
+            /// <param name="n">Vector length</param>
+            /// <param name="y">Vector to modify</param>
+            /// <param name="constantValue">Value to use</param>
+            public void SetToConstant(int n, T[] y, T constantValue)
+            {
+                if (setConstVec == null)
+                    setConstVec = new T[1];
+
+                setConstVec[0] = constantValue;
+
+                blas.copy(n, setConstVec, 0, y, 1);
+            }
+
+            /// <summary>
+            /// Overwrites the vector with 0s
+            /// </summary>
+            public void Clear(int n, T[] y)
+            {
+                //SetToConstant(n, y, _0);
+                // maybe we should benchmark these two to choose which one is best?
+                Array.Clear(y, 0, n);
+            }
+        }
+
+        protected readonly ExtraFunctions extras;
+
     }
 }

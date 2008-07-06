@@ -67,5 +67,14 @@ namespace Nmli.CollectionAgnostic
         /// <param name="a">Input (to be inverted)</param>
         /// <param name="y">Output (inverse of input)</param>
         void Inv(int n, AT a, AT y);
+
+
+        /// <summary>
+        /// Square-roots each element of a vector
+        /// </summary>
+        /// <param name="n">Number of elements</param>
+        /// <param name="a">Input (to be square-rooted)</param>
+        /// <param name="y">Output (square roots)</param>
+        void Sqrt(int n, AT a, AT y);
     }
 }

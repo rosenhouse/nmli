@@ -57,7 +57,6 @@
     <Compile Include="CollectionAgnostic\IBlas.cs" />
     <Compile Include="CollectionAgnostic\ILapack.cs" />
     <Compile Include="CollectionAgnostic\IVml.cs" />
-    <Compile Include="Extended\CommonExtensions.cs" />
     <Compile Include="Extended\MultinormalPdf.cs" />
     <Compile Include="Extended\Vectorized1DGaussian.cs" />
     <Compile Include="Extended\Vectorized2DNormalPDF.cs" />
