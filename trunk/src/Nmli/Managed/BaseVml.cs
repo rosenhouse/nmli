@@ -83,6 +83,18 @@ namespace Nmli.Managed
                 y[i] = 1.0f / a[i];
         }
 
+
+        public void Sqrt(int n, float[] a, float[] y)
+        {
+            for (int i = 0; i < n; i++)
+                y[i] = (float)Math.Sqrt(a[i]);
+        }
+
+        public void Sqrt(int n, double[] a, double[] y)
+        {
+            for (int i = 0; i < n; i++)
+                y[i] = Math.Sqrt(a[i]);
+        }
     }
     
 }

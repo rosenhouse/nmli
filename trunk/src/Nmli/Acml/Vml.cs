@@ -78,5 +78,11 @@ namespace Nmli.Acml
 
         public void Inv(int n, double[] a, double[] y) { managed.Inv(n, a, y); }
         public void Inv(int n, float[] a, float[] y) { managed.Inv(n, a, y); }
+
+
+        public void Sqrt(int n, float[] a, float[] y) { managed.Sqrt(n, a, y); }
+        public void Sqrt(int n, double[] a, double[] y) { managed.Sqrt(n, a, y); }
+
+
     }
 }

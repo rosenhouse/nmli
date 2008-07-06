@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Nmli.Extended
 {
-    public class CholeskyInverter<T> : Extensions1<T>
+    public class CholeskyInverter<T> : ExtendingFunc<T>
     {
         public class NonPositiveDefiniteBlockException : Exception
         {
