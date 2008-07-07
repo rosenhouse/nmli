@@ -143,8 +143,11 @@ namespace Nmli.Extended
             // inverse of diagonal matrix just inverts the elements along diagonal
             vml.Inv(T, variance, variance);
 
-            // compute difference of x and mean
-            blas.axpy(T, sml.Negate(_1), x, 1, mean, 1);
+            // mean := mean - x
+            vml.Sub(T, mean, x, mean);
+            //blas.axpy(T, sml.Negate(_1), x, 1, mean, 1);
+
+            
 
             // 1 * variance * mean + 0 * tempVector stored into tempVector
             blas.sbmv(UpLo.Upper, T, 0, _1, variance, 1, mean, 1, _0, tempVector, 1);

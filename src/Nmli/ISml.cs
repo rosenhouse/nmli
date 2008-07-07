@@ -25,9 +25,19 @@ namespace Nmli
             N Invert(N x);
             N Divide(N x, N y);
         }
+
+        public interface IOrdered<N>
+        {
+            bool LessThan(N x, N y);
+            bool GreaterThan(N x, N y);
+            bool LessThanOrEqualTo(N x, N y);
+            bool GreaterThanOrEqualTo(N x, N y);
+            bool EqualTo(N x, N y);
+            bool NotEqualTo(N x, N y);
+        }
     }
 
-    public interface ISml<N> : Abstract.ICalcField<N>
+    public interface ISml<N> : Abstract.ICalcField<N>, Abstract.IOrdered<N>
     {
         /// <summary>
         /// Converts a 8-byte (64-bit) double-precision floating point number to the generic type.
