@@ -23,7 +23,6 @@ namespace Nmli.CollectionAgnostic
         /// <param name="y">Output vector</param>
         void Ln(int n, AT x, AT y);
 
-
         /// <summary>
         /// Computes the natural exponential e^x elementwise
         /// </summary>
@@ -32,6 +31,31 @@ namespace Nmli.CollectionAgnostic
         /// <param name="y">Output vector</param>
         void Exp(int n, AT x, AT y);
 
+        /// <summary>
+        /// Squares each element of a vector
+        /// </summary>
+        /// <param name="n">Number of elements</param>
+        /// <param name="a">Input (to be squared)</param>
+        /// <param name="y">Output (squared)</param>
+        void Sqr(int n, AT a, AT y);
+
+        /// <summary>
+        /// Inverts each element of a vector
+        /// </summary>
+        /// <param name="n">Number of elements</param>
+        /// <param name="a">Input (to be inverted)</param>
+        /// <param name="y">Output (inverse of input)</param>
+        void Inv(int n, AT a, AT y);
+
+
+
+        /// <summary>
+        /// Square-roots each element of a vector
+        /// </summary>
+        /// <param name="n">Number of elements</param>
+        /// <param name="a">Input (to be square-rooted)</param>
+        /// <param name="y">Output (square roots)</param>
+        void Sqrt(int n, AT a, AT y);
 
         /// <summary>
         /// Adds two vectors elementwise: y = a + b
@@ -52,29 +76,22 @@ namespace Nmli.CollectionAgnostic
         void Sub(int n, AT a, AT b, AT y);
 
         /// <summary>
-        /// Squares each element of a vector
+        /// Multiplies two vectors elementwise: y = a * b
         /// </summary>
         /// <param name="n">Number of elements</param>
-        /// <param name="a">Input (to be squared)</param>
-        /// <param name="y">Output (squared)</param>
-        void Sqr(int n, AT a, AT y);
-
+        /// <param name="a">Multiplicand a</param>
+        /// <param name="b">Multiplicand b</param>
+        /// <param name="y">Product</param>
+        void Mul(int n, AT a, AT b, AT y);
 
         /// <summary>
-        /// Inverts each element of a vector
+        /// Divides two vectors elementwise: y = a / b
         /// </summary>
         /// <param name="n">Number of elements</param>
-        /// <param name="a">Input (to be inverted)</param>
-        /// <param name="y">Output (inverse of input)</param>
-        void Inv(int n, AT a, AT y);
+        /// <param name="a">Dividend</param>
+        /// <param name="b">Divisor</param>
+        /// <param name="y">Quotient</param>
+        void Div(int n, AT a, AT b, AT y);
 
-
-        /// <summary>
-        /// Square-roots each element of a vector
-        /// </summary>
-        /// <param name="n">Number of elements</param>
-        /// <param name="a">Input (to be square-rooted)</param>
-        /// <param name="y">Output (square roots)</param>
-        void Sqrt(int n, AT a, AT y);
     }
 }

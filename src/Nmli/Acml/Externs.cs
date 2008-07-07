@@ -74,6 +74,9 @@ namespace Nmli.Acml
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void sger(int m, int n, float alpha, float[] x, int incX, float[] y, int incY, float[] a, int lda);
 
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void stbsv(byte uplo, byte transA, byte diag, int n, int k, float[] a, int lda, float[] x, int incX);
+
         #endregion
 
         #endregion
@@ -125,6 +128,10 @@ namespace Nmli.Acml
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void dger(int m, int n, double alpha, double[] x, int incX, double[] y, int incY, double[] a, int lda);
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void dtbsv(byte uplo, byte transA, byte diag, int n, int k, double[] a, int lda, double[] x, int incX);
+
 
         #endregion
 

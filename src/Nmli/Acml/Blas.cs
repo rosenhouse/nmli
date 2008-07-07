@@ -59,12 +59,20 @@ namespace Nmli.Acml
             Externs.sgemv(tranA, m, n, alpha, a, lda, x, incX, beta, y, incY);
         }
 
-
-
         public void ger(int m, int n, float alpha, float[] x, int incX, float[] y, int incY, float[] a, int lda)
         {
             Externs.sger(m, n, alpha, x, incX, y, incY, a, lda);
         }
+
+        public void tbsv(UpLo uplo, Transpose transA, Diag diag,
+            int n, int k, float[] a, int lda, float[] x, int incX)
+        {
+            byte ul = Utilities.EnumAsAscii(uplo);
+            byte tranA = Utilities.EnumAsAscii(transA);
+            byte dia = Utilities.EnumAsAscii(diag);
+            Externs.stbsv(ul, tranA, dia, n, k, a, lda, x, incX);
+        }
+
 
         #endregion
 
@@ -128,10 +136,17 @@ namespace Nmli.Acml
         }
 
 
-
         public void ger(int m, int n, double alpha, double[] x, int incX, double[] y, int incY, double[] a, int lda)
         {
             Externs.dger(m, n, alpha, x, incX, y, incY, a, lda);
+        }
+
+        public void tbsv(UpLo uplo, Transpose transA, Diag diag, int n, int k, double[] a, int lda, double[] x, int incX)
+        {
+            byte ul = Utilities.EnumAsAscii(uplo);
+            byte tranA = Utilities.EnumAsAscii(transA);
+            byte dia = Utilities.EnumAsAscii(diag);
+            Externs.dtbsv(ul, tranA, dia, n, k, a, lda, x, incX);
         }
 
         #endregion
