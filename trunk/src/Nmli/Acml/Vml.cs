@@ -52,33 +52,39 @@ namespace Nmli.Acml
                 managed.Exp(n, x, y);
         }
 
-        
+
 
         public void Add(int n, float[] a, float[] b, float[] y) { managed.Add(n, a, b, y); }
 
         public void Sub(int n, float[] a, float[] b, float[] y) { managed.Sub(n, a, b, y); }
 
-        public void Sqr(int n, float[] a, float[] y)
+        public void Mul(int n, float[] a, float[] b, float[] y)
         {
-            // treat a as a diagonal matrix and as vector, output to vector y, scaled by 0
-            blas.sbmv(UpLo.Lower, n, 0, 1, a, 1, a, 1, 0, y, 1);
+            // treat a as a diagonal matrix and b as a vector, output to vector y, scaled by 0
+            blas.sbmv(UpLo.Lower, n, 0, 1, a, 1, b, 1, 0, y, 1);
         }
 
+        public void Sqr(int n, float[] a, float[] y) { Mul(n, a, a, y); }
+
+        public void Div(int n, float[] a, float[] b, float[] y) { managed.Div(n, a, b, y); }
 
 
         public void Add(int n, double[] a, double[] b, double[] y) { managed.Add(n, a, b, y); }
 
         public void Sub(int n, double[] a, double[] b, double[] y) { managed.Sub(n, a, b, y); }
 
-        public void Sqr(int n, double[] a, double[] y)
+        public void Mul(int n, double[] a, double[] b, double[] y)
         {
-            // treat a as a diagonal matrix and as vector, output to vector y, scaled by 0
-            blas.sbmv(UpLo.Lower, n, 0, 1, a, 1, a, 1, 0, y, 1);
+            // treat a as a diagonal matrix and b as a vector, output to vector y, scaled by 0
+            blas.sbmv(UpLo.Lower, n, 0, 1, a, 1, b, 1, 0, y, 1);
         }
+
+        public void Sqr(int n, double[] a, double[] y) { Mul(n, a, a, y); }
+
+        public void Div(int n, double[] a, double[] b, double[] y) { managed.Div(n, a, b, y); }
 
         public void Inv(int n, double[] a, double[] y) { managed.Inv(n, a, y); }
         public void Inv(int n, float[] a, float[] y) { managed.Inv(n, a, y); }
-
 
         public void Sqrt(int n, float[] a, float[] y) { managed.Sqrt(n, a, y); }
         public void Sqrt(int n, double[] a, double[] y) { managed.Sqrt(n, a, y); }

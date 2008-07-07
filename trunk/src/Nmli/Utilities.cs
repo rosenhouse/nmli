@@ -36,6 +36,16 @@ namespace Nmli
             return 67; // ASCII 'C'
         }
 
+        /// <summary>
+        /// Convert an (MKL-centric) Diag type into an ASCII byte suitable for Fortran interfaces
+        /// </summary>
+        public static byte EnumAsAscii(Diag d)
+        {
+            if (d == Diag.Unit)
+                return 85; // ASCII 'U'
+            else
+                return 78; // ASCII 'N'
+        }
 
 
         /// <summary>

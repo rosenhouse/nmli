@@ -22,6 +22,10 @@ namespace Nmli.Mkl
 
         public void Sub(int n, float[] a, float[] b, float[] y) { Externs.vsSub(n, a, b, y); }
 
+        public void Mul(int n, float[] a, float[] b, float[] y) { Externs.vsMul(n, a, b, y); }
+
+        public void Div(int n, float[] a, float[] b, float[] y) { Externs.vsDiv(n, a, b, y); }
+
         public void Sqr(int n, float[] a, float[] y) { Externs.vsSqr(n, a, y); }
 
         public void Inv(int n, float[] a, float[] y) { Externs.vsInv(n, a, y); }
@@ -34,10 +38,16 @@ namespace Nmli.Mkl
 
         public void Sub(int n, double[] a, double[] b, double[] y) { Externs.vdSub(n, a, b, y); }
 
+        public void Mul(int n, double[] a, double[] b, double[] y) { Externs.vdMul(n, a, b, y); }
+
+        public void Div(int n, double[] a, double[] b, double[] y) { Externs.vdDiv(n, a, b, y); }
+
         public void Sqr(int n, double[] a, double[] y) { Externs.vdSqr(n, a, y); }
 
         public void Inv(int n, double[] a, double[] y) { Externs.vdInv(n, a, y); }
 
         public void Sqrt(int n, double[] a, double[] y) { Externs.vdSqrt(n, a, y); }
+
+        
     }
 }

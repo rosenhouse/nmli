@@ -18,6 +18,9 @@ namespace Nmli.Extended
         [ThreadStatic]
         static Workspace<T> scratchProvider;
 
+        /// <summary>
+        /// Returns the natural log of the determinant of a Cholesky-factored matrix
+        /// </summary>
         public double LnDeterminantOfFactoredMatrix(int n, T[] choleskyDecomposed)
         {
             /*  If the symmetric positive definite matrix A is represented by its 

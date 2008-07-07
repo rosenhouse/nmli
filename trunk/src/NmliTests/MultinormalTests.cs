@@ -14,26 +14,13 @@ namespace NmliTests
             protected readonly MultinormalPdf<N> pdf = new MultinormalPdf<N>(Lib);
 
             [Test]
-            public void TestOriginal()
+            public void TestFullCovMatrix()
             {
                 N[] mean = new N[] { of(2), of(-1) };
                 N[] cov = new N[] { of(1), of(0.3), of(0.3), of(1) };
                 N[] x = new N[] { of(2.5), of(-0.3) };
 
-                double lp = pdf.LogPDF(x, mean, cov);
-
-                Assert.AreEqual(-2.08193, lp, delta);
-            }
-
-
-            [Test]
-            public void TestFast()
-            {
-                N[] mean = new N[] { of(2), of(-1) };
-                N[] cov = new N[] { of(1), of(0.3), of(0.3), of(1) };
-                N[] x = new N[] { of(2.5), of(-0.3) };
-
-                double lp = pdf.LogPDF_Fast(x, mean, cov);
+                double lp = pdf.LogPDF_FastFull(x, mean, cov);
 
                 Assert.AreEqual(-2.08193, lp, delta);
             }
