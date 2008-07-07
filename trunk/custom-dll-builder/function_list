@@ -62,3 +62,5 @@ vsInv
 vdInv
 vsSqrt
 vdSqrt
+vsDiv
+vdDiv
