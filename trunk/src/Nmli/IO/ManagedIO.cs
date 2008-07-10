@@ -5,7 +5,7 @@ namespace Nmli.IO
     public class ManagedIO : IIO
     {
 
-        #region IIO<float> members
+        #region Single
         public void Write(BinaryWriter bw, int n, float[] buffer)
         {
             for (int i = 0; i < n; i++)
@@ -34,10 +34,11 @@ namespace Nmli.IO
             for (int i = 0; i < n; i++)
                 buffer[i] = (float)(br.ReadDouble());
         }
-
         #endregion
 
 
+
+        #region Double
         public void Write(BinaryWriter bw, int n, double[] buffer)
         {
             for (int i = 0; i < n; i++)
@@ -67,7 +68,7 @@ namespace Nmli.IO
         }
 
         public void ReadF64(BinaryReader br, int n, double[] buffer) { Read(br, n, buffer); }
-
+        #endregion
 
     }
 }

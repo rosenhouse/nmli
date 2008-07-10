@@ -18,4 +18,8 @@ namespace Nmli
     public interface IVml : IVml<float>, IVml<double> { }
 
 
+
+
+    public interface IIO<N> : CollectionAgnostic.IIO<N[]> { }
+    public interface IIO : IIO<float>, IIO<double> { }
 }

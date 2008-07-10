@@ -47,6 +47,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acml\Blas.cs" />
@@ -55,14 +57,15 @@
     <Compile Include="Acml\UnsafeExterns.cs" />
     <Compile Include="Acml\Vml.cs" />
     <Compile Include="CollectionAgnostic\IBlas.cs" />
+    <Compile Include="CollectionAgnostic\IIO.cs" />
     <Compile Include="CollectionAgnostic\ILapack.cs" />
     <Compile Include="CollectionAgnostic\IVml.cs" />
     <Compile Include="Extended\MultinormalPdf.cs" />
     <Compile Include="Extended\Vectorized1DGaussian.cs" />
     <Compile Include="Extended\Vectorized2DNormalPDF.cs" />
     <Compile Include="Interfaces.cs" />
-    <Compile Include="IO\IIO.cs" />
     <Compile Include="IO\ManagedIO.cs" />
+    <Compile Include="IO\ManagedIO2.cs" />
     <Compile Include="ISml.cs" />
     <Compile Include="Extended\CholeskyInvert.cs" />
     <Compile Include="ExtendingFunc.cs" />
