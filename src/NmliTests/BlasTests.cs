@@ -359,9 +359,9 @@ namespace NmliTests
             public void imax()
             {
                 int i_min1 = blas.imax(array.Length, array, 1);
-                Assert.AreEqual(8, i_min1);  // 1-based indexing
+                Assert.AreEqual(8, i_min1);  // 0-based indexing
 
-                int i_min3 = blas.imax(array.Length, array, 3);
+                int i_min3 = blas.imax(3, array, 3);
                 Assert.AreEqual(2, i_min3);  // index is with respect to incX
             }
 
