@@ -82,7 +82,8 @@ namespace Nmli.IO
         /// <summary>
         /// Encapsulates the given array as a memory stream, and then performs the given action on that stream.
         /// </summary>
-        protected static unsafe void EncapsulateArrayAndAct<TArray>(Array array, Action<Stream> action)
+        protected static unsafe void EncapsulateArrayAndAct<TArray>(Array array, FileAccess fileAccess,
+            Action<Stream> action)
         {
             long numElements = array.Length;
             long numBytes = numElements * GetSize<TArray>();
@@ -90,8 +91,8 @@ namespace Nmli.IO
             GCHandle gch = GCHandle.Alloc(array, GCHandleType.Pinned);
             try
             {
-                byte* bp = (byte*)Marshal.UnsafeAddrOfPinnedArrayElement(array, 0);
-                UnmanagedMemoryStream ums = new UnmanagedMemoryStream(bp, numBytes);
+                byte* bp = (byte*)(Marshal.UnsafeAddrOfPinnedArrayElement(array, 0).ToPointer());
+                UnmanagedMemoryStream ums = new UnmanagedMemoryStream(bp, numBytes, numBytes, fileAccess );
                 action(ums);
             }
             finally
@@ -103,12 +104,14 @@ namespace Nmli.IO
 
         protected static void sa_Copy<TIn, TOut>(Stream source, Array target)
         {
-            EncapsulateArrayAndAct<TOut>(target, delegate(Stream t) { ss_Copy<TIn, TOut>(source, t, target.Length); });
+            EncapsulateArrayAndAct<TOut>(target, FileAccess.Write,
+                delegate(Stream t) { ss_Copy<TIn, TOut>(source, t, target.Length); });
         }
 
         protected static void as_Copy<TIn, TOut>(Array source, Stream target)
         {
-            EncapsulateArrayAndAct<TIn>(source, delegate(Stream s) { ss_Copy<TIn, TOut>(s, target, source.Length); });
+            EncapsulateArrayAndAct<TIn>(source, FileAccess.Read,
+                delegate(Stream s) { ss_Copy<TIn, TOut>(s, target, source.Length); });
         }
 
         protected static void aa_Copy<TIn, TOut>(Array source, Array target)
@@ -116,7 +119,8 @@ namespace Nmli.IO
             if (source.Length != target.Length)
                 throw new ArgumentException("Source and target must have the same length.");
 
-            EncapsulateArrayAndAct<TIn>(source, delegate(Stream s) { sa_Copy<TIn, TOut>(s, target); });
+            EncapsulateArrayAndAct<TIn>(source, FileAccess.Read,
+                delegate(Stream s) { sa_Copy<TIn, TOut>(s, target); });
         }
 
 
