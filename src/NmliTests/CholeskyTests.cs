@@ -23,7 +23,7 @@ namespace NmliTests
         CholeskyInverter<double> di;
         CholeskyInverter<float> fi;
 
-        public const float delta = BlasTest.delta;
+        public const float delta = GenericNumericTest<double, Libs.MKL>.delta;
 
         protected CholeskyTest(IMathLibrary ml)
         {
