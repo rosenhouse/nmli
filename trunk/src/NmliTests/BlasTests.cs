@@ -16,7 +16,7 @@ using Nmli;
 
 namespace NmliTests
 {
-    public static class GenericBlasTests
+    public static class BlasTests
     {
 
         public abstract class GenericTest<N, L> : GenericNumericTest<N, L>
@@ -209,9 +209,6 @@ namespace NmliTests
 
             
             #endregion 
-
-
-
 
         }
 
