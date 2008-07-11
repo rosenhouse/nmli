@@ -5,6 +5,8 @@ MKL_free
 MKL_MemStat
 MKL_FreeBuffers
 
+cblas_isamin
+cblas_idamin
 cblas_dasum
 cblas_daxpy
 cblas_dcopy
