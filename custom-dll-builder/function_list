@@ -7,6 +7,9 @@ MKL_FreeBuffers
 
 cblas_isamin
 cblas_idamin
+cblas_isamax
+cblas_idamax
+
 cblas_dasum
 cblas_daxpy
 cblas_dcopy
