@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.IO;
 
@@ -75,19 +76,19 @@ namespace Nmli
         {
             IntPtr address = LoadLibrary(path);
             if (address == IntPtr.Zero)
+            {
+                int errCode = Marshal.GetLastWin32Error();
                 throw new InvalidOperationException("Unable to load " + path);
+
+            }
         }
 
         static void tryLoad(string path)
         {
             if (Utilities.isWindows)
             {
-                //Environment.CurrentDirectory = Path.GetDirectoryName(Utilities.CurrentDllPath);
                 string p = Path.GetFullPath(path);
-
-                Environment.SetEnvironmentVariable("PATH",
-                    Path.GetDirectoryName(p) + ";"
-                    + Environment.GetEnvironmentVariable("PATH"));
+                Environment.CurrentDirectory = Path.GetDirectoryName(p);
 
                 windowsLoad(p);
             }

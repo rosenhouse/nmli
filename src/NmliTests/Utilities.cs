@@ -17,12 +17,17 @@ namespace NmliTests
             Console.ForegroundColor = c;
         }
 
+        static IEnumerable<Type> GetFixtures()
+        {
+            foreach (Type t in Assembly.GetExecutingAssembly().GetTypes())
+                if (t.GetCustomAttributes(typeof(TestFixtureAttribute), false).Length > 0)
+                    yield return t;
+
+        }
+
         public static void RunAll()
         {
-            Type[] fixtures = new Type[] { typeof(AcmlBlasTest), typeof(AcmlLapackTest),
-                typeof(MklBlasTest), typeof(MklLapackTest), typeof(VmlTest) };
-
-            foreach (Type t in fixtures)
+            foreach (Type t in GetFixtures())
             {
                 Object fixture = t.GetConstructor(Type.EmptyTypes).Invoke(null);
                 Console.WriteLine("Starting to test {0}...", t.Name);

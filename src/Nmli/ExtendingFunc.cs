@@ -59,10 +59,7 @@ namespace Nmli
         protected ExtendingFunc() : this(Libraries<T>.Default) { }
 
 
-
-
-
-        public class ExtraFunctions : ExtendingFunc<T>
+        public class ExtraFunctions
         {
 
             private readonly T[] OneVec;
@@ -71,15 +68,18 @@ namespace Nmli
             [ThreadStatic]
             private static T[] setConstVec;
 
+            private readonly IMathLibrary<T> ml;
+             
             public ExtraFunctions(IMathLibrary<T> ml)
-                : base(ml)
             {
-                OneVec = new T[] { _1 };
-                ZeroVec = new T[] { _0 };
+                this.ml = ml;
+
+                OneVec = new T[] { ml.Sml.One };
+                ZeroVec = new T[] { ml.Sml.Zero };
             }
 
 
-            public T Sum(int n, T[] x) { return blas.dot(n, x, 1, OneVec, 0); }
+            public T Sum(int n, T[] x) { return ml.Blas.dot(n, x, 1, OneVec, 0); }
 
 
             /// <summary>
@@ -95,18 +95,9 @@ namespace Nmli
 
                 setConstVec[0] = constantValue;
 
-                blas.copy(n, setConstVec, 0, y, 1);
+                ml.Blas.copy(n, setConstVec, 0, y, 1);
             }
 
-            /// <summary>
-            /// Overwrites the vector with 0s
-            /// </summary>
-            public void Clear(int n, T[] y)
-            {
-                //SetToConstant(n, y, _0);
-                // maybe we should benchmark these two to choose which one is best?
-                Array.Clear(y, 0, n);
-            }
         }
 
         protected readonly ExtraFunctions extras;
