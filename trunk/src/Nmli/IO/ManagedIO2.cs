@@ -4,33 +4,20 @@ using System.Runtime.InteropServices;
 
 namespace Nmli.IO
 {
-    public static class ManagedIO2<N>
+
+    public class ManagedIO2
     {
-        delegate void StreamCopier(Stream source, Stream target, long numElements);
+        protected delegate void StreamCopier(Stream source, Stream target, long numElements);
 
-        static readonly int size_of_N;
-        static readonly bool N_is_f32;
-        static readonly bool N_is_f64;
+        protected static int GetSize<T>() { return Marshal.SizeOf(typeof(T)); }
+        protected static bool IsF32<T>() { return (typeof(T) == typeof(float)); }
+        protected static bool IsF64<T>() { return (typeof(T) == typeof(double)); }
 
-        const string InvalidGenericTypeErrMsg = "Only valid generic types are float32 and float64";
+        protected const string InvalidGenericTypeErrMsg = "Only valid generic types are float32 and float64";
 
-        static ManagedIO2()
+        protected static void ss_CopyDirectly<T>(Stream source, Stream target, long numElements)
         {
-            Type t = typeof(N);
-            size_of_N = Marshal.SizeOf(t);
-
-            if (t == typeof(float))
-                N_is_f32 = true;
-            else if (t == typeof(double))
-                N_is_f64 = true;
-            else
-                throw new InvalidOperationException(InvalidGenericTypeErrMsg);
-        }
-
-
-        static void CopyDirectly(Stream source, Stream target, long numElements)
-        {
-            long numBytes = numElements * size_of_N;
+            long numBytes = numElements * GetSize<T>();
 
             int bufSize = 256 * 4;
             byte[] buffer = new byte[bufSize];
@@ -49,7 +36,7 @@ namespace Nmli.IO
             target.Flush();
         }
 
-        static void CopyF32ToF64(Stream source, Stream target, long numElements)
+        protected static void ss_CopyF32ToF64(Stream source, Stream target, long numElements)
         {
             BinaryReader br = new BinaryReader(source);
             BinaryWriter bw = new BinaryWriter(target);
@@ -61,7 +48,7 @@ namespace Nmli.IO
             target.Flush();
         }
 
-        static void CopyF64ToF32(Stream source, Stream target, long numElements)
+        protected static void ss_CopyF64ToF32(Stream source, Stream target, long numElements)
         {
             BinaryReader br = new BinaryReader(source);
             BinaryWriter bw = new BinaryWriter(target);
@@ -74,17 +61,38 @@ namespace Nmli.IO
         }
 
 
-        static unsafe void ReadIntoArray(Stream source, Array target, 
-            long numElements, StreamCopier sc)
+        protected static void ss_Copy<TIn, TOut>(Stream source, Stream target, long numElements)
         {
-            GCHandle gch = GCHandle.Alloc(target, GCHandleType.Pinned);
+            if (typeof(TIn) == typeof(TOut))
+                ss_CopyDirectly<TIn>(source, target, numElements);
+            else
+            {
+                if (IsF32<TIn>() && IsF64<TOut>())
+                    ss_CopyF32ToF64(source, target, numElements);
+                else if (IsF64<TIn>() && IsF32<TOut>())
+                    ss_CopyF64ToF32(source, target, numElements);
+                else
+                    throw new Exception(string.Format(
+                        "Unclear how to copy streams of incompatible types {0} and {1}",
+                        typeof(TIn).Name, typeof(TOut).Name));
+            }
+        }
+
+
+        /// <summary>
+        /// Encapsulates the given array as a memory stream, and then performs the given action on that stream.
+        /// </summary>
+        protected static unsafe void EncapsulateArrayAndAct<TArray>(Array array, Action<Stream> action)
+        {
+            long numElements = array.Length;
+            long numBytes = numElements * GetSize<TArray>();
+
+            GCHandle gch = GCHandle.Alloc(array, GCHandleType.Pinned);
             try
             {
-                IntPtr p = Marshal.UnsafeAddrOfPinnedArrayElement(target, 0);
-                byte* b = (byte*)p;
-                long numBytes = numElements * size_of_N;
-                UnmanagedMemoryStream ums = new UnmanagedMemoryStream(b, numBytes);
-                sc(source, ums, numElements);
+                byte* bp = (byte*)Marshal.UnsafeAddrOfPinnedArrayElement(array, 0);
+                UnmanagedMemoryStream ums = new UnmanagedMemoryStream(bp, numBytes);
+                action(ums);
             }
             finally
             {
@@ -92,85 +100,47 @@ namespace Nmli.IO
             }
         }
 
-        static unsafe void WriteFromArray(Array source, Stream target,
-            long numElements, StreamCopier sc)
+
+        protected static void sa_Copy<TIn, TOut>(Stream source, Array target)
         {
-            GCHandle gch = GCHandle.Alloc(source, GCHandleType.Pinned);
-            try
-            {
-                IntPtr p = Marshal.UnsafeAddrOfPinnedArrayElement(source, 0);
-                byte* b = (byte*)p;
-                long numBytes = numElements * size_of_N;
-                UnmanagedMemoryStream ums = new UnmanagedMemoryStream(b, numBytes);
-                sc(ums, target, numElements);
-            }
-            finally
-            {
-                gch.Free();
-            }
+            EncapsulateArrayAndAct<TOut>(target, delegate(Stream t) { ss_Copy<TIn, TOut>(source, t, target.Length); });
+        }
+
+        protected static void as_Copy<TIn, TOut>(Array source, Stream target)
+        {
+            EncapsulateArrayAndAct<TIn>(source, delegate(Stream s) { ss_Copy<TIn, TOut>(s, target, source.Length); });
+        }
+
+        protected static void aa_Copy<TIn, TOut>(Array source, Array target)
+        {
+            if (source.Length != target.Length)
+                throw new ArgumentException("Source and target must have the same length.");
+
+            EncapsulateArrayAndAct<TIn>(source, delegate(Stream s) { sa_Copy<TIn, TOut>(s, target); });
         }
 
 
 
-        public static void ReadF64s(Stream source, Array target)
-        {
-            int numElements = target.Length;
+        public static void Copy<TIn, TOut>(Stream source, TOut[] target) { sa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(Stream source, TOut[,] target) { sa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(Stream source, TOut[,,] target) { sa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(Stream source, TOut[,,,] target) { sa_Copy<TIn, TOut>(source, target); }
 
-            StreamCopier sc;
-            if (N_is_f64)
-                sc = CopyDirectly;
-            else if (N_is_f32)
-                sc = CopyF64ToF32;
-            else
-                throw new InvalidOperationException(InvalidGenericTypeErrMsg);
+        public static void Copy<TIn, TOut>(TIn[] source, Stream target) { as_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,] source, Stream target) { as_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,] source, Stream target) { as_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,] source, Stream target) { as_Copy<TIn, TOut>(source, target); }
 
-            ReadIntoArray(source, target, numElements, sc);
-        }
+        public static void Copy<TIn, TOut>(TIn[] source, TOut[] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[] source, TOut[,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[] source, TOut[,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,] source, TOut[] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,] source, TOut[,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,] source, TOut[,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,] source, TOut[] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,] source, TOut[,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,] source, TOut[,,] target) { aa_Copy<TIn, TOut>(source, target); }
 
-        public static void ReadF32s(Stream source, Array target)
-        {
-            int numElements = target.Length;
-
-            StreamCopier sc;
-            if (N_is_f32)
-                sc = CopyDirectly;
-            else if (N_is_f64)
-                sc = CopyF32ToF64;
-            else
-                throw new InvalidOperationException(InvalidGenericTypeErrMsg);
-
-            ReadIntoArray(source, target, numElements, sc);
-        }
-
-
-        public static void WriteF64s(Array source, Stream target)
-        {
-            int numElements = source.Length;
-
-            StreamCopier sc;
-            if (N_is_f64)
-                sc = CopyDirectly;
-            else if (N_is_f32)
-                sc = CopyF64ToF32;
-            else
-                throw new InvalidOperationException(InvalidGenericTypeErrMsg);
-
-            WriteFromArray(source, target, numElements, sc);
-        }
-
-        public static void WriteF32s(Array source, Stream target)
-        {
-            int numElements = source.Length;
-
-            StreamCopier sc;
-            if (N_is_f32)
-                sc = CopyDirectly;
-            else if (N_is_f64)
-                sc = CopyF32ToF64;
-            else
-                throw new InvalidOperationException(InvalidGenericTypeErrMsg);
-
-            WriteFromArray(source, target, numElements, sc);
-        }
     }
+
 }

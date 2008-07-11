@@ -24,6 +24,7 @@ mt -manifest mkl.dll.manifest -outputresource:mkl.dll;2
 
 copy mkl.dll 32bit-mkl.dll
 copy /y 32bit-mkl.dll ..\bin\x86\MKL\mkl.dll
+copy /y "%_mkl%\ia32\bin\libguide40.dll" ..\bin\x86\MKL\libguide40.dll
 del mkl.*
 
 echo Done building 32-bit dll
