@@ -73,7 +73,7 @@ namespace Nmli
         /// <summary>
         /// Reveals the internal buffer, unchanged, if it exists.  Returns null otherwise.
         /// </summary>
-        public static int PeekBuffer(ref Workspace<T> field)
+        public static T[] PeekBuffer(ref Workspace<T> field)
         {
             if (field != null)
                 return field.buffer;
