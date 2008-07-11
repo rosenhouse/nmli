@@ -73,6 +73,12 @@ namespace Nmli.Mkl
 
         #region Level 1
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int cblas_ismax(int n, float* x, int incX);
+        
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int cblas_ismin(int n, float* x, int incX);
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern float cblas_sdot(int n, float* x, int incX, float* y, int incY);
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
@@ -120,6 +126,14 @@ namespace Nmli.Mkl
         #region Double
 
         #region Level 1
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int cblas_idmin(int n, double* x, int incX);
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int cblas_idmax(int n, double* x, int incX);
+
+
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern double cblas_ddot(int n, double* x, int incX, double* y, int incY);
 

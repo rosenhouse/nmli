@@ -36,6 +36,7 @@ namespace NmliTests
         private double[] darray = new double[] { -1.1, -2.2, -3.3, 0, 1.1, 2.2, -4.4, 5.5, 6.6 };
 
         #region Level 1
+
         [Test]
         public void Sdot()
         {
@@ -336,5 +337,64 @@ namespace NmliTests
             Assert.AreEqual(7, output[1], delta);
             Assert.AreEqual(11, output[2], delta);
         }
+    }
+
+
+
+    public static class GenericBlasTests
+    {
+
+        public abstract class GenericTest<N, L> : GenericNumericTest<N, L>
+        {
+            N[] array;
+
+            protected GenericTest()
+            {
+                float[] farray = new float[] { -1.1f, -2.2f, -3.3f, 0f, 1.1f, 2.2f, -4.4f, 5.5f, 6.6f };
+                this.array = new N[farray.Length];
+                Nmli.IO.ManagedIO2.Copy<float, N>(farray, array);
+            }
+
+            [Test]
+            public void imax()
+            {
+                int i_min1 = blas.imax(array.Length, array, 1);
+                Assert.AreEqual(8, i_min1);
+
+                int i_min3 = blas.imax(array.Length, array, 3);
+                Assert.AreEqual(6, i_min3);
+            }
+
+        }
+
+
+
+        [TestFixture]
+        [Category("BLAS")]
+        [Category("ACML")]
+        [Category("Double")]
+        public class DoubleACML : GenericTest<double, Libs.ACML> { }
+
+
+        [TestFixture]
+        [Category("BLAS")]
+        [Category("ACML")]
+        [Category("Float")]
+        public class FloatACML : GenericTest<float, Libs.ACML> { }
+
+
+        [TestFixture]
+        [Category("BLAS")]
+        [Category("MKL")]
+        [Category("Double")]
+        public class DoubleMKL : GenericTest<double, Libs.MKL> { }
+
+
+        [TestFixture]
+        [Category("BLAS")]
+        [Category("MKL")]
+        [Category("Float")]
+        public class FloatMKL : GenericTest<float, Libs.MKL> { }
+
     }
 }

@@ -9,6 +9,11 @@ namespace Nmli.Mkl
 
         #region Level 1
 
+        public int imin(int n, float[] x, int incX) { return Externs.cblas_isamin(n, x, incX); }
+
+        public int imax(int n, float[] x, int incX) { return Externs.cblas_isamax(n, x, incX); }
+
+
         public float nrm2(int n, float[] x, int incX) { return Externs.cblas_snrm2(n, x, incX); }
 
         public float asum(int n, float[] x, int incX) { return Externs.cblas_sasum(n, x, incX); }
@@ -64,6 +69,10 @@ namespace Nmli.Mkl
         #region Double
 
         #region Level 1
+
+        public int imin(int n, double[] x, int incX) { return Externs.cblas_idamin(n, x, incX); }
+
+        public int imax(int n, double[] x, int incX) { return Externs.cblas_idamax(n, x, incX); }
 
         public double dot(int n, double[] x, int incX, double[] y, int incY) { return Externs.cblas_ddot(n, x, incX, y, incY); }
 

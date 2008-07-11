@@ -56,6 +56,9 @@ namespace Nmli.Acml
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern float sasum(int n, float* x, int incX);
 
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int ismax(int n, float* x, int incX);
+
         #endregion
 
         #region Level 2
@@ -105,6 +108,9 @@ namespace Nmli.Acml
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void dscal(int n, double alpha, double* x, int incX);
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int idmax(int n, double* x, int incX);
 
         #endregion
 

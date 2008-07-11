@@ -39,6 +39,9 @@ namespace Nmli.Acml
 
         #region Level 1
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int isamax(int n, float[] x, int incX);
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern float sdot(int n, float[] x, int incX, float[] y, int incY);
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
@@ -88,6 +91,9 @@ namespace Nmli.Acml
 
 
         #region Level 1
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern int idamax(int n, double[] x, int incX);
+
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern double ddot(int n, double[] x, int incX, [In]double[] y, int incY);
 
