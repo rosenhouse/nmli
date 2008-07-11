@@ -15,7 +15,7 @@ namespace NmliTests
             private double[] darray = new double[] { -1.1, -2.2, -3.3, 0, 0.1, 2.2, -4.4, 5.5, 6.6 };
             private N[] data;
 
-            protected GenericTest() { data = Array.ConvertAll<double, N>(darray, base.of); }
+            protected GenericTest() { data = Array.ConvertAll<double, N>(darray, base.of_dbl); }
 
             [Test]
             public void Ln()
@@ -23,7 +23,7 @@ namespace NmliTests
                 N[] es = new N[data.Length];
                 N[] output = new N[es.Length];
                 for (int i = 0; i < es.Length; i++)
-                    es[i] = of(Math.Exp(darray[i]));
+                    es[i] = of_dbl(Math.Exp(darray[i]));
 
                 vml.Ln(es.Length, es, output);
 
@@ -37,7 +37,7 @@ namespace NmliTests
                 N[] es = new N[data.Length];
                 N[] output = new N[es.Length];
                 for (int i = 0; i < es.Length; i++)
-                    es[i] = of(Math.Exp(darray[i]));
+                    es[i] = of_dbl(Math.Exp(darray[i]));
 
                 vml.Exp(es.Length, data, output);
 

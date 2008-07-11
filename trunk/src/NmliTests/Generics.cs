@@ -30,16 +30,11 @@ namespace NmliTests
 
     public abstract class GenericNumericTest<N, L> : ExtendingFunc<N>
     {
-        public const double delta = 0.00390625f;
+        public const float delta = 0.00390625f;
 
         public static IMathLibrary<N> Lib { get { return Libs.Get<N, L>(); } }
 
         private static readonly ISml<N> _sml = (ISml<N>)Libraries.Sml;
-        
-        protected N of(double d) { return _sml.OfDouble(d); }
-        protected double to(N n) { return _sml.ToDouble(n); }
-
-        //protected ISml<N> sml { get { return _sml; } }
 
         protected GenericNumericTest() : base(Lib) { }
 
@@ -53,11 +48,13 @@ namespace NmliTests
             
             for (int i = 0; i < n; i++)
             {
-                double ex = to(expected[i]);
-                double ac = to(actual[i]);
+                double ex = to_dbl(expected[i]);
+                double ac = to_dbl(actual[i]);
                 Assert.AreEqual(ex,ac, delta, "Expected {0} but got {1} at index {2}", ex, ac, i);
             }
         }
+
+        protected void AssertArrayEqual(N[] expected, N[] actual) { AssertArrayEqual(expected, actual, delta); }
     }
 
 }

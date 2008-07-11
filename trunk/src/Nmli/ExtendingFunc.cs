@@ -34,6 +34,20 @@ namespace Nmli
         protected int to_int(T x) { return sml.ToInt(x); }
 
         /// <summary>
+        /// Returns a newly allocated generic-typed array containing the given double data
+        /// </summary>
+        protected T[] new_array(params double[] d)
+        {
+            if (d == null)
+                return null;
+
+            T[] a = new T[d.Length];
+            IO.ManagedIO2.Copy<double, T>(d, a);
+            return a;
+        }
+
+
+        /// <summary>
         /// Initializes with a custom math library
         /// </summary>
         /// <param name="ml">The custom math library</param>

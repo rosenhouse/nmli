@@ -16,331 +16,6 @@ using Nmli;
 
 namespace NmliTests
 {
-    [TestFixture]
-    [Category("BLAS")]
-    [Category("MKL")]
-    public class MklBlasTest : BlasTest { public MklBlasTest() : base(Libraries.Mkl.Blas) { } }
-
-    [TestFixture]
-    [Category("BLAS")]
-    [Category("ACML")]
-    public class AcmlBlasTest : BlasTest { public AcmlBlasTest() : base(Libraries.Acml.Blas) { } }
-
-    public abstract class BlasTest
-    {
-        protected readonly IBlas blas;
-        protected BlasTest(IBlas blas) { this.blas = blas; }
-
-        public const float delta = 0.00390625f;
-        private float[] farray = new float[] { -1.1f, -2.2f, -3.3f, 0f, 1.1f, 2.2f, -4.4f, 5.5f, 6.6f };
-        private double[] darray = new double[] { -1.1, -2.2, -3.3, 0, 1.1, 2.2, -4.4, 5.5, 6.6 };
-
-        #region Level 1
-
-        [Test]
-        public void Sdot()
-        {
-            
-            float res = blas.dot(farray.Length, farray, 1, farray, 1);
-            float expected = 0;
-            for (int i = 0; i < farray.Length; i++)
-            {
-                expected += farray[i] * farray[i];
-            }
-            Assert.AreEqual(expected, res, delta);
-        }
-
-        [Test]
-        public void Ddot()
-        {
-            double res = blas.dot(darray.Length, darray, 1, darray, 1);
-            double expected = 0;
-            for (int i = 0; i < farray.Length; i++)
-            {
-                expected += darray[i] * darray[i];
-            }
-            Assert.AreEqual(expected, res, delta);
-        }
-
-
-        [Test]
-        public void Snrm2()
-        {
-            float res = blas.nrm2(farray.Length, farray, 1);
-            float expected = 10.7778f;
-            Assert.AreEqual(expected, res, delta);
-        }
-
-        [Test]
-        public void Dnrm2()
-        {
-            double res = blas.nrm2(darray.Length, darray, 1);
-            double expected = 10.7778;
-            Assert.AreEqual(expected, res, delta);
-        }
-
-
-        [Test]
-        public void Sasum()
-        {
-            float res = blas.asum(farray.Length, farray, 1);
-            float expected = 0;
-            for (int i = 0; i < farray.Length; i++)
-            {
-                expected += Math.Abs(farray[i]);
-            }
-            Assert.AreEqual(expected, res, delta);
-        }
-
-        [Test]
-        public void Dasum()
-        {
-            double res = blas.asum(darray.Length, darray, 1);
-            double expected = 0;
-            for (int i = 0; i < darray.Length; i++)
-            {
-                expected += Math.Abs(darray[i]);
-            }
-            Assert.AreEqual(expected, res, delta);
-        }
-
-
-
-        [Test]
-        public void Scopy()
-        {
-            float[] copy = new float[farray.Length];
-            blas.copy(farray.Length, farray, 1, copy, 1);
-            for (int i = 0; i < farray.Length; i++)
-            {
-                Assert.AreEqual(farray[i], copy[i], delta);
-            }
-        }
-
-        [Test]
-        public void Dcopy()
-        {
-            double[] copy = new double[darray.Length];
-            blas.copy(darray.Length, darray, 1, copy, 1);
-            for (int i = 0; i < darray.Length; i++)
-            {
-                Assert.AreEqual(darray[i], copy[i], delta);
-            }
-        }
-
-
-        [Test]
-        public void Saxpy()
-        {
-            float[] y = (float[])farray.Clone();
-            blas.axpy(y.Length, 2, farray, 1, y, 1);
-            float expected = 0;
-            for (int i = 0; i < y.Length; i++)
-            {
-                expected = 2 * farray[i] + farray[i];
-                Assert.AreEqual(expected, y[i]);
-            }
-        }
-
-        [Test]
-        public void Daxpy()
-        {
-            double[] y = (double[])darray.Clone();
-            blas.axpy(y.Length, 2, darray, 1, y, 1);
-            double expected = 0;
-            for (int i = 0; i < y.Length; i++)
-            {
-                expected = 2 * darray[i] + darray[i];
-                Assert.AreEqual(expected, y[i]);
-            }
-        }
-
-
-        [Test]
-        public void Sscal()
-        {
-            float[] x = (float[])farray.Clone();
-            blas.scal(x.Length, 2, x, 1);
-            for (int i = 0; i < x.Length; i++)
-            {
-                Assert.AreEqual(2 * farray[i], x[i], delta);
-            }
-        }
-
-        [Test]
-        public void Dscal()
-        {
-            double[] x = (double[])darray.Clone();
-            blas.scal(x.Length, 2, x, 1);
-            for (int i = 0; i < x.Length; i++)
-            {
-                Assert.AreEqual(2 * darray[i], x[i], delta);
-            }
-        }
-
-        #endregion
-
-
-        #region Level 2
-
-        [Test]
-        public void Ssymv()
-        {
-            float[] a = new float[] { 1, 2, 2, 1, 1, 2, 1, 1, 1 };
-            float[] x = new float[] { 1, 1, 1 };
-            float[] y = new float[] { 1, 1, 1 };
-
-            blas.symv(UpLo.Upper, 3, 3, a, 3, x, 1, 2, y, 1);
-            Assert.AreEqual(11, y[0]);
-            Assert.AreEqual(11, y[1]);
-            Assert.AreEqual(11, y[2]);
-        }
-
-        [Test]
-        public void Dsymv()
-        {
-            double[] a = new double[] { 1, 2, 2, 1, 1, 2, 1, 1, 1 };
-            double[] x = new double[] { 1, 1, 1 };
-            double[] y = new double[] { 1, 1, 1 };
-
-            blas.symv(UpLo.Upper, 3, 3, a, 3, x, 1, 2, y, 1);
-            Assert.AreEqual(11, y[0]);
-            Assert.AreEqual(11, y[1]);
-            Assert.AreEqual(11, y[2]);
-        }
-
-
-        [Test]
-        public void Ssbmv()
-        {
-            float[] a = new float[] { 10, 1, 1, 1, 1, 1 };
-            float[] x = new float[] { 1, 1, 1 };
-            float[] y = new float[] { 1, 1, 1 };
-
-            blas.sbmv(UpLo.Upper, 3, 1, 3, a, 2, x, 1, 2, y, 1);
-            Assert.AreEqual(8, y[0]);
-            Assert.AreEqual(11, y[1]);
-            Assert.AreEqual(8, y[2]);
-        }
-
-        [Test]
-        public void Dsbmv()
-        {
-            double[] a = new double[] { 10, 1, 1, 1, 1, 1 };
-            double[] x = new double[] { 1, 1, 1 };
-            double[] y = new double[] { 1, 1, 1 };
-
-            //DSBMV  (UPLO,       N, K, ALPHA, A, LDA, X, INCX, BETA, Y, INCY)
-            blas.sbmv(UpLo.Upper, 3, 1,   3,   a,  2,  x,  1,     2,  y, 1);
-            Assert.AreEqual(8, y[0]);
-            Assert.AreEqual(11, y[1]);
-            Assert.AreEqual(8, y[2]);
-        }
-
-
-        [Test]
-        public void Sgemv()
-        {
-            float alpha = 2;
-            float beta = 3;
-            float[] a = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            float[] x = new float[] { 1, 1, 1 };
-            float[] y = new float[] { 1, 1, 1 };
-
-            blas.gemv(Transpose.Trans, 3, 3, alpha, a, 3, x, 1, beta, y, 1);
-            for (int i = 0; i < y.Length; i++)
-            {
-                Assert.AreEqual(9, y[i]);
-            }
-        }
-
-        [Test]
-        public void Dgemv()
-        {
-            double alpha = 2;
-            double beta = 3;
-            double[] a = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            double[] x = new double[] { 1, 1, 1 };
-            double[] y = new double[] { 1, 1, 1 };
-
-            blas.gemv(Transpose.Trans, 3, 3, alpha, a, 3, x, 1, beta, y, 1);
-            for (int i = 0; i < y.Length; i++)
-            {
-                Assert.AreEqual(9, y[i]);
-            }
-        }
-
-
-        [Test]
-        public void Dger()
-        {
-            double alpha = 2;
-            double[] a = new double[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            double[] x = new double[] { 1, 1, 1 };
-            double[] y = new double[] { 1, 1, 1 };
-
-            blas.ger(3, 3, alpha, x, 1, y, 1, a, 3);
-            for (int i = 0; i < a.Length; i++)
-            {
-                Assert.AreEqual(3, a[i]);
-            }
-        }
-
-        [Test]
-        public void Sger()
-        {
-            float alpha = 2;
-            float[] a = new float[] { 1, 1, 1, 1, 1, 1, 1, 1, 1 };
-            float[] x = new float[] { 1, 1, 1 };
-            float[] y = new float[] { 1, 1, 1 };
-
-            blas.ger(3, 3, alpha, x, 1, y, 1, a, 3);
-            for (int i = 0; i < a.Length; i++)
-            {
-                Assert.AreEqual(3, a[i]);
-            }
-        }
-
-        #endregion 
-
-
-
-
-        [Test]
-        public void MyGemvTest1()
-        {
-            int rows = 3;
-            int cols = 2;
-            double[] A = new double[] { 1, 2, 3, 4, 5, 6 };
-            double[] x = new double[] { 1, 2 };
-
-            double[] output = new double[rows];
-            blas.gemv(Transpose.NoTrans, rows, cols, 1, A, rows, x, 1, 0, output, 1);
-
-            Assert.AreEqual(9, output[0], delta);
-            Assert.AreEqual(12, output[1], delta);
-            Assert.AreEqual(15, output[2], delta);
-        }
-
-        [Test]
-        public void MyGemvTest2()
-        {
-            int rows = 2;
-            int cols = 3;
-            double[] A = new double[] { 1, 2, 3, 4, 5, 6 };
-            double[] x = new double[] { 1, 1 };
-
-            double[] output = new double[cols];
-            blas.gemv(Transpose.Trans, rows, cols, 1, A, rows, x, 1, 0, output, 1);
-
-            Assert.AreEqual(3, output[0], delta);
-            Assert.AreEqual(7, output[1], delta);
-            Assert.AreEqual(11, output[2], delta);
-        }
-    }
-
-
-
     public static class GenericBlasTests
     {
 
@@ -350,10 +25,11 @@ namespace NmliTests
 
             protected GenericTest()
             {
-                float[] farray = new float[] { -1.1f, -2.2f, -3.3f, 0f, 1.2f, 2.3f, -4.4f, 5.5f, 6.6f };
-                this.array = new N[farray.Length];
-                Nmli.IO.ManagedIO2.Copy<float, N>(farray, array);
+                this.array = new_array(-1.1, -2.2, -3.3, 0, 1.2, 2.3, 4.4, 5.5, 6.6);
             }
+
+
+            #region Level 1
 
             [Test]
             public void imax()
@@ -364,6 +40,178 @@ namespace NmliTests
                 int i_min3 = blas.imax(3, array, 3);
                 Assert.AreEqual(2, i_min3);  // index is with respect to incX
             }
+
+
+            [Test]
+            public void dot()
+            {
+                N res = blas.dot(array.Length, array, 1, array, 1);
+                double expected = 0;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    double x = to_dbl(array[i]);
+                    expected += x * x;
+                }
+                Assert.AreEqual(expected, to_dbl(res), delta);
+            }
+
+
+
+            [Test]
+            public void nrm2()
+            {
+                N res = blas.nrm2(array.Length, array, 1);
+                double expected = 10.8093;
+                Assert.AreEqual(expected, to_dbl(res), delta);
+            }
+
+
+
+            [Test]
+            public void asum()
+            {
+                N res = blas.asum(array.Length, array, 1);
+                double expected = 0;
+                for (int i = 0; i < array.Length; i++)
+                    expected += Math.Abs(to_dbl(array[i]));
+
+                Assert.AreEqual(expected, to_dbl(res), delta);
+            }
+
+
+
+            [Test]
+            public void copy()
+            {
+                N[] copy = new N[array.Length];
+                blas.copy(array.Length, array, 1, copy, 1);
+                AssertArrayEqual(array, copy);
+
+                N[] copy3 = new N[array.Length * 3];
+                blas.copy(2, array, 2, copy3, 3);
+
+                Assert.AreEqual(to_dbl(array[0]), to_dbl(copy3[0]));
+                Assert.AreEqual(to_dbl(array[2]), to_dbl(copy3[3]));
+            }
+
+
+
+
+            [Test]
+            public void axpy()
+            {
+                N[] y = (N[])array.Clone();
+                blas.axpy(y.Length, of_dbl(2), array, 1, y, 1);
+                for (int i = 0; i < y.Length; i++)
+                    Assert.AreEqual(3 * to_dbl(array[i]), to_dbl(y[i]), delta);
+            }
+
+
+            [Test]
+            public void scal()
+            {
+                N[] x = (N[])array.Clone();
+                blas.scal(x.Length, of_dbl(2), x, 1);
+                for (int i = 0; i < x.Length; i++)
+                    Assert.AreEqual(2 * to_dbl(array[i]), to_dbl(x[i]), delta);
+            }
+
+            #endregion
+
+
+
+            #region Level 2
+
+            [Test]
+            public void symv()
+            {
+                N[] a = new_array( 1, 2, 2, 1, 1, 2, 1, 1, 1 );
+                N[] x = new_array( 1, 1, 1 );
+                N[] y = new_array(1, 1, 1);
+
+                blas.symv(UpLo.Upper, 3, of_dbl(3), a, 3, x, 1, of_dbl(2), y, 1);
+
+                AssertArrayEqual(new_array(11, 11, 11), y, delta);
+            }
+
+
+            [Test]
+            public void sbmv()
+            {
+                N[] a = new_array( 10, 1, 1, 1, 1, 1 );
+                N[] x = new_array( 1, 1, 1 );
+                N[] y = new_array( 1, 1, 1 );
+
+                //DSBMV  (UPLO,       N, K, ALPHA,     A, LDA, X, INCX, BETA, Y, INCY)
+                blas.sbmv(UpLo.Upper, 3, 1, of_dbl(3), a, 2,   x, 1, of_dbl(2), y, 1);
+
+                AssertArrayEqual(new_array(8, 11, 8), y, delta);
+            }
+
+
+
+            [Test]
+            public void gemv()
+            {
+                N alpha = of_dbl(2);
+                N beta = of_dbl(3);
+                N[] a = new_array( 1, 1, 1, 1, 1, 1, 1, 1, 1 );
+                N[] x = new_array( 1, 1, 1 );
+                N[] y = new_array( 1, 1, 1 );
+
+                blas.gemv(Transpose.Trans, 3, 3, alpha, a, 3, x, 1, beta, y, 1);
+
+                for (int i = 0; i < y.Length; i++)
+                    Assert.AreEqual(of_dbl(9), y[i]);
+            }
+
+            [Test]
+            public void gemv1()
+            {
+                int rows = 3;
+                int cols = 2;
+                N[] A = new_array(1, 2, 3, 4, 5, 6);
+                N[] x = new_array(1, 2);
+
+                N[] output = new N[rows];
+                blas.gemv(Transpose.NoTrans, rows, cols, _1, A, rows, x, 1, _0, output, 1);
+
+                AssertArrayEqual(new_array(9, 12, 15), output, delta);
+            }
+
+            [Test]
+            public void gemv2()
+            {
+                int rows = 2;
+                int cols = 3;
+                N[] A = new_array(1, 2, 3, 4, 5, 6);
+                N[] x = new_array(1, 1);
+
+                N[] output = new N[cols];
+                blas.gemv(Transpose.Trans, rows, cols, _1, A, rows, x, 1, _0, output, 1);
+
+                AssertArrayEqual(new_array(3, 7, 11), output, delta);
+            }
+
+
+            [Test]
+            public void ger()
+            {
+                N alpha = of_dbl(2);
+                N[] a = new_array( 1, 1, 1, 1, 1, 1, 1, 1, 1 );
+                N[] x = new_array( 1, 1, 1 );
+                N[] y = new_array( 1, 1, 1 );
+
+                blas.ger(3, 3, alpha, x, 1, y, 1, a, 3);
+                for (int i = 0; i < a.Length; i++)
+                    Assert.AreEqual(of_dbl(3), a[i]);
+            }
+
+            
+            #endregion 
+
+
+
 
         }
 

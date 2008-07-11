@@ -16,10 +16,10 @@ namespace NmliTests
             [Test]
             public void TestSquarer()
             {
-                N[] toSquare = new N[] { of(-4), of(-3), of(-0.5), of(0), of(.7), of(5) };
-                N[] toAddTo = new N[]  { of(1),  of(-2), of(-1),   of(5), of(90), of(0) };
-                N alpha = of(-0.25);
-                N beta = of(3.9);
+                N[] toSquare = new N[] { of_dbl(-4), of_dbl(-3), of_dbl(-0.5), of_dbl(0), of_dbl(.7), of_dbl(5) };
+                N[] toAddTo = new N[]  { of_dbl(1),  of_dbl(-2), of_dbl(-1),   of_dbl(5), of_dbl(90), of_dbl(0) };
+                N alpha = of_dbl(-0.25);
+                N beta = of_dbl(3.9);
 
                 N[] expected = new N[toSquare.Length];
                 for (int i = 0; i < expected.Length; i++)
@@ -42,8 +42,8 @@ namespace NmliTests
             {
                 
 
-                N[] xs = new N[] { of(-2), of(0.5), of(1) };
-                N[] ys = new N[] { of(9), of(1.2), of(-8.2) };
+                N[] xs = new N[] { of_dbl(-2), of_dbl(0.5), of_dbl(1) };
+                N[] ys = new N[] { of_dbl(9), of_dbl(1.2), of_dbl(-8.2) };
                 N[] r2s = new N[xs.Length];
                 for (int i = 0; i < xs.Length; i++)
                 {
@@ -61,7 +61,7 @@ namespace NmliTests
                 N[] output = new N[xs.Length];
 
 
-                obj.RSquareds(xs.Length, linear, output, of(1));
+                obj.RSquareds(xs.Length, linear, output, of_dbl(1));
 
                 AssertArrayEqual(r2s, output, delta);
             }
@@ -70,8 +70,8 @@ namespace NmliTests
             public void TestComputePDFs()
             {
                 int n = 3;
-                N[] xs = new N[] { of(0), of(-0.5), of(3.3) };
-                N[] ys = new N[] { of(1), of(2.1), of(-1.2) };
+                N[] xs = new N[] { of_dbl(0), of_dbl(-0.5), of_dbl(3.3) };
+                N[] ys = new N[] { of_dbl(1), of_dbl(2.1), of_dbl(-1.2) };
                 double variance = 8.5;
 
                 N[] diffs2 = new N[n * 2];
@@ -84,7 +84,7 @@ namespace NmliTests
                 N[] output = new N[n];
                 obj.ComputePDFs(n, diffs2, variance, output);
 
-                N[] expected = new N[] { of(0.0176545), of(0.0142349), of(0.00906588) };
+                N[] expected = new N[] { of_dbl(0.0176545), of_dbl(0.0142349), of_dbl(0.00906588) };
                 
                 AssertArrayEqual(expected, output, delta);
             }

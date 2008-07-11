@@ -32,7 +32,7 @@ namespace NmliTests
         protected readonly ILapack lapack;
         protected LapackTest(ILapack lapack) { this.lapack = lapack; }
 
-        public const float delta = BlasTest.delta;
+        public const float delta = GenericNumericTest<double, Libs.ACML>.delta;
 
         [Test]
         public void Spotrf()

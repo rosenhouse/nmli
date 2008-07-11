@@ -9,7 +9,7 @@ namespace NmliTests
     [TestFixture]
     public class PointerTests
     {
-        const float delta = MklBlasTest.delta;
+        const float delta = GenericNumericTest<double, Libs.MKL>.delta;
 
         [Test]
         public void MultNoOffset()

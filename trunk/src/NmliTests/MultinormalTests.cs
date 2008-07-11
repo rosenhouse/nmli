@@ -16,9 +16,9 @@ namespace NmliTests
             [Test]
             public void TestFullCovMatrix()
             {
-                N[] mean = new N[] { of(2), of(-1) };
-                N[] cov = new N[] { of(1), of(0.3), of(0.3), of(1) };
-                N[] x = new N[] { of(2.5), of(-0.3) };
+                N[] mean = new N[] { of_dbl(2), of_dbl(-1) };
+                N[] cov = new N[] { of_dbl(1), of_dbl(0.3), of_dbl(0.3), of_dbl(1) };
+                N[] x = new N[] { of_dbl(2.5), of_dbl(-0.3) };
 
                 double lp = pdf.LogPDF_FastFull(x, mean, cov);
 
