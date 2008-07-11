@@ -12,7 +12,7 @@ namespace Nmli.WithOffsets.Acml
         public int imax(int n, OA<float> x, int incX)
         {
             fixed (float* px = &x.array[x.offset])
-                return Externs.ismax(n, px, incX);
+                return Externs.ismax(n, px, incX)-1;
         }
 
         public float dot(int n, OA<float> x, int incX, OA<float> y, int incY)
@@ -111,7 +111,7 @@ namespace Nmli.WithOffsets.Acml
         public int imax(int n, OA<double> x, int incX)
         {
             fixed (double* px = &x.array[x.offset])
-                return Externs.idmax(n, px, incX);
+                return Externs.idmax(n, px, incX)-1;
         }
 
         public double dot(int n, OA<double> x, int incX, OA<double> y, int incY)
