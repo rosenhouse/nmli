@@ -13,6 +13,15 @@ namespace Nmli.CollectionAgnostic
     {
         #region Level 1
         /// <summary>
+        /// Returns the index of the element with the largest absolute value.
+        /// </summary>
+        /// <param name="n">Vector length</param>
+        /// <param name="x">Vector</param>
+        /// <param name="incX">Increment</param>
+        /// <returns>Index of element with largest absolute value</returns>
+        int imax(int n, AT x, int incX);
+
+        /// <summary>
         /// Computes a vector-vector dot product.
         /// </summary>
         /// <param name="n">The order of the vectors.</param>

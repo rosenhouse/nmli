@@ -10,6 +10,19 @@ namespace Nmli.WithOffsets.Mkl
 
         #region Level 1
 
+        public int imin(int n, OA<float> x, int incX)
+        {
+            fixed (float* px = &x.array[x.offset])
+                return Externs.cblas_ismin(n, px, incX);
+        }
+
+        public int imax(int n, OA<float> x, int incX)
+        {
+            fixed (float* px = &x.array[x.offset])
+                return Externs.cblas_ismax(n, px, incX);
+        }
+
+
         public float nrm2(int n, OA<float> x, int incX)
         {
             fixed (float* px = &x.array[x.offset])
@@ -101,6 +114,18 @@ namespace Nmli.WithOffsets.Mkl
         #region Double
 
         #region Level 1
+
+        public int imin(int n, OA<double> x, int incX)
+        {
+            fixed (double* px = &x.array[x.offset])
+                return Externs.cblas_idmin(n, px, incX);
+        }
+
+        public int imax(int n, OA<double> x, int incX)
+        {
+            fixed (double* px = &x.array[x.offset])
+                return Externs.cblas_idmax(n, px, incX);
+        }
 
         public double nrm2(int n, OA<double> x, int incX)
         {

@@ -9,6 +9,12 @@ namespace Nmli.WithOffsets.Acml
         #region Single
 
         #region Level 1
+        public int imax(int n, OA<float> x, int incX)
+        {
+            fixed (float* px = &x.array[x.offset])
+                return Externs.ismax(n, px, incX);
+        }
+
         public float dot(int n, OA<float> x, int incX, OA<float> y, int incY)
         {
             fixed (float* px = &x.array[x.offset], py = &y.array[y.offset])
@@ -102,6 +108,12 @@ namespace Nmli.WithOffsets.Acml
         #region Double
 
         #region Level 1
+        public int imax(int n, OA<double> x, int incX)
+        {
+            fixed (double* px = &x.array[x.offset])
+                return Externs.idmax(n, px, incX);
+        }
+
         public double dot(int n, OA<double> x, int incX, OA<double> y, int incY)
         {
             fixed (double* px = &x.array[x.offset], py = &y.array[y.offset])

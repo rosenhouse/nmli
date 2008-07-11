@@ -9,25 +9,15 @@ namespace Nmli.Acml
         #region Single
 
         #region Level 1
-        public float dot(int n, float[] x, int incX, float[] y, int incY)
-        {
-            return Externs.sdot(n, x, incX, y, incY);
-        }
+        public int imax(int n, float[] x, int incX) { return Externs.isamax(n, x, incX); }
 
-        public void copy(int n, float[] x, int incX, float[] y, int incY)
-        {
-            Externs.scopy(n, x, incX, y, incY);
-        }
+        public float dot(int n, float[] x, int incX, float[] y, int incY) { return Externs.sdot(n, x, incX, y, incY); }
 
-        public void scal(int n, float alpha, float[] x, int incX)
-        {
-            Externs.sscal(n, alpha, x, incX);
-        }
+        public void copy(int n, float[] x, int incX, float[] y, int incY) { Externs.scopy(n, x, incX, y, incY); }
 
-        public void axpy(int n, float alpha, float[] x, int incX, float[] y, int incY)
-        {
-            Externs.saxpy(n, alpha, x, incX, y, incY);
-        }
+        public void scal(int n, float alpha, float[] x, int incX) { Externs.sscal(n, alpha, x, incX); }
+
+        public void axpy(int n, float alpha, float[] x, int incX, float[] y, int incY) { Externs.saxpy(n, alpha, x, incX, y, incY); }
 
         public float nrm2(int n, float[] x, int incX) { return Externs.snrm2(n, x, incX); }
 
@@ -84,25 +74,15 @@ namespace Nmli.Acml
         #region Double
 
         #region Level 1
-        public double dot(int n, double[] x, int incX, double[] y, int incY)
-        {
-            return Externs.ddot(n, x, incX, y, incY);
-        }
+        public int imax(int n, double[] x, int incX) { return Externs.idamax(n, x, incX); }
 
-        public void copy(int n, double[] x, int incX, double[] y, int incY)
-        {
-            Externs.dcopy(n, x, incX, y, incY);
-        }
+        public double dot(int n, double[] x, int incX, double[] y, int incY) { return Externs.ddot(n, x, incX, y, incY); }
 
-        public void scal(int n, double alpha, double[] x, int incX)
-        {
-            Externs.dscal(n, alpha, x, incX);
-        }
+        public void copy(int n, double[] x, int incX, double[] y, int incY) { Externs.dcopy(n, x, incX, y, incY); }
 
-        public void axpy(int n, double alpha, double[] x, int incX, double[] y, int incY)
-        {
-            Externs.daxpy(n, alpha, x, incX, y, incY);
-        }
+        public void scal(int n, double alpha, double[] x, int incX) { Externs.dscal(n, alpha, x, incX); }
+
+        public void axpy(int n, double alpha, double[] x, int incX, double[] y, int incY) { Externs.daxpy(n, alpha, x, incX, y, incY); }
 
         public double nrm2(int n, double[] x, int incX) { return Externs.dnrm2(n, x, incX); }
 
