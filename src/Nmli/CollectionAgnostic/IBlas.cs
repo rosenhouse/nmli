@@ -13,7 +13,9 @@ namespace Nmli.CollectionAgnostic
     {
         #region Level 1
         /// <summary>
-        /// Returns the index of the element with the largest absolute value.
+        /// Returns the index of the element with the largest absolute value.  
+        /// Indexing is 0-based, and respects incX.
+        /// For example, imax(4, {0,1,2,3}, 2) = 1
         /// </summary>
         /// <param name="n">Vector length</param>
         /// <param name="x">Vector</param>

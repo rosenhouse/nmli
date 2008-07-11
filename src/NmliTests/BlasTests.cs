@@ -350,7 +350,7 @@ namespace NmliTests
 
             protected GenericTest()
             {
-                float[] farray = new float[] { -1.1f, -2.2f, -3.3f, 0f, 1.1f, 2.2f, -4.4f, 5.5f, 6.6f };
+                float[] farray = new float[] { -1.1f, -2.2f, -3.3f, 0f, 1.2f, 2.3f, -4.4f, 5.5f, 6.6f };
                 this.array = new N[farray.Length];
                 Nmli.IO.ManagedIO2.Copy<float, N>(farray, array);
             }
@@ -359,10 +359,10 @@ namespace NmliTests
             public void imax()
             {
                 int i_min1 = blas.imax(array.Length, array, 1);
-                Assert.AreEqual(8, i_min1);
+                Assert.AreEqual(8, i_min1);  // 1-based indexing
 
                 int i_min3 = blas.imax(array.Length, array, 3);
-                Assert.AreEqual(6, i_min3);
+                Assert.AreEqual(2, i_min3);  // index is with respect to incX
             }
 
         }

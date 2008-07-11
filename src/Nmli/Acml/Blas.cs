@@ -9,7 +9,7 @@ namespace Nmli.Acml
         #region Single
 
         #region Level 1
-        public int imax(int n, float[] x, int incX) { return Externs.isamax(n, x, incX); }
+        public int imax(int n, float[] x, int incX) { return Externs.isamax(n, x, incX) - 1; }
 
         public float dot(int n, float[] x, int incX, float[] y, int incY) { return Externs.sdot(n, x, incX, y, incY); }
 
@@ -74,7 +74,7 @@ namespace Nmli.Acml
         #region Double
 
         #region Level 1
-        public int imax(int n, double[] x, int incX) { return Externs.idamax(n, x, incX); }
+        public int imax(int n, double[] x, int incX) { return Externs.idamax(n, x, incX) - 1; }
 
         public double dot(int n, double[] x, int incX, double[] y, int incY) { return Externs.ddot(n, x, incX, y, incY); }
 
