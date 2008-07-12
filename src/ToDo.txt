@@ -1,3 +1,27 @@
-Make full OffsetArray implementation
+Partially-complete:
 
-If we can guarantee inlining, etc, perhaps make mainline implementation just call through OffsetArray?
+-BLAS coverage
+
+-LAPACK coverage
+
+-VML coverage
+
+-Offset-enabled versions of the above
+
+-Unit tests for the above
+
+
+
+Unstarted:
+
+-Random number generators
+
+-FFTs
+
+
+
+
+Other things we haven't done in a long time:
+
+-Profiling & benchmarking
+-Maintaining XML docs & code comments
