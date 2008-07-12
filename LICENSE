@@ -1,7 +1,9 @@
 NMLI Copyright (c) 2008, Gabriel Rosenhouse. All rights reserved.
 http://code.google.com/p/nmli/
 
-Derived from dnAnalytics.  See also dnAnalytics-NLI-LICENSE.
+Derived from dnAnalytics v0.2, NLI v0.9.1 which was released under a 
+ BSD-style license.  See dnAnalytics-NLI-LICENSE.  
+An identical license is maintained here:
 
 
 Redistribution and use in source and binary forms, with or 
