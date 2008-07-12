@@ -8,6 +8,10 @@ namespace Nmli.Mkl
     {
         internal const string dllName = "mkl.dll";
 
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void MKLGetVersionString(byte[] buf, int len);
+
+
         #region VML
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]

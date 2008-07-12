@@ -10,6 +10,9 @@ namespace Nmli.Acml
         internal const string dllName = "libacml_dll.dll";
         internal const string vml_dllName = "libacml_mv_dll.dll";
 
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void acmlinfo();
+
 
         #region VML
 
