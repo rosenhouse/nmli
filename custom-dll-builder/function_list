@@ -1,4 +1,6 @@
 mkl_set_num_threads
+MKLGetVersionString
+MKLGetVersion
 
 MKL_malloc
 MKL_free
