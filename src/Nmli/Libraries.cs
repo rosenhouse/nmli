@@ -79,8 +79,9 @@ namespace Nmli
             {
                 int errCode = Marshal.GetLastWin32Error();
                 throw new InvalidOperationException("Unable to load " + path);
-
             }
+            else
+                Console.WriteLine("Successfully loaded native library " + path);
         }
 
         static void tryLoad(string path)
@@ -106,6 +107,8 @@ namespace Nmli
                 {
                     tryLoad(mklPath);
                     loadedMkl = true;
+                    Versioning.PrintVersionMKL();
+                    Console.WriteLine();
                 }
                 return mkl;
             }
@@ -119,6 +122,8 @@ namespace Nmli
                 {
                     tryLoad(acmlPath);
                     loadedAcml = true;
+                    Versioning.PrintVersionACML();
+                    Console.WriteLine();
                 }
                 return acml;
             }

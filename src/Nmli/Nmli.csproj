@@ -101,6 +101,7 @@
     <Compile Include="Mkl\Vml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Versioning.cs" />
     <Compile Include="WithOffsets\Acml\Blas.cs" />
     <Compile Include="WithOffsets\Interfaces.cs" />
     <Compile Include="WithOffsets\Libraries.cs" />
