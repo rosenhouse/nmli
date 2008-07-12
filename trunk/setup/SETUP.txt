@@ -1,0 +1,57 @@
+Required environment variables:
+NMLI_PATH=C:\path\to\nmli
+NMLI_IMPL=MKL or ACML
+
+When Nmli.dll is loaded, it chooses a implementation based on NMLI_IMPL
+and looks for the native binaries in a subdirectory of NMLI_PATH
+
+
+
+The scripts in this folder setup the directory hierarchy at Nmli\bin
+
+You will likely need to set a couple path variables defined at
+the top of the scripts, but they are otherwise reasonably automated.
+
+
+When they complete successfully on Windows XP x64, the full directory layout should be
+
+Nmli
++---bin
+¦   +---x64
+¦   ¦   +---ACML
+¦   ¦   +---MKL
+¦   +---x86
+¦       +---ACML
+¦       +---MKL
++---custom-dll-builder
++---src
+    +---Nmli ...
+    +---NmliTests ...
+    +---Standalone Tester
+
+
+With the contents of Nmli\bin being
+
+Nmli\bin\Nmli.dll
+Nmli\bin\x64
+Nmli\bin\x86
+Nmli\bin\x64\ACML
+Nmli\bin\x64\MKL
+Nmli\bin\x64\ACML\libacml_dll.dll
+Nmli\bin\x64\ACML\libacml_mv_dll.dll
+Nmli\bin\x64\ACML\libguide40.dll
+Nmli\bin\x64\ACML\libifcoremd.dll
+Nmli\bin\x64\ACML\libmmd.dll
+Nmli\bin\x64\MKL\libguide40.dll
+Nmli\bin\x64\MKL\mkl.dll
+Nmli\bin\x86\ACML
+Nmli\bin\x86\MKL
+Nmli\bin\x86\ACML\libacml_dll.dll
+Nmli\bin\x86\ACML\libifcoremd.dll
+Nmli\bin\x86\ACML\libmmd.dll
+Nmli\bin\x86\MKL\libguide40.dll
+Nmli\bin\x86\MKL\mkl.dll
+
+
+Obviously if you run only the 32-bit setup you won't get the x64 folder.
+
