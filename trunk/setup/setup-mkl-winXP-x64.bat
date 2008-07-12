@@ -3,8 +3,9 @@
 
 REM     ------ set these paths as necessary -------
 
-set _mkl = C:\Program Files\Intel\MKL\10.0.3.021
 set _vs=C:\Program Files (x86)\Microsoft Visual Studio 8
+set _mkl=C:\Program Files\Intel\MKL\10.0.3.021
+set _mkl_ds_short=C:\\PROGRA~1\\Intel\\MKL\\10.0.3.021\\
 
 REM     -------------------------------------------
 
@@ -52,6 +53,9 @@ pause
 mkdir lib
 copy "%_mkl%\tools\builder\lib\*.lib" .\lib\
 
+set _mkl_makefile="%_mkl%\tools\builder\makefile"
+set _nmakeCmd=nmake /f %_mkl_makefile% /E local_mklpath=%_mkl_ds_short% /E mkl32_libpath=$(local_mklpath)ia32\\lib\\ /E mklem64t_libpath=$(local_mklpath)em64t\\lib\\
+set _nmakeParams= export=function_list name=mkl
 
 echo Starting to build 32-bit dll...
 echo.
@@ -69,7 +73,7 @@ set CPATH=%_mkl%\include
 set FPATH=%_mkl%\include
 set lib=%_mkl%\ia32\lib;%lib%
 
-nmake ia32 export=function_list name=mkl
+%_nmakeCmd% ia32 %_nmakeParams%
 mt -manifest mkl.dll.manifest -outputresource:mkl.dll;2
 
 move /y mkl.dll "%_nmli32mkl%\mkl.dll"
@@ -92,7 +96,7 @@ set path=%_mkl%\em64t\bin;%_vs%\VC\BIN\amd64;C:\Program Files\Microsoft.NET\SDK\
 set LIBRARY_PATH=%_mkl%\em64t\lib
 set lib=%_mkl%\em64t\lib;%_vs%\VC\PlatformSDK\Lib\AMD64;%_vs%\VC\lib\amd64
 
-nmake em64t export=function_list name=mkl
+%_nmakeCmd% em64t %_nmakeParams%
 mt -manifest mkl.dll.manifest -outputresource:mkl.dll;2
 
 move /y mkl.dll "%_nmli64mkl%\mkl.dll"
