@@ -95,7 +95,7 @@ namespace Nmli
             }
             else
             {
-                throw new NotImplementedException("Running on an unsupported operating system.  I don't know how to load native libraries.");
+                Console.WriteLine("No LoadLibrary() on this platform.  We'll let Mono handle that.");
             }
         }
 
@@ -106,8 +106,8 @@ namespace Nmli
                 if (!loadedMkl)
                 {
                     tryLoad(mklPath);
-                    loadedMkl = true;
                     Versioning.PrintVersionMKL();
+                    loadedMkl = true;
                     Console.WriteLine();
                 }
                 return mkl;
@@ -121,8 +121,8 @@ namespace Nmli
                 if (!loadedAcml)
                 {
                     tryLoad(acmlPath);
-                    loadedAcml = true;
                     Versioning.PrintVersionACML();
+                    loadedAcml = true;
                     Console.WriteLine();
                 }
                 return acml;
