@@ -77,12 +77,12 @@ namespace Nmli
             const string tmpl = "The path '{0}' (derived from the environment variable '{1}') does not exist.";
 
             string path = GetEnvVar(PATH_ROOT_ENV_VAR_NAME);
-            if (!(path.EndsWith(""+_ps)))
+            if (!(path.EndsWith("" + _ps)))
                 path += _ps;
             path += "bin" + _ps;
             if (Directory.Exists(path))
                 return path;
-            else                
+            else
                 throw new DirectoryNotFoundException(string.Format(tmpl, path, PATH_ROOT_ENV_VAR_NAME));
         }
 
