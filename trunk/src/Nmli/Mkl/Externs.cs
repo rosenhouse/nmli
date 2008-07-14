@@ -138,7 +138,7 @@ namespace Nmli.Mkl
         internal static extern void cblas_sger(Order order, int m, int n, float alpha, float[] x, int incX, float[] y, int incY, float[] a, int lda);
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void cblas_ssyr(UpLo uplo, int n, float alpha, float[] x, int incX, float[] a, int lda);
+        internal static extern void cblas_ssyr(Order order, UpLo uplo, int n, float alpha, float[] x, int incX, float[] a, int lda);
 
         #endregion
 
@@ -196,7 +196,7 @@ namespace Nmli.Mkl
         internal static extern void cblas_dger(Order order, int m, int n, double alpha, double[] x, int incX, double[] y, int incY, double[] a, int lda);
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void cblas_dsyr(UpLo uplo, int n, double alpha, double[] x, int incX, double[] a, int lda);
+        internal static extern void cblas_dsyr(Order order, UpLo uplo, int n, double alpha, double[] x, int incX, double[] a, int lda);
 
 
         #endregion

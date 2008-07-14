@@ -131,7 +131,7 @@ namespace NmliTests
 
                 blas.symv(UpLo.Upper, 3, of_dbl(3), a, 3, x, 1, of_dbl(2), y, 1);
 
-                AssertArrayEqual(new_array(11, 11, 11), y, delta);
+                AssertArrayEqual(new_array(11, 11, 11), y);
             }
 
 
@@ -145,7 +145,7 @@ namespace NmliTests
                 //DSBMV  (UPLO,       N, K, ALPHA,     A, LDA, X, INCX, BETA, Y, INCY)
                 blas.sbmv(UpLo.Upper, 3, 1, of_dbl(3), a, 2,   x, 1, of_dbl(2), y, 1);
 
-                AssertArrayEqual(new_array(8, 11, 8), y, delta);
+                AssertArrayEqual(new_array(8, 11, 8), y);
             }
 
 
@@ -176,7 +176,7 @@ namespace NmliTests
                 N[] output = new N[rows];
                 blas.gemv(Transpose.NoTrans, rows, cols, _1, A, rows, x, 1, _0, output, 1);
 
-                AssertArrayEqual(new_array(9, 12, 15), output, delta);
+                AssertArrayEqual(new_array(9, 12, 15), output);
             }
 
             [Test]
@@ -190,7 +190,7 @@ namespace NmliTests
                 N[] output = new N[cols];
                 blas.gemv(Transpose.Trans, rows, cols, _1, A, rows, x, 1, _0, output, 1);
 
-                AssertArrayEqual(new_array(3, 7, 11), output, delta);
+                AssertArrayEqual(new_array(3, 7, 11), output);
             }
 
 

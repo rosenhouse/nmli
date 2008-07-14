@@ -108,7 +108,7 @@ namespace Nmli.WithOffsets.Mkl
         {
             fixed (float* pa = &a.array[a.offset],
                     px = &x.array[x.offset])
-                Externs.cblas_ssyr(uplo, n, alpha, px, incX, pa, lda);
+                Externs.cblas_ssyr(Order.Column, uplo, n, alpha, px, incX, pa, lda);
         }
 
         #endregion
@@ -217,7 +217,7 @@ namespace Nmli.WithOffsets.Mkl
         {
             fixed (double* pa = &a.array[a.offset],
                     px = &x.array[x.offset])
-                Externs.cblas_dsyr(uplo, n, alpha, px, incX, pa, lda);
+                Externs.cblas_dsyr(Order.Column, uplo, n, alpha, px, incX, pa, lda);
         }
 
         #endregion

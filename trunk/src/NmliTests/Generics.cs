@@ -38,21 +38,28 @@ namespace NmliTests
 
         protected GenericNumericTest() : base(Lib) { }
 
-        protected void AssertArrayEqual(N[] expected, N[] actual, double delta)
+        protected void AssertArrayEqual(N[] expected, N[] actual, double delta, string message)
         {
             int m = expected.Length;
             int n = actual.Length;
-            
+
+            if (message == null)
+                message = "";
+
             Assert.AreEqual(expected.Length, actual.Length,
-                "Expected array length={0}, but actual array length={1}", m, n);
-            
+                "{0} Expected array length={1}, but actual array length={2}", message, m, n);
+
             for (int i = 0; i < n; i++)
             {
                 double ex = to_dbl(expected[i]);
                 double ac = to_dbl(actual[i]);
-                Assert.AreEqual(ex,ac, delta, "Expected {0} but got {1} at index {2}", ex, ac, i);
+                Assert.AreEqual(ex, ac, delta, "{0} Expected {1} but got {2} at index {3}", message, ex, ac, i);
             }
         }
+
+        protected void AssertArrayEqual(N[] expected, N[] actual, double delta) { AssertArrayEqual(expected, actual, delta, ""); }
+
+        protected void AssertArrayEqual(N[] expected, N[] actual, string message) { AssertArrayEqual(expected, actual, delta, message); }
 
         protected void AssertArrayEqual(N[] expected, N[] actual) { AssertArrayEqual(expected, actual, delta); }
     }

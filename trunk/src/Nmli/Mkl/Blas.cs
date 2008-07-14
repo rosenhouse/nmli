@@ -59,7 +59,7 @@ namespace Nmli.Mkl
 
         public void syr(UpLo uplo, int n, float alpha, float[] x, int incX, float[] a, int lda)
         {
-            Externs.cblas_ssyr(uplo, n, alpha, x, incX, a, lda);
+            Externs.cblas_ssyr(Order.Column, uplo, n, alpha, x, incX, a, lda);
         }
 
 
@@ -124,7 +124,7 @@ namespace Nmli.Mkl
 
         public void syr(UpLo uplo, int n, double alpha, double[] x, int incX, double[] a, int lda)
         {
-            Externs.cblas_dsyr(uplo, n, alpha, x, incX, a, lda);
+            Externs.cblas_dsyr(Order.Column, uplo, n, alpha, x, incX, a, lda);
         }
         #endregion
 
