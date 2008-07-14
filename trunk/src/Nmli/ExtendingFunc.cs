@@ -112,6 +112,29 @@ namespace Nmli
                 ml.Blas.copy(n, setConstVec, 0, y, 1);
             }
 
+
+            /// <summary>
+            /// Copies data from a source triangle of a square matrix to the opposite one.
+            /// </summary>
+            /// <param name="source">Triangle with the data to be copied</param>
+            /// <param name="n">Side length of square matrix</param>
+            /// <param name="matrix">Data to be modified</param>
+            public void MirrorTriangle(UpLo source, int n, T[] matrix)
+            {
+                if (source == UpLo.Upper)
+                {
+                    for (int c = 0; c < n; c++)
+                        for (int r = 0; r < c; r++)
+                            matrix[r * n + c] = matrix[c * n + r];
+                }
+                else if(source == UpLo.Lower)
+                {
+                    for (int c = 0; c < n; c++)
+                        for (int r = 0; r < c; r++)
+                            matrix[c * n + r] = matrix[r * n + c];
+                }
+            }
+
         }
 
         protected readonly ExtraFunctions extras;
