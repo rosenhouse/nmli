@@ -44,8 +44,19 @@ namespace Nmli.Extended
 
         public void ComputePDFs(int n, N[] diff2, double variance, N[] output)
         {
+            ComputePDFs(n, diff2, variance, output, false);
+        }
+
+        static readonly IVml<N> mvml = (IVml<N>)new Nmli.Managed.ManagedVml();
+
+
+        /// <summary>
+        /// Turns out that at least the MKL's Exp is slower than our managed version for small arrays.
+        /// </summary>
+        public void ComputePDFs(int n, N[] diff2, double variance, N[] output, bool managedExp)
+        {
             N scalar1 = sml.OfDouble(-1 / (2 * variance));
-            
+
             N scalar2 = sml.OfDouble(-1 * Math.Log(2 * Math.PI * variance));
 
             // puts scaled squared distances into output
@@ -54,7 +65,10 @@ namespace Nmli.Extended
             // adds scalar2 to every element of output
             blas.axpy(n, scalar2, Onex2, 0, output, 1);
 
-            vml.Exp(n, output, output);
+            if (managedExp)
+                mvml.Exp(n, output, output);
+            else
+                vml.Exp(n, output, output);
         }
 
     }
