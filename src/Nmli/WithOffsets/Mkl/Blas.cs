@@ -104,7 +104,12 @@ namespace Nmli.WithOffsets.Mkl
                 Externs.cblas_sger(Order.Column, m, n, alpha, px, incX, py, incY, pa, lda);
         }
 
-
+        public void syr(UpLo uplo, int n, float alpha, OA<float> x, int incX, OA<float> a, int lda)
+        {
+            fixed (float* pa = &a.array[a.offset],
+                    px = &x.array[x.offset])
+                Externs.cblas_ssyr(uplo, n, alpha, px, incX, pa, lda);
+        }
 
         #endregion
 
@@ -208,7 +213,12 @@ namespace Nmli.WithOffsets.Mkl
                 Externs.cblas_dger(Order.Column, m, n, alpha, px, incX, py, incY, pa, lda);
         }
 
-
+        public void syr(UpLo uplo, int n, double alpha, OA<double> x, int incX, OA<double> a, int lda)
+        {
+            fixed (double* pa = &a.array[a.offset],
+                    px = &x.array[x.offset])
+                Externs.cblas_dsyr(uplo, n, alpha, px, incX, pa, lda);
+        }
 
         #endregion
 

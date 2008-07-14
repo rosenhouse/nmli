@@ -63,6 +63,12 @@ namespace Nmli.Acml
             Externs.stbsv(ul, tranA, dia, n, k, a, lda, x, incX);
         }
 
+        public void syr(UpLo uplo, int n, float alpha, float[] x, int incX, float[] a, int lda)
+        {
+            byte ul = Utilities.EnumAsAscii(uplo);
+            Externs.ssyr(ul, n, alpha, x, incX, a, lda);
+        }
+
 
         #endregion
 
@@ -129,9 +135,18 @@ namespace Nmli.Acml
             Externs.dtbsv(ul, tranA, dia, n, k, a, lda, x, incX);
         }
 
+        public void syr(UpLo uplo, int n, double alpha, double[] x, int incX, double[] a, int lda)
+        {
+            byte ul = Utilities.EnumAsAscii(uplo);
+            Externs.dsyr(ul, n, alpha, x, incX, a, lda);
+        }
         #endregion
 
         #endregion
+
+
+
+
 
 
     }

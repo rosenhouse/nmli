@@ -100,6 +100,15 @@ namespace Nmli.WithOffsets.Acml
             Externs.sger(m, n, alpha, px, incX, py, incY, pa, lda);
         }
 
+        public void syr(UpLo uplo, int n, float alpha, OA<float> x, int incX, OA<float> a, int lda)
+        {
+            byte b = Utilities.EnumAsAscii(uplo);
+            fixed (float* pa = &a.array[a.offset],
+                    px = &x.array[x.offset])
+                Externs.ssyr(b, n, alpha, px, incX, pa, lda);
+        }
+
+
         #endregion
 
         #endregion
@@ -199,9 +208,19 @@ namespace Nmli.WithOffsets.Acml
                 Externs.dger(m, n, alpha, px, incX, py, incY, pa, lda);
         }
 
+        public void syr(UpLo uplo, int n, double alpha, OA<double> x, int incX, OA<double> a, int lda)
+        {
+            byte b = Utilities.EnumAsAscii(uplo);
+            fixed (double* pa = &a.array[a.offset],
+                    px = &x.array[x.offset])
+                Externs.ssyr(b, n, alpha, px, incX, pa, lda);
+        }
+
         #endregion
 
         #endregion
+
+
 
     }
 }

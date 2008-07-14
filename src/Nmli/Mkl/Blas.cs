@@ -26,6 +26,7 @@ namespace Nmli.Mkl
 
         public void axpy(int n, float alpha, float[] x, int incX, float[] y, int incY) { Externs.cblas_saxpy(n, alpha, x, incX, y, incY); }
 
+
         #endregion
 
 
@@ -56,6 +57,10 @@ namespace Nmli.Mkl
             Externs.cblas_sger(Order.Column, m, n, alpha, x, incX, y, incY, a, lda);
         }
 
+        public void syr(UpLo uplo, int n, float alpha, float[] x, int incX, float[] a, int lda)
+        {
+            Externs.cblas_ssyr(uplo, n, alpha, x, incX, a, lda);
+        }
 
 
         #endregion
@@ -115,6 +120,11 @@ namespace Nmli.Mkl
         public void ger(int m, int n, double alpha, double[] x, int incX, double[] y, int incY, double[] a, int lda)
         {
             Externs.cblas_dger(Order.Column, m, n, alpha, x, incX, y, incY, a, lda);
+        }
+
+        public void syr(UpLo uplo, int n, double alpha, double[] x, int incX, double[] a, int lda)
+        {
+            Externs.cblas_dsyr(uplo, n, alpha, x, incX, a, lda);
         }
         #endregion
 

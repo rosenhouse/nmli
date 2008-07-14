@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="BlasTests.cs" />
     <Compile Include="CholeskyTests.cs" />
+    <Compile Include="ExtendingFuncTests.cs" />
     <Compile Include="FrontEnd.cs" />
     <Compile Include="Generics.cs" />
     <Compile Include="LapackTests.cs" />

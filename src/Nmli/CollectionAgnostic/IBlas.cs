@@ -183,6 +183,20 @@ namespace Nmli.CollectionAgnostic
         /// <param name="lda">The first dimension of <paramref name="a"/>. <paramref name="lda"/> must be at least m.</param>
         void ger(int m, int n, T alpha, AT x, int incX, AT y, int incY, AT a, int lda);
 
+        /// <summary>
+        /// A rank-1 update of a symmetric matrix.  A = alpha * x * x' + A
+        /// </summary>
+        /// <param name="uplo">The <see cref="BlasUpLoType"/> specifying if <paramref name="a"/>'s data is stored in the upper or lower
+        /// triangular part of the matrix.</param>
+        /// <param name="n">The order of <paramref name="a"/>. Must be greater than zero.</param>
+        /// <param name="alpha">A scalar to scale x * x' by.</param>
+        /// <param name="x">Vector length n</param>
+        /// <param name="incX">Increment index for X</param>
+        /// <param name="a">Matrix to be updated.  a += alpha * x * x' </param>
+        /// <param name="lda">Leading dimension of <paramref name="a"/></param>
+        void syr(UpLo uplo, int n, T alpha, AT x, int incX, AT a, int lda);
+
+
         #endregion
     }
 }

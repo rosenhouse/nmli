@@ -77,6 +77,10 @@ namespace Nmli.Acml
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void sger(int m, int n, float alpha, float* x, int incX, float* y, int incY, float* a, int lda);
 
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void ssyr(byte uplo, int n, float alpha, float* x, int incX, float* a, int lda);
+
         #endregion
 
         #endregion
@@ -131,6 +135,10 @@ namespace Nmli.Acml
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void dger(int m, int n, double alpha, double* x, int incX, double* y, int incY, double* a, int lda);
+
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void ssyr(byte uplo, int n, double alpha, double* x, int incX, double* a, int lda);
 
         #endregion
 
