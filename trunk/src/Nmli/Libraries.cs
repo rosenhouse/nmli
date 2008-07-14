@@ -89,9 +89,7 @@ namespace Nmli
             if (Utilities.isWindows)
             {
                 string p = Path.GetFullPath(path);
-                Environment.CurrentDirectory = Path.GetDirectoryName(p);
-
-                windowsLoad(p);
+                Utilities.TempSwitchCurDir(Path.GetDirectoryName(p), delegate() { windowsLoad(p); });
             }
             else
             {
