@@ -88,7 +88,6 @@ namespace Nmli
 
         public static string NativeLibraryRoot { get { return BinPath(); } }
 
-
         static string DefaultImp()
         {
             string imp = GetEnvVar(DEFAULT_IMPL_ENV_VAR_NAME);
@@ -107,6 +106,24 @@ namespace Nmli
             {
                 return (LibraryImplementations)Enum.Parse(typeof(LibraryImplementations), 
                     DefaultImp(), true);
+            }
+        }
+
+
+        public delegate void Func();
+        public static void TempSwitchCurDir(string tempCurDir, Func f)
+        {
+            string cd = Environment.CurrentDirectory;
+            try
+            {
+                Environment.CurrentDirectory = tempCurDir;
+                f();
+                Environment.CurrentDirectory = cd;
+            }
+            catch (Exception)
+            {
+                Environment.CurrentDirectory = cd;
+                throw;
             }
         }
     }
