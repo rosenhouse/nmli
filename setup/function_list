@@ -33,6 +33,9 @@ cblas_sgemv
 cblas_dgemv
 cblas_sger
 cblas_dger
+cblas_ssyr
+cblas_dsyr
+
 cblas_sgbmv
 cblas_dgbmv
 
