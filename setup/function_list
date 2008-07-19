@@ -56,6 +56,9 @@ SPOTRF
 SPOTRI
 SPOTRS
 
+SGELS
+DGELS
+
 vdLn
 vsLn
 vdExp
