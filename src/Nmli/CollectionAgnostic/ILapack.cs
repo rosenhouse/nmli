@@ -100,5 +100,11 @@ namespace Nmli.CollectionAgnostic
 
         #endregion
 
+
+        #region Linear least-squares
+
+        int gels(Transpose trans, int m, int n, int nrhs, AT a, int lda, AT b, int ldb, AT work, int lwork);
+
+        #endregion
     }
 }

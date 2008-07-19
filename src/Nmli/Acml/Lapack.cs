@@ -43,6 +43,16 @@ namespace Nmli.Acml
             Externs.DGETRI(ref n, a, ref lda, ipiv, work, ref lwork, ref info);
             return info;
         }
+
+
+        public int gels(Transpose trans, int m, int n, int nrhs, double[] a, int lda, double[] b, int ldb, double[] work, int lwork)
+        {
+            int info = 0;
+            byte t = Utilities.EnumAsAscii(trans);
+            Externs.DGELS(ref t, ref m, ref n, ref nrhs, a, ref lda, b, ref ldb, work, ref lwork, ref info);
+            return info;
+        }
+
         #endregion
 
 
@@ -84,6 +94,17 @@ namespace Nmli.Acml
             Externs.SGETRI(ref n, a, ref lda, ipiv, work, ref lwork, ref info);
             return info;
         }
+
+        public int gels(Transpose trans, int m, int n, int nrhs, float[] a, int lda, float[] b, int ldb, float[] work, int lwork)
+        {
+            int info = 0;
+            byte t = Utilities.EnumAsAscii(trans);
+            Externs.SGELS(ref t, ref m, ref n, ref nrhs, a, ref lda, b, ref ldb, work, ref lwork, ref info);
+            return info;
+        }
+
+
         #endregion
+
     }
 }
