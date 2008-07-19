@@ -6,6 +6,8 @@ namespace Nmli.Mkl
 {
     class Lapack : ILapack
     {
+
+        #region Double
         public int potrf(UpLo uplo, int n, double[] a, int lda)
         {
             int info = 0;
@@ -54,6 +56,21 @@ namespace Nmli.Mkl
             return info;
         }
 
+        public int gels(Transpose trans, int m, int n, int nrhs, double[] a, int lda, double[] b, int ldb, double[] work, int lwork)
+        {
+            int info = 0;
+            byte t = Utilities.EnumAsAscii(trans);
+            Externs.DGELS(ref t, ref m, ref n, ref nrhs, a, ref lda, b, ref ldb, work, ref lwork, ref info);
+            return info;
+        }
+
+        #endregion
+
+
+
+
+        #region Single
+
 
         public int potrf(UpLo uplo, int n, float[] a, int lda)
         {
@@ -85,7 +102,14 @@ namespace Nmli.Mkl
             return info;
         }
 
-
+        public int gels(Transpose trans, int m, int n, int nrhs, float[] a, int lda, float[] b, int ldb, float[] work, int lwork)
+        {
+            int info = 0;
+            byte t = Utilities.EnumAsAscii(trans);
+            Externs.SGELS(ref t, ref m, ref n, ref nrhs, a, ref lda, b, ref ldb, work, ref lwork, ref info);
+            return info;
+        }
+        #endregion
 
 
 

@@ -180,8 +180,14 @@ namespace Nmli.Acml
 
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void SPOSV(ref byte UpLo, ref int n, ref int nrhs, float[] a, ref int lda, float[] b, ref int ldb, ref int info);
+        internal static extern void SPOSV(ref byte uplo, ref int n, ref int nrhs, float[] a, ref int lda, float[] b, ref int ldb, ref int info);
 
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void SGELS(ref byte trans, ref int m, ref int n, ref int nrhs, 
+            float[] a, ref int lda, float[] b, ref int ldb, ref float[] work, ref int lwork, ref int info);
+
+        
         #endregion
 
 
@@ -204,6 +210,12 @@ namespace Nmli.Acml
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void DPOSV(ref byte UpLo, ref int n, ref int nrhs, double[] a, ref int lda, double[] b, ref int ldb, ref int info);
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void DGELS(ref byte trans, ref int m, ref int n, ref int nrhs,
+            double[] a, ref int lda, double[] b, ref int ldb, ref double[] work, ref int lwork, ref int info);
+
+        
 
         #endregion
 
