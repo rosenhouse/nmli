@@ -63,6 +63,44 @@ namespace NmliTests
                 AssertArrayEqual(full, testMatrix, "Checking mirror from upper: ");
             }
 
+
+            [Test]
+            public void InplaceSquareTranspose()
+            {
+                int n = 3;
+
+                N[] testmatrix = new_array(1, 2, 3,
+                                           4, 5, 6,
+                                           7, 8, 9);
+
+                N[] transpose = new_array(1, 4, 7,
+                                          2, 5, 8,
+                                          3, 6, 9);
+
+                extras.InplaceTransposeSquareMatrix(n, testmatrix);
+                AssertArrayEqual(transpose, testmatrix);
+            }
+
+
+            [Test]
+            public void CopyTranspose()
+            {
+                int innerDimLen = 3;
+                int outerDimLen = 2;
+
+                N[] source = new_array(1, 2, 3,
+                                       4, 5, 6 );
+
+                N[] transpose = new_array(1, 4,
+                                          2, 5,
+                                          3, 6 );
+
+                N[] target = new N[innerDimLen * outerDimLen];
+
+                extras.CopyTranspose(outerDimLen, innerDimLen, source, target);
+
+                AssertArrayEqual(transpose, target);
+            }
         }
 
 

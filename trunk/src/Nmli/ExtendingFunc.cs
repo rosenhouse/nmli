@@ -135,6 +135,37 @@ namespace Nmli
                 }
             }
 
+
+            public void InplaceTransposeSquareMatrix(int n, T[] matrix)
+            {
+                if (matrix.Length < n * n)
+                    throw new ArgumentException("Array length is shorter than n^2");
+
+                T temp;
+                for(int i=0; i<n-1; i++)
+                    for (int j = i + 1; j < n; j++)
+                    {
+                        temp = matrix[i * n + j];
+                        matrix[i * n + j] = matrix[j * n + i];
+                        matrix[j * n + i] = temp;
+                    }
+            }
+
+
+            /// <summary>
+            /// Copies the transpose of source into target.  
+            /// </summary>
+            public void CopyTranspose(int srcOutDimLen, int srcInDimLen, T[] source, T[] target)
+            {
+                if (source.Length < srcOutDimLen * srcInDimLen)
+                    throw new ArgumentException("source array is too short.");
+                if (target.Length < srcOutDimLen * srcInDimLen)
+                    throw new ArgumentException("target array is too short.");
+
+                for (int i = 0; i < srcOutDimLen; i++)
+                    for (int j = 0; j < srcInDimLen; j++)
+                        target[j * srcOutDimLen + i] = source[i * srcInDimLen + j];
+            }
         }
 
         protected readonly ExtraFunctions extras;
