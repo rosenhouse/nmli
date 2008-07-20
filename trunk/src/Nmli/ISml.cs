@@ -34,6 +34,9 @@ namespace Nmli
             bool GreaterThanOrEqualTo(N x, N y);
             bool EqualTo(N x, N y);
             bool NotEqualTo(N x, N y);
+
+            N Max(N x, N y);
+            N Min(N x, N y);
         }
     }
 
