@@ -74,17 +74,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BlasTests.cs" />
-    <Compile Include="CholeskyTests.cs" />
+    <Compile Include="Extended\CholeskyTests.cs" />
+    <Compile Include="Extended\MatrixSolver1Tests.cs" />
     <Compile Include="ExtendingFuncTests.cs" />
     <Compile Include="FrontEnd.cs" />
     <Compile Include="Generics.cs" />
     <Compile Include="LapackTests.cs" />
-    <Compile Include="MultinormalTests.cs" />
+    <Compile Include="Extended\MultinormalTests.cs" />
     <Compile Include="PointerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SmlTests.cs" />
     <Compile Include="Utilities.cs" />
-    <Compile Include="Vectorized2DNormalPDFTests.cs" />
+    <Compile Include="Extended\Vectorized2DNormalPDFTests.cs" />
     <Compile Include="VmlTests.cs" />
   </ItemGroup>
   <ItemGroup>
