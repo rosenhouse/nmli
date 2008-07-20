@@ -56,6 +56,8 @@ namespace Nmli.Managed
         public bool GreaterThanOrEqualTo(double x, double y) { return x >= y; }
         public bool EqualTo(double x, double y) { return x == y; }
         public bool NotEqualTo(double x, double y) { return x != y; }
+        public double Max(double x, double y) { return Math.Max(x,y); }
+        public double Min(double x, double y) { return Math.Min(x,y); }
 
         public bool LessThan(float x, float y) { return x < y; }
         public bool GreaterThan(float x, float y) { return x > y; }
@@ -63,6 +65,8 @@ namespace Nmli.Managed
         public bool GreaterThanOrEqualTo(float x, float y) { return x >= y; }
         public bool EqualTo(float x, float y) { return x == y; }
         public bool NotEqualTo(float x, float y) { return x != y; }
+        public float Max(float x, float y) { return Math.Max(x, y); }
+        public float Min(float x, float y) { return Math.Min(x, y); }
         #endregion
     }
 }
