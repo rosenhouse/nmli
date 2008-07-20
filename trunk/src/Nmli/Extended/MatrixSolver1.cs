@@ -9,7 +9,8 @@ namespace Nmli.Extended
     /// </summary>
     public class MatrixSolver1<N> : ExtendingFunc<N>
     {
-        public MatrixSolver1(IMathLibrary<N> ml) : base(ml) { }
+
+        public MatrixSolver1(IMathLibrary<N> ml) : base(ml) { throw new NotImplementedException(); }
 
         [ThreadStatic]
         Workspace<N> ws_z;
