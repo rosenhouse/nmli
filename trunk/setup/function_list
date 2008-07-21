@@ -39,6 +39,9 @@ cblas_dsyr
 cblas_sgbmv
 cblas_dgbmv
 
+cblas_sgemm
+cblas_dgemm
+
 DGETRF
 DGETRI
 SGETRF
