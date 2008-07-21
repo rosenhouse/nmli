@@ -166,6 +166,27 @@ namespace Nmli
                     for (int j = 0; j < srcInDimLen; j++)
                         target[j * srcOutDimLen + i] = source[i * srcInDimLen + j];
             }
+
+
+            public void Reposition(int nrows, int ld_source, int ld_target, int ncols, T[] source, T[] target)
+            {
+                if (nrows > ld_source)
+                    throw new ArgumentException("ld_source must be >= nrows");
+
+                if (nrows > ld_target)
+                    throw new ArgumentException("ld_target must be >= nrows");
+
+                if (source.Length < ncols * ld_source)
+                    throw new ArgumentException("Source array is too short.");
+
+                if (target.Length < ncols * ld_target)
+                    throw new ArgumentException("Target array is too short.");
+
+                Array.Clear(target, 0, ncols * ld_target);
+
+                for (int c = 0; c < ncols; c++)
+                    Array.Copy(source, c * ld_source, target, c * ld_target, nrows);
+            }
         }
 
         protected readonly ExtraFunctions extras;

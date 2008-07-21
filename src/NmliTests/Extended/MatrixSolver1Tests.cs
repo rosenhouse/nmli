@@ -13,7 +13,7 @@ namespace NmliTests
         {
             protected readonly MatrixSolver1<N> solver = new MatrixSolver1<N>(Lib);
 
-            [Test]
+            //[Test]
             public void TestSolveFullyDetermined()
             {
                 int ra = 2;
@@ -28,7 +28,7 @@ namespace NmliTests
                 AssertArrayEqual(new_array(1, 2, 3, 4), X);
             }
 
-            [Test]
+            //[Test]
             public void TestSolveOverDetermined()
             {
                 int ra = 3;
@@ -46,11 +46,57 @@ namespace NmliTests
             }
 
 
-            [Test]
+            //[Test]
             public void TestSolveUnderDetermined()
             {
-                //throw new NotImplementedException();
+                throw new NotImplementedException();
             }
+
+            [Test]
+            public void TestSolveTrivial1()
+            {
+                int ra = 1;
+                int ca = 1;
+                N[] A = new_array(2);
+
+                N[] B = new_array(12);
+
+                N[] X = new N[ca * ca];
+                solver.Solve(ra, ca, A, B, X);
+
+                AssertArrayEqual(new_array(3), X);
+            }
+            [Test]
+            public void TestSolveTrivial2()
+            {
+                int ra = 2;
+                int ca = 1;
+                N[] A = new_array(3, 4);
+
+                N[] B = new_array(45, 60, 60, 80);
+
+                N[] X = new N[ca * ca];
+                solver.Solve(ra, ca, A, B, X);
+
+                AssertArrayEqual(new_array(5), X);
+            }
+
+            [Test]
+            public void TestSolveTrivial3()
+            {
+                int ra = 1;
+                int ca = 2;
+                N[] A = new_array(1,1);
+
+                N[] B = new_array(2);
+
+                N[] X = new N[ca * ca];
+                solver.Solve(ra, ca, A, B, X);
+
+                AssertArrayEqual(new_array(0.5,0.5,0.5,0.5), X);
+            }
+
+
         }
 
         [TestFixture]
