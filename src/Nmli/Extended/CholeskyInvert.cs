@@ -96,6 +96,13 @@ namespace Nmli.Extended
                 throw new Exception("Argument " + errCode + " for potri was invalid.");
         }
 
+
+        /// <summary>
+        /// Inverts a symmetric positive-definite matrix
+        /// </summary>
+        /// <param name="n">Matrix rank</param>
+        /// <param name="symmetricPositiveDefiniteMatrix">Input: A symmetric, positive definite matrix.  Output: Its inverse</param>
+        /// <returns>Natural log of the determinant of the original matrix</returns>
         public double Invert(int n, T[] symmetricPositiveDefiniteMatrix)
         {
             double lnDet = Decompose(n, symmetricPositiveDefiniteMatrix);
