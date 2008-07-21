@@ -142,6 +142,12 @@ namespace Nmli.Mkl
 
         #endregion
 
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void cblas_sgemm(Transpose transa, Transpose transb, int m, int n, int k,
+            float alpha, float[] a, int lda, float[] b, int ldb, float beta, float[] c, int ldc);
+
+
         #endregion
 
 
@@ -200,6 +206,10 @@ namespace Nmli.Mkl
 
 
         #endregion
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void cblas_dgemm(Transpose transa, Transpose transb, int m, int n, int k,
+            double alpha, double[] a, int lda, double[] b, int ldb, double beta, double[] c, int ldc);
 
         #endregion
 

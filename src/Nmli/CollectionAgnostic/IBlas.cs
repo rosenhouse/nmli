@@ -198,5 +198,36 @@ namespace Nmli.CollectionAgnostic
 
 
         #endregion
+
+
+        /// <summary>
+        /// Computes a scalar-matrix-matrix product and adds the result to a scalar-matrix product.
+        ///      C := alpha*op(A)*op(B) + beta*C
+        /// </summary>
+        /// <remarks>The ?gemm routines perform a matrix-matrix operation with general matrices. The operation is defined as 
+        ///    <code>C := alpha*op(A)*op(B) + beta*C</code>
+        /// where:
+        ///   op(x) is one of op(x) = x, or op(x) = x', or op(x) = conjg(x'),
+        ///   alpha and beta are scalars,
+        ///   A, B and C are matrices:
+        ///   op(A) is an m-by-k matrix,
+        ///   op(B) is a k-by-n matrix,
+        ///   C is an m-by-n matrix.
+        /// </remarks>
+        /// <param name="transa">Specifies whether and how to transpose matrix A</param>
+        /// <param name="transb">Specifies whether and how to transpose matrix B</param>
+        /// <param name="m">Num rows of op(A) and rows of C</param>
+        /// <param name="n">Num cols of op(C) and cols of C</param>
+        /// <param name="k">Num cols of op(A) and rows of op(B)</param>
+        /// <param name="alpha">Scalar of op(A)*op(B)</param>
+        /// <param name="a">Matrix A</param>
+        /// <param name="lda">Leading dim of A.  If op(A)=A then lda>=m, else lda>=k</param>
+        /// <param name="b">Matrix B</param>
+        /// <param name="ldb">Leading dim of B.  If op(B)=B then ldb>=k, else ldb>=n</param>
+        /// <param name="beta">Scalar of C before add</param>
+        /// <param name="c">Matrix C</param>
+        /// <param name="ldc">Leading dim of C.  ldc>=m</param>
+        void gemm(Transpose transa, Transpose transb, int m, int n, int k,
+            T alpha, AT a, int lda, AT b, int ldb, T beta, AT c, int ldc);
     }
 }

@@ -72,6 +72,13 @@ namespace Nmli.Acml
 
         #endregion
 
+        public void gemm(Transpose transa, Transpose transb, int m, int n, int k, float alpha, float[] a, int lda, float[] b, int ldb, float beta, float[] c, int ldc)
+        {
+            byte tranA = Utilities.EnumAsAscii(transa);
+            byte tranB = Utilities.EnumAsAscii(transb);
+            Externs.sgemm(tranA, tranB, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
+        }
+
         #endregion
 
 
@@ -142,12 +149,18 @@ namespace Nmli.Acml
         }
         #endregion
 
+        public void gemm(Transpose transa, Transpose transb, int m, int n, int k, double alpha, double[] a, int lda, double[] b, int ldb, double beta, double[] c, int ldc)
+        {
+            byte tranA = Utilities.EnumAsAscii(transa);
+            byte tranB = Utilities.EnumAsAscii(transb);
+            Externs.dgemm(tranA, tranB, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
+        }
+
         #endregion
 
 
 
 
-
-
+        
     }
 }

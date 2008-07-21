@@ -89,6 +89,11 @@ namespace Nmli.Acml
 
         #endregion
 
+        
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void sgemm(byte transa, byte transb, int m, int n, int k, 
+            float alpha, float[] a, int lda, float[] b, int ldb, float beta, float[] c, int ldc);
+
         #endregion
 
 
@@ -149,6 +154,12 @@ namespace Nmli.Acml
         internal static extern void dsyr(byte uplo, int n, double alpha, double[] x, int incX, double[] a, int lda);
 
         #endregion
+
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void dgemm(byte transa, byte transb, int m, int n, int k,
+            double alpha, double[] a, int lda, double[] b, int ldb, double beta, double[] c, int ldc);
+
 
         #endregion
 

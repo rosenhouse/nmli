@@ -65,6 +65,10 @@ namespace Nmli.Mkl
 
         #endregion
 
+        public void gemm(Transpose transa, Transpose transb, int m, int n, int k, float alpha, float[] a, int lda, float[] b, int ldb, float beta, float[] c, int ldc)
+        {
+            Externs.cblas_sgemm(transa, transb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
+        }
 
         #endregion
 
@@ -127,6 +131,13 @@ namespace Nmli.Mkl
             Externs.cblas_dsyr(Order.Column, uplo, n, alpha, x, incX, a, lda);
         }
         #endregion
+
+
+        public void gemm(Transpose transa, Transpose transb, int m, int n, int k, double alpha, double[] a, int lda, double[] b, int ldb, double beta, double[] c, int ldc)
+        {
+            Externs.cblas_dgemm(transa, transb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
+        }
+
 
         #endregion
 
