@@ -101,6 +101,30 @@ namespace NmliTests
 
                 AssertArrayEqual(transpose, target);
             }
+
+
+            [Test]
+            public void Reposition()
+            {
+                int nrows = 3;
+                int ncols = 2;
+                int ld_compact = nrows;
+                int ld_expanded = 5;
+
+                N[] compact = new_array(1, 2, 3,
+                                        4, 5, 6);
+
+                N[] expanded = new_array(1, 2, 3, 0, 0,
+                                         4, 5, 6, 0, 0);
+
+                N[] target1 = new N[ncols * ld_expanded];
+                extras.Reposition(nrows, ld_compact, ld_expanded, ncols, compact, target1);
+                AssertArrayEqual(expanded, target1);
+
+                N[] target2 = new N[ncols * ld_compact];
+                extras.Reposition(nrows, ld_expanded, ld_compact, ncols, expanded, target2);
+                AssertArrayEqual(compact, target2);
+            }
         }
 
 

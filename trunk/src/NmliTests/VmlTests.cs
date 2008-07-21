@@ -67,28 +67,28 @@ namespace NmliTests
         #region Specific instances
 
         [TestFixture]
-        [Category("Extended")]
+        [Category("VML")]
         [Category("ACML")]
         [Category("Double")]
         public class DoubleACML : GenericTest<double, Libs.ACML> { }
 
 
         [TestFixture]
-        [Category("Extended")]
+        [Category("VML")]
         [Category("ACML")]
         [Category("Float")]
         public class FloatACML : GenericTest<float, Libs.ACML> { }
 
 
         [TestFixture]
-        [Category("Extended")]
+        [Category("VML")]
         [Category("MKL")]
         [Category("Double")]
         public class DoubleMKL : GenericTest<double, Libs.MKL> { }
 
 
         [TestFixture]
-        [Category("Extended")]
+        [Category("VML")]
         [Category("MKL")]
         [Category("Float")]
         public class FloatMKL : GenericTest<float, Libs.MKL> { }
