@@ -24,7 +24,7 @@ namespace Nmli.Extended
         public static void PrintArray(N[] a)
         {
             foreach (N x in a)
-                Console.Write("{0:00.00}, ", x);
+                Console.Write("{0:0.000}, ", x);
             Console.WriteLine();
         }
 
@@ -107,6 +107,7 @@ namespace Nmli.Extended
             //       by doing  Z^t = A.X^t   for X^t
             
             // re-place A into a
+            Array.Clear(a, 0, a.Length); // unnecessary, but helps for debugging
             Array.Copy(A, a, ra*ca);
 
 
