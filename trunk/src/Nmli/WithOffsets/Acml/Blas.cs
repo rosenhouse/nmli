@@ -109,7 +109,20 @@ namespace Nmli.WithOffsets.Acml
         }
 
 
+
         #endregion
+
+
+        public void gemm(Transpose transa, Transpose transb, int m, int n, int k, float alpha, OA<float> a, int lda, OA<float> b, int ldb, float beta, OA<float> c, int ldc)
+        {
+            byte tranA = Utilities.EnumAsAscii(transa);
+            byte tranB = Utilities.EnumAsAscii(transb);
+            fixed (float* pa = &a.array[a.offset],
+                pb = &b.array[b.offset],
+                pc = &c.array[c.offset])
+                Externs.sgemm(tranA, tranB, m, n, k, alpha, pa, lda, pb, ldb, beta, pc, ldc);
+        }
+
 
         #endregion
 
@@ -217,6 +230,17 @@ namespace Nmli.WithOffsets.Acml
         }
 
         #endregion
+
+        public void gemm(Transpose transa, Transpose transb, int m, int n, int k, double alpha, OA<double> a, int lda, OA<double> b, int ldb, double beta, OA<double> c, int ldc)
+        {
+            byte tranA = Utilities.EnumAsAscii(transa);
+            byte tranB = Utilities.EnumAsAscii(transb);
+            fixed (double* pa = &a.array[a.offset],
+                    pb = &b.array[b.offset],
+                    pc = &c.array[c.offset])
+            Externs.dgemm(tranA, tranB, m, n, k, alpha, pa, lda, pb, ldb, beta, pc, ldc);
+        }
+
 
         #endregion
 
