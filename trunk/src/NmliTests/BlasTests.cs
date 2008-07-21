@@ -210,6 +210,38 @@ namespace NmliTests
             
             #endregion 
 
+
+            [Test]
+            public void gemm()
+            {
+                N[] myArray = new_array(1, 2, 3,    4, 5, 6);
+
+                N[] result = new N[2 * 2];
+                N[] expected = new_array(14, 32, 32, 77);
+
+                int m = 2; // rows of A, rows of C
+                int n = 2; // cols of B, cols of C
+                int k = 3; // cols of A, rows of B
+
+                N[] a = myArray; // a^t = A : m x k
+                N[] b = myArray; // b   = B : k x n
+                N[] c = result;        // c = A * B = C: nFrames x nFrames = m x n
+
+                int lda = k;
+                int ldb = k;
+                int ldc = m;
+
+                N alpha = _1;
+                N beta = _0;
+
+                blas.gemm(Transpose.Trans, Transpose.NoTrans, m, n, k,
+                    alpha, a, lda, b, ldb, beta, c, ldc);
+
+
+                AssertArrayEqual(expected, result);
+
+            }
+
         }
 
 
