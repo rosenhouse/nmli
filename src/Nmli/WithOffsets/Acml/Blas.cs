@@ -113,6 +113,8 @@ namespace Nmli.WithOffsets.Acml
         #endregion
 
 
+        #region Level 3
+
         public void gemm(Transpose transa, Transpose transb, int m, int n, int k, float alpha, OA<float> a, int lda, OA<float> b, int ldb, float beta, OA<float> c, int ldc)
         {
             byte tranA = Utilities.EnumAsAscii(transa);
@@ -122,6 +124,17 @@ namespace Nmli.WithOffsets.Acml
                 pc = &c.array[c.offset])
                 Externs.sgemm(tranA, tranB, m, n, k, alpha, pa, lda, pb, ldb, beta, pc, ldc);
         }
+
+        public void syrk(UpLo uplo, Transpose trans, int n, int k, float alpha, OA<float> a, int lda, float beta, OA<float> c, int ldc)
+        {
+            byte tran = Utilities.EnumAsAscii(trans);
+            byte upl = Utilities.EnumAsAscii(uplo);
+
+            fixed (float* pa = &a.array[a.offset], pc = &c.array[c.offset])
+                Externs.ssyrk(upl, tran, n, k, alpha, pa, lda, beta, pc, ldc);
+        }
+
+        #endregion
 
 
         #endregion
@@ -231,6 +244,9 @@ namespace Nmli.WithOffsets.Acml
 
         #endregion
 
+
+        #region Level 3
+
         public void gemm(Transpose transa, Transpose transb, int m, int n, int k, double alpha, OA<double> a, int lda, OA<double> b, int ldb, double beta, OA<double> c, int ldc)
         {
             byte tranA = Utilities.EnumAsAscii(transa);
@@ -241,10 +257,21 @@ namespace Nmli.WithOffsets.Acml
             Externs.dgemm(tranA, tranB, m, n, k, alpha, pa, lda, pb, ldb, beta, pc, ldc);
         }
 
+        public void syrk(UpLo uplo, Transpose trans, int n, int k, double alpha, OA<double> a, int lda, double beta, OA<double> c, int ldc)
+        {
+            byte tran = Utilities.EnumAsAscii(trans);
+            byte upl = Utilities.EnumAsAscii(uplo);
+
+            fixed (double* pa = &a.array[a.offset], pc = &c.array[c.offset])
+                Externs.dsyrk(upl, tran, n, k, alpha, pa, lda, beta, pc, ldc);
+        }
+
+        #endregion
+
 
         #endregion
 
 
 
-    }
+}
 }

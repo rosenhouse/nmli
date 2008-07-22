@@ -29,7 +29,6 @@ namespace NmliTests
                 AssertArrayEqual(new_array(3), X);
             }
 
-
             [Test]
             public void TestSolve2x1()
             {
@@ -92,27 +91,46 @@ namespace NmliTests
                 solver.Solve(ra, ca, A, B, X);
 
                 AssertArrayEqual(expected, X);
-            }3
-
+            }
 
             [Test]
             public void TestSolve2x2()
             {
                 int ra = 2;
                 int ca = 2;
-                N[] A = new_array(1, 2, 3, 4, 5, 6);
+                N[] A = new_array(0.5, -2, 3, 0.5);
 
-                N[] B = new_array(-1, 4, 9,
-                                  4, 11, 18,
-                                  9, 18, 27);
+                N[] B = new_array(9.375, 18.75,
+                                  18.75, 12.5);
+
+                N[] expected = new_array(1.5, -3, -3, 2);
 
                 N[] X = new N[ca * ca];
                 solver.Solve(ra, ca, A, B, X);
 
-                AssertArrayEqual(new_array(-1, 3, 2, -1), X);
+                AssertArrayEqual(expected, X);
             }
 
 
+
+            [Test]
+            public void TestSolve3x2()
+            {
+                int ra = 3;
+                int ca = 2;
+                N[] A = new_array(1, .5, .25,    0, 0.5, 1);
+
+                N[] B = new_array(   1,    0.1,    -0.55,
+                                   0.1,    0.15,  0.225,
+                                 -0.55,   0.225, .8625);
+
+                N[] expected = new_array(1,-.8,-.8, 1.2);
+
+                N[] X = new N[ca * ca];
+                solver.Solve(ra, ca, A, B, X);
+
+                AssertArrayEqual(expected, X);
+            }
         }
 
         [TestFixture]

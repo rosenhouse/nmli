@@ -30,6 +30,7 @@ namespace Nmli.Mkl
         #endregion
 
 
+
         #region Level 2
 
         public void symv(UpLo uplo, int n, float alpha, float[] a, int lda, float[] x, int incX, float beta, float[] y, int incY)
@@ -65,17 +66,31 @@ namespace Nmli.Mkl
 
         #endregion
 
+
+
+        #region Level 3
+
         public void gemm(Transpose transa, Transpose transb, int m, int n, int k, float alpha, float[] a, int lda, float[] b, int ldb, float beta, float[] c, int ldc)
         {
-            Externs.cblas_sgemm(transa, transb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
+            Externs.cblas_sgemm(Order.Column, transa, transb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
         }
+
+
+        public void syrk(UpLo uplo, Transpose trans, int n, int k, float alpha, float[] a, int lda, float beta, float[] c, int ldc)
+        {
+            Externs.cblas_ssyrk(Order.Column, uplo, trans, n, k, alpha, a, lda, beta, c, ldc);
+        }
+
 
         #endregion
 
 
 
 
+        #endregion
+
         #region Double
+
 
         #region Level 1
 
@@ -97,6 +112,7 @@ namespace Nmli.Mkl
         public double asum(int n, double[] x, int incX) { return Externs.cblas_dasum(n, x, incX); }
 
         #endregion
+
 
 
         #region Level 2
@@ -133,10 +149,21 @@ namespace Nmli.Mkl
         #endregion
 
 
+
+        #region Level 3
+
         public void gemm(Transpose transa, Transpose transb, int m, int n, int k, double alpha, double[] a, int lda, double[] b, int ldb, double beta, double[] c, int ldc)
         {
-            Externs.cblas_dgemm(transa, transb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
+            Externs.cblas_dgemm(Order.Column, transa, transb, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
         }
+
+        public void syrk(UpLo uplo, Transpose trans, int n, int k, double alpha, double[] a, int lda, double beta, double[] c, int ldc)
+        {
+            Externs.cblas_dsyrk(Order.Column, uplo, trans, n, k, alpha, a, lda, beta, c, ldc);
+        }
+
+        #endregion
+
 
 
         #endregion

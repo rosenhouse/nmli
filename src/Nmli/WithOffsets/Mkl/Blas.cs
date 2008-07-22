@@ -113,16 +113,24 @@ namespace Nmli.WithOffsets.Mkl
 
         #endregion
 
-
+        #region Level 3
         public void gemm(Transpose transa, Transpose transb, int m, int n, int k, float alpha, OA<float> a, int lda, OA<float> b, int ldb, float beta, OA<float> c, int ldc)
         {
             fixed (float* pa = &a.array[a.offset],
                 pb = &b.array[b.offset],
                 pc = &c.array[c.offset])
-                Externs.cblas_sgemm(transa, transb, m, n, k, alpha, pa, lda, pb, ldb, beta, pc, ldc);
+                Externs.cblas_sgemm(Order.Column, transa, transb, m, n, k, alpha, pa, lda, pb, ldb, beta, pc, ldc);
         }
 
-        
+        public void syrk(UpLo uplo, Transpose trans, int n, int k, float alpha, OA<float> a, int lda, float beta, OA<float> c, int ldc)
+        {
+            fixed (float* pa = &a.array[a.offset], pc = &c.array[c.offset])
+                Externs.cblas_ssyrk(Order.Column, uplo, trans, n, k, alpha, pa, lda, beta, pc, ldc);
+        }
+
+        #endregion
+
+
         #endregion
 
 
@@ -234,14 +242,23 @@ namespace Nmli.WithOffsets.Mkl
 
         #endregion
 
+
+        #region Level 3
+
         public void gemm(Transpose transa, Transpose transb, int m, int n, int k, double alpha, OA<double> a, int lda, OA<double> b, int ldb, double beta, OA<double> c, int ldc)
         {
             fixed (double* pa = &a.array[a.offset],
                 pb = &b.array[b.offset],
                 pc = &c.array[c.offset])
-                Externs.cblas_dgemm(transa, transb, m, n, k, alpha, pa, lda, pb, ldb, beta, pc, ldc);
+                Externs.cblas_dgemm(Order.Column, transa, transb, m, n, k, alpha, pa, lda, pb, ldb, beta, pc, ldc);
         }
 
+        public void syrk(UpLo uplo, Transpose trans, int n, int k, double alpha, OA<double> a, int lda, double beta, OA<double> c, int ldc)
+        {
+            fixed (double* pa = &a.array[a.offset], pc = &c.array[c.offset])
+                Externs.cblas_dsyrk(Order.Column, uplo, trans, n, k, alpha, pa, lda, beta, pc, ldc);
+        }
+        #endregion
 
 
         #endregion

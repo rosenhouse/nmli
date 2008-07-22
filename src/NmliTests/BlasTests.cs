@@ -210,7 +210,8 @@ namespace NmliTests
             
             #endregion 
 
-
+            #region Level 3
+            
             [Test]
             public void gemm()
             {
@@ -241,6 +242,38 @@ namespace NmliTests
                 AssertArrayEqual(expected, result);
 
             }
+
+
+            [Test]
+            public void syrk()
+            {
+                N[] myArray = new_array(1, 2, 3,   4, 5, 6);
+
+                N[] result = new N[2 * 2];
+                N[] expected = new_array(14, 32, 32, 77);
+
+                int n = 2; // cols of B, cols of C
+                int k = 3; // cols of A, rows of B
+
+                N[] a = myArray; // a^t = A : m x k
+                N[] c = result;  // c = A * B = C: nFrames x nFrames = m x n
+
+                int lda = k;
+                int ldc = n;
+
+                N alpha = _1;
+                N beta = _1;
+
+                blas.syrk(UpLo.Lower, Transpose.Trans, n, k, alpha, a, lda, beta, c, ldc);
+                extras.MirrorTriangle(UpLo.Lower, n, c);
+
+
+                AssertArrayEqual(expected, result);
+
+
+            }
+
+            #endregion
 
         }
 

@@ -229,5 +229,32 @@ namespace Nmli.CollectionAgnostic
         /// <param name="ldc">Leading dim of C.  ldc>=m</param>
         void gemm(Transpose transa, Transpose transb, int m, int n, int k,
             T alpha, AT a, int lda, AT b, int ldb, T beta, AT c, int ldc);
+
+
+        /// <summary>
+        /// Performs a rank-n update of a symmetric matrix
+        ///    C := alpha*A*A' + beta*C  or    C := alpha*A'*A + beta*C
+        /// </summary>
+        /// <remarks>
+        /// The ?syrk routines perform a matrix-matrix operation using symmetric matrices. The operation is defined as 
+        /// <code>C := alpha*A*A' + beta*C</code>
+        /// or 
+        /// <code>C := alpha*A'*A + beta*C</code>
+        /// where:
+        /// alpha and beta are scalars,
+        /// C is an n-by-n symmetric matrix,
+        /// A is an n-by-k matrix in the first case and a k-by-n matrix in the second case.
+        /// </remarks>
+        /// <param name="uplo">Write to the upper or lower part of C</param>
+        /// <param name="trans">If notrans, then C:= alpha*A*A' + beta*C, else C:=alpha*A'*A + beta*C</param>
+        /// <param name="n">Order of C</param>
+        /// <param name="k">If notrans then k = numcols(a)   else k = numrows(a)</param>
+        /// <param name="alpha">Scalar of matrix product</param>
+        /// <param name="a">Matrix a</param>
+        /// <param name="lda">Leading dim of A.  If notrans then lda>=n else lda >= k</param>
+        /// <param name="beta">Scalar of C before addition</param>
+        /// <param name="c">Matrix c</param>
+        /// <param name="ldc">Leading dim of C.  ldc >= n</param>
+        void syrk(UpLo uplo, Transpose trans, int n, int k, T alpha, AT a, int lda, T beta, AT c, int ldc);
     }
 }
