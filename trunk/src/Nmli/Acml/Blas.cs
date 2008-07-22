@@ -72,12 +72,26 @@ namespace Nmli.Acml
 
         #endregion
 
+
+        #region Level 3
+
         public void gemm(Transpose transa, Transpose transb, int m, int n, int k, float alpha, float[] a, int lda, float[] b, int ldb, float beta, float[] c, int ldc)
         {
             byte tranA = Utilities.EnumAsAscii(transa);
             byte tranB = Utilities.EnumAsAscii(transb);
             Externs.sgemm(tranA, tranB, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
         }
+
+
+        public void syrk(UpLo uplo, Transpose trans, int n, int k, float alpha, float[] a, int lda, float beta, float[] c, int ldc)
+        {
+            byte upl = Utilities.EnumAsAscii(uplo);
+            byte tran = Utilities.EnumAsAscii(trans);
+            Externs.ssyrk(upl, tran, n, k, alpha, a, lda, beta, c, ldc);
+        }
+
+        #endregion
+
 
         #endregion
 
@@ -149,6 +163,9 @@ namespace Nmli.Acml
         }
         #endregion
 
+
+        #region Level 3
+
         public void gemm(Transpose transa, Transpose transb, int m, int n, int k, double alpha, double[] a, int lda, double[] b, int ldb, double beta, double[] c, int ldc)
         {
             byte tranA = Utilities.EnumAsAscii(transa);
@@ -156,11 +173,16 @@ namespace Nmli.Acml
             Externs.dgemm(tranA, tranB, m, n, k, alpha, a, lda, b, ldb, beta, c, ldc);
         }
 
+        public void syrk(UpLo uplo, Transpose trans, int n, int k, double alpha, double[] a, int lda, double beta, double[] c, int ldc)
+        {
+            byte upl = Utilities.EnumAsAscii(uplo);
+            byte tran = Utilities.EnumAsAscii(trans);
+            Externs.dsyrk(upl, tran, n, k, alpha, a, lda, beta, c, ldc);
+        }  
+
         #endregion
 
+        #endregion
 
-
-
-        
     }
 }

@@ -122,10 +122,19 @@ namespace Nmli.Mkl
 
         #endregion
 
+
+        #region Level 3
+        
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void cblas_sgemm(Transpose transa, Transpose transb, int m, int n, int k,
+        internal static extern void cblas_sgemm(Order order, Transpose transa, Transpose transb, int m, int n, int k,
             float alpha, float* a, int lda, float* b, int ldb, float beta, float* c, int ldc);
 
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void cblas_ssyrk(Order order, UpLo uplo, Transpose trans, int n, int k, float alpha,
+            float* a, int lda, float beta, float* c, int ldc);
+
+
+        #endregion
 
         #endregion
 
@@ -186,11 +195,23 @@ namespace Nmli.Mkl
 
         #endregion
 
-        #endregion
+
+        #region Level 3
 
         [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern void cblas_dgemm(Transpose transa, Transpose transb, int m, int n, int k,
+        internal static extern void cblas_dgemm(Order order, Transpose transa, Transpose transb, int m, int n, int k,
             double alpha, double* a, int lda, double* b, int ldb, double beta, double* c, int ldc);
+
+        [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern void cblas_dsyrk(Order order, UpLo uplo, Transpose trans, int n, int k, double alpha,
+            double* a, int lda, double beta, double* c, int ldc);
+
+        #endregion
+
+
+
+        #endregion
+
 
 
         #endregion
