@@ -42,6 +42,11 @@ cblas_dgbmv
 cblas_sgemm
 cblas_dgemm
 
+cblas_ssyrk
+cblas_dsyrk
+
+
+
 DGETRF
 DGETRI
 SGETRF
