@@ -94,6 +94,7 @@ namespace Nmli.Extended
                 throw new NonPositiveDefiniteBlockException(errCode);
             else if (errCode < 0)
                 throw new Exception("Argument " + errCode + " for potri was invalid.");
+            extras.MirrorTriangle(UpLo.Upper, n, choleskyDecomposed);
         }
 
 
