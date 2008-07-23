@@ -7,10 +7,8 @@ using Nmli.WithOffsets;
 namespace NmliTests
 {
     [TestFixture]
-    public class PointerTests
+    public class PointerTests : GenericNumericTest<double, Libs.MKL>
     {
-        const float delta = GenericNumericTest<double, Libs.MKL>.delta;
-
         [Test]
         public void MultNoOffset()
         {
@@ -51,5 +49,23 @@ namespace NmliTests
             Assert.AreEqual(0, c[2], delta);
         }
 
+
+
+        [Test]
+        public void ArrayElementRef()
+        {
+            double mean = 0;
+            double stdev = 1;
+            double x = 3;
+            double z = (x - mean) / (Math.Sqrt(2) * stdev);
+
+            double[] foo = new double[3];
+            Nmli.Mkl.ExclusiveExterns.AsRefs.vdErfc(1, ref z, ref foo[1]);
+
+            double[] expected = new double[] { 0, 0.0026998, 0 };
+
+            AssertArrayEqual(expected, foo);
+
+        }
     }
 }

@@ -6,7 +6,7 @@ using Nmli;
 namespace NmliTests
 {
 
-    public class VmlTest
+    public class VmlTests
     {
         public abstract class GenericTest<N, L> : GenericNumericTest<N, L>
         {
