@@ -51,6 +51,9 @@ namespace Nmli.Experimental
             return x;
         }
 
+        static bool throwOnErrors = false;
+        public static bool ThrowOnErrors { get { return throwOnErrors; } set { throwOnErrors = value; } }
+
         /// <summary>
         /// Maps a Uniform(0,1] random variable to a truncated normal.  Note this function is deterministic.
         /// </summary>
@@ -62,13 +65,20 @@ namespace Nmli.Experimental
         public static double UniformToTruncatedNormal(double mean, double stdev, double minValue, double uniformSample)
         {
             double a = 1 - CDF(mean, stdev, minValue); // P[X >= minValue]
+
+            if (a == 0)
+            {
+                if (throwOnErrors)
+                    throw new ArgumentOutOfRangeException("minValue", 
+                        "The given normal distribution has insufficient mass above minValue");
+                else
+                    return minValue;
+            }
+
             double restrictedSample = a * (1 - uniformSample); // sample from Uniform (0, a]
             double toInvert = 1 - restrictedSample; // sample from Uniform [1-a, 1)
+
             double mapped = InvCDF(mean, stdev, toInvert);
-
-            //if (mapped < minValue)
-            //    throw new Exception("This should be impossible: MinVal=" + minValue + ", but mapped val=" + mapped);
-
             return Math.Max(mapped, minValue); // because sometimes errors propogate through
             
 
