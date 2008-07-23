@@ -65,10 +65,13 @@ namespace Nmli.Experimental
             double restrictedSample = a * (1 - uniformSample); // sample from Uniform (0, a]
             double toInvert = 1 - restrictedSample; // sample from Uniform [1-a, 1)
             double mapped = InvCDF(mean, stdev, toInvert);
-            if (mapped < minValue)
-                throw new Exception("This should be impossible: MinVal=" + minValue + ", but mapped val=" + mapped);
 
-            return mapped;
+            //if (mapped < minValue)
+            //    throw new Exception("This should be impossible: MinVal=" + minValue + ", but mapped val=" + mapped);
+
+            return Math.Max(mapped, minValue); // because sometimes errors propogate through
+            
+
         }
 
         /// <summary>
