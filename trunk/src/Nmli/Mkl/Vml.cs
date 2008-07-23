@@ -48,6 +48,5 @@ namespace Nmli.Mkl
 
         public void Sqrt(int n, double[] a, double[] y) { Externs.vdSqrt(n, a, y); }
 
-        
     }
 }
