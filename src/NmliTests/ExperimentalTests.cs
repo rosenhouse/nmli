@@ -42,87 +42,63 @@ namespace NmliTests
 
         }
 
+        public void ValidateTruncatedNormal(double mean, double stdev, double minVal, double uniformSample)
+        {
+            double delta = 0.01;
+
+            double massBelow = TNS.CDF(mean, stdev, minVal);
+            double val = TNS.UniformToTruncatedNormal(mean, stdev, minVal, uniformSample);
+
+            double cdf_at_val = TNS.CDF(mean, stdev, val);
+            Assert.AreEqual(uniformSample * (1 - massBelow), cdf_at_val - massBelow, delta);
+        }
+
         [Test]
         public void UniformToTruncatedNormal1()
         {
+            double delta = 0.01;
             double mean = 0;
             double stdev = 1;
             double minValue = 0;
+            double massBelow = TNS.CDF(mean, stdev, minValue);
 
             double uniformSample = 0.5;
-            double val = TruncatedNormalSampler.UniformToTruncatedNormal(mean, stdev, minValue, uniformSample);
+
+            double val = TNS.UniformToTruncatedNormal(mean, stdev, minValue, uniformSample);
 
             double expected = 0.67449;
-            double delta = 0.01;
-
             Assert.AreEqual(expected, val, delta);
+
+            double cdf_at_val = TNS.CDF(mean, stdev, val);
+            Assert.AreEqual(uniformSample * (1 - massBelow), cdf_at_val - massBelow);
         }
+
 
         [Test]
         public void UniformToTruncatedNormal2()
         {
-            double delta = 0.01;
-
             double mean = 5;
             double stdev = 2.3;
             double minValue = 3;
-
-            double massBelow = TNS.CDF(mean, stdev, minValue);
-            Assert.AreEqual(0.192269, massBelow, delta);
-
-            double uniformSample = 0.666667; // proportion of mass left to consume
-            double val = TNS.UniformToTruncatedNormal(mean, stdev, minValue, uniformSample);
-
-            double cdf_at_val = TNS.CDF(mean, stdev, val);
-            Assert.AreEqual(uniformSample, TNS.InvCDF(mean, stdev, cdf_at_val));
-
-            Assert.AreEqual((1 - massBelow) * uniformSample + massBelow, cdf_at_val);
+            double uniformSample = 0.665;
+            ValidateTruncatedNormal(mean, stdev, minValue, uniformSample);
         }
 
-
-
-
-
         [Test]
-        public void TruncatedSampler1()
+        public void TruncatedSampler()
         {
-            int nSamples = 100000;
-            double sum = 0;
+            int nSamples = 10000;
+            double avg = 0;
 
 
-            double mean = 0;
-            double stdev = 1;
-            double minValue = -2;
+            double mean = -4.5;
+            double stdev = 0.2;
+            double minValue = -3.5;
 
             for (int i = 0; i < nSamples; i++)
-                sum += TruncatedNormalSampler.SampleTruncatedNormal(mean, stdev, minValue);
+                avg = (i * avg + TruncatedNormalSampler.SampleTruncatedNormal(mean, stdev, minValue)) / (i + 1);
 
-            double avg = sum / nSamples;
-
-            double expected = 0.053991;
-            double delta = 0.01;
-
-            Assert.AreEqual(expected, avg, delta);
-        }
-
-
-        [Test]
-        public void TruncatedSampler2()
-        {
-            int nSamples = 100000;
-            double sum = 0;
-
-
-            double mean = 2;
-            double stdev = 1;
-            double minValue = 2;
-
-            for (int i = 0; i < nSamples; i++)
-                sum += TruncatedNormalSampler.SampleTruncatedNormal(mean, stdev, minValue);
-
-            double avg = sum / nSamples;
-
-            double expected = 1.39894;
+            double expected = -3.4627;
             double delta = 0.01;
 
             Assert.AreEqual(expected, avg, delta);
