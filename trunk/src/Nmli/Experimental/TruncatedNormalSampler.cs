@@ -62,11 +62,11 @@ namespace Nmli.Experimental
         public static double UniformToTruncatedNormal(double mean, double stdev, double minValue, double uniformSample)
         {
             double a = 1 - CDF(mean, stdev, minValue); // P[X >= minValue]
-            double restrictedSample = a * uniformSample; // sample from Uniform (0, a]
+            double restrictedSample = a * (1 - uniformSample); // sample from Uniform (0, a]
             double toInvert = 1 - restrictedSample; // sample from Uniform [1-a, 1)
             double mapped = InvCDF(mean, stdev, toInvert);
             if (mapped < minValue)
-                throw new Exception("This should be impossible!");
+                throw new Exception("This should be impossible: MinVal=" + minValue + ", but mapped val=" + mapped);
 
             return mapped;
         }
