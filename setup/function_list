@@ -89,3 +89,10 @@ vsSqrt
 vdSqrt
 vsDiv
 vdDiv
+
+vsErf
+vdErf
+vsErfc
+vdErfc
+vsErfInv
+vdErfInv
