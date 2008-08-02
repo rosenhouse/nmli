@@ -22,7 +22,7 @@ namespace Nmli.Managed
         public double Multiply(double x, double y) { return x * y; }
         public double Invert(double x) { return 1.0 / x; }
         public double Divide(double x, double y) { return x / y; }
-
+        public double Pow(double x, double y) { return Math.Pow(x, y); }
 
         public float Add(float x, float y) { return x + y; }
         public float Negate(float x) { return -x; }
@@ -31,6 +31,7 @@ namespace Nmli.Managed
         public float Multiply(float x, float y) { return x * y; }
         public float Invert(float x) { return 1.0f / x; }
         public float Divide(float x, float y) { return x / y; }
+        public float Pow(float x, float y) { return (float)Math.Pow(x, y); }
         #endregion
 
 
@@ -59,6 +60,7 @@ namespace Nmli.Managed
         public double Max(double x, double y) { return Math.Max(x,y); }
         public double Min(double x, double y) { return Math.Min(x,y); }
         public double Abs(double x) { return Math.Abs(x); }
+        public double Round(double x) { return Math.Round(x); }
 
         public bool LessThan(float x, float y) { return x < y; }
         public bool GreaterThan(float x, float y) { return x > y; }
@@ -69,6 +71,8 @@ namespace Nmli.Managed
         public float Max(float x, float y) { return Math.Max(x, y); }
         public float Min(float x, float y) { return Math.Min(x, y); }
         public float Abs(float x) { return Math.Abs(x); }
+        public float Round(float x) { return (float)Math.Round(x); }
         #endregion
+
     }
 }

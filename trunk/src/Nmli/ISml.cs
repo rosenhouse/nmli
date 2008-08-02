@@ -39,6 +39,8 @@ namespace Nmli
             N Min(N x, N y);
 
             N Abs(N x);
+
+            N Round(N x);
         }
     }
 
@@ -80,7 +82,7 @@ namespace Nmli
         int ToInt(N x);
 
 
-
+        N Pow(N x, N y);
     }
 
     public interface ISml : ISml<double>, ISml<float> { }
