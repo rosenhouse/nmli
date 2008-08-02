@@ -9,7 +9,7 @@ namespace NmliTests
     using TNS = TruncatedNormalSampler;
 
     [TestFixture]
-    public class ExperimentalTests
+    public class ExperimentalTestsNonGeneric
     {
         [Test]
         public void CDF()
@@ -103,6 +103,63 @@ namespace NmliTests
 
             Assert.AreEqual(expected, avg, delta);
         }
+    }
+
+
+    public static class ExperimentalTestsGenericMKL
+    {
+
+        public abstract class GenericTest<N, L> : GenericNumericTest<N, L>
+        {
+            [Test]
+            public void DiagMult()
+            {
+                N[] diag = new_array(3, -2, 0.5);
+
+                N[] rect = new_array(1, 2, 3, 4, 5, 6);
+
+
+                N[] result = new N[6];
+                Nmli.Mkl.ExclusiveExtras<N>.DiagMult(3, 2, diag, rect, result);
+
+                N[] expected = new_array(3, -4, 1.5, 12, -10, 3);
+
+                AssertArrayEqual(expected, result);
+
+            }
+
+
+            [Test]
+            public void DiagInvMult()
+            {
+                N[] diag = new_array(3, -2, 0.5);
+
+                N[] rect = new_array(1, 2, 3, 4, 5, 6);
+
+
+                N[] result = new N[6];
+                Nmli.Mkl.ExclusiveExtras<N>.DiagInvMult(3, 2, diag, rect, result);
+                N[] expected = new_array(0.3333333, -1, 6, 1.333333, -2.5, 12);
+                AssertArrayEqual(expected, result);
+
+            }
+
+        }
+
+
+        [TestFixture]
+        [Category("BLAS")]
+        [Category("MKL")]
+        [Category("Double")]
+        public class DoubleMKL : GenericTest<double, Libs.MKL> { }
+
+
+        [TestFixture]
+        [Category("BLAS")]
+        [Category("MKL")]
+        [Category("Float")]
+        public class FloatMKL : GenericTest<float, Libs.MKL> { }
 
     }
 }
+
