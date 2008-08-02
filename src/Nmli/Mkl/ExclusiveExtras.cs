@@ -24,18 +24,20 @@ namespace Nmli.Mkl
         
         public void Mul(int n, ref double a, ref double b, ref double y)
         {
-            ExclusiveExterns.AsRefs.vsMul(n, ref a, ref b, ref y);
+            ExclusiveExterns.AsRefs.vdMul(n, ref a, ref b, ref y);
         }
 
         public void Div(int n, ref double a, ref double b, ref double y)
         {
-            ExclusiveExterns.AsRefs.vsDiv(n, ref a, ref b, ref y);
+            ExclusiveExterns.AsRefs.vdDiv(n, ref a, ref b, ref y);
         }
 
     }
 
-    public class ExclusiveExtras<N>
+    public static class ExclusiveExtras<N>
     {
+        static readonly IRefVML<N> refVml = (IRefVML<N>)(new MKLRefVML());
+
 
         /// <summary>
         /// Multiplies a diagonal matrix by a rectangular matrix:
@@ -44,16 +46,34 @@ namespace Nmli.Mkl
         /// <param name="n">Side length of the diagonal matrix, and num rows of the rectangular matrix</param>
         /// <param name="m">Num cols of the rectangular matrix</param>
         /// <param name="diag">The elements of the diagonal matrix (length = n)</param>
-        /// <param name="source">The matrix to multiply </param>
-        /// <param name="target">On output, contains the product</param>
+        /// <param name="source">The matrix to multiply (n rows by m columns)</param>
+        /// <param name="target">Filled with the product (n rows by m columns)</param>
         /// <remarks>
-        /// Does multiple calls to VML.Mul so 
+        /// Calls VML.Mul once for each column of R.
         /// </remarks>
         public static void DiagMult(int n, int m, N[] diag, N[] source, N[] target)
         {
-
-
+            for (int c = 0; c < m; c++)
+                refVml.Mul(n, ref diag[0], ref source[c * n], ref target[c * n]);
         }
 
+
+        /// <summary>
+        /// Multiplies the inverse of a diagonal matrix by a rectangular matrix:
+        ///    D^-1 * R -> T
+        /// </summary>
+        /// <param name="n">Side length of the diagonal matrix, and num rows of the rectangular matrix</param>
+        /// <param name="m">Num cols of the rectangular matrix</param>
+        /// <param name="diag">The elements of the diagonal matrix to invert and multiply (length = n)</param>
+        /// <param name="source">The matrix to multiply (n rows by m columns)</param>
+        /// <param name="target">Filled with the product (n rows by m columns)</param>
+        /// <remarks>
+        /// Calls VML.Mul once for each column of R.
+        /// </remarks>
+        public static void DiagInvMult(int n, int m, N[] diag, N[] source, N[] target)
+        {
+            for (int c = 0; c < m; c++)
+                refVml.Div(n, ref source[c * n], ref diag[0], ref target[c * n]);
+        }
     }
 }
