@@ -37,6 +37,8 @@ namespace Nmli
 
             N Max(N x, N y);
             N Min(N x, N y);
+
+            N Abs(N x);
         }
     }
 

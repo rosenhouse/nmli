@@ -1,43 +1,14 @@
 using System;
 
+
 namespace Nmli.Mkl
 {
-    interface IRefVML<N>
+    using Nmli.WithOffsets;
+    public unsafe static class ExclusiveExtras<N>
     {
-        void Mul(int n, ref N a, ref N b, ref N y);
+        static readonly IVml<N> vml = (IVml<N>)(new Nmli.WithOffsets.Mkl.Vml());
 
-        void Div(int n, ref N a, ref N b, ref N y);
-    }
-
-    class MKLRefVML : IRefVML<float>, IRefVML<double>
-    {
-        public void Mul(int n, ref float a, ref float b, ref float y)
-        {
-            ExclusiveExterns.AsRefs.vsMul(n, ref a, ref b, ref y);
-        }
-
-        public void Div(int n, ref float a, ref float b, ref float y)
-        {
-            ExclusiveExterns.AsRefs.vsDiv(n, ref a, ref b, ref y);
-        }
-
-        
-        public void Mul(int n, ref double a, ref double b, ref double y)
-        {
-            ExclusiveExterns.AsRefs.vdMul(n, ref a, ref b, ref y);
-        }
-
-        public void Div(int n, ref double a, ref double b, ref double y)
-        {
-            ExclusiveExterns.AsRefs.vdDiv(n, ref a, ref b, ref y);
-        }
-
-    }
-
-    public static class ExclusiveExtras<N>
-    {
-        static readonly IRefVML<N> refVml = (IRefVML<N>)(new MKLRefVML());
-
+        static OA<N> oa(N[] array, int offset) { return OA.O<N>(array, offset); }
 
         /// <summary>
         /// Multiplies a diagonal matrix by a rectangular matrix:
@@ -53,8 +24,9 @@ namespace Nmli.Mkl
         /// </remarks>
         public static void DiagMult(int n, int m, N[] diag, N[] source, N[] target)
         {
+            OA<N> diag_p = oa(diag, 0);
             for (int c = 0; c < m; c++)
-                refVml.Mul(n, ref diag[0], ref source[c * n], ref target[c * n]);
+                vml.Mul(n, diag_p, oa(source, c*n), oa(target, c*n));
         }
 
 
@@ -72,8 +44,9 @@ namespace Nmli.Mkl
         /// </remarks>
         public static void DiagInvMult(int n, int m, N[] diag, N[] source, N[] target)
         {
+            OA<N> diag_p = oa(diag, 0);
             for (int c = 0; c < m; c++)
-                refVml.Div(n, ref source[c * n], ref diag[0], ref target[c * n]);
+                vml.Div(n, oa(source, c * n), diag_p, oa(target, c * n));
         }
     }
 }
