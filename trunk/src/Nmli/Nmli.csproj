@@ -95,6 +95,8 @@
     <Compile Include="Managed\BaseSml.cs" />
     <Compile Include="Managed\BaseVml.cs" />
     <Compile Include="Mkl\Blas.cs" />
+    <Compile Include="Mkl\ExclusiveExtras.cs" />
+    <Compile Include="Mkl\ExclusiveExterns.cs" />
     <Compile Include="Mkl\Externs.cs" />
     <Compile Include="Mkl\Lapack.cs" />
     <Compile Include="Mkl\UnsafeExterns.cs" />

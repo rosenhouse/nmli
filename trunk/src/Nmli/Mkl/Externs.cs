@@ -3,58 +3,7 @@ using System.Security;
 
 namespace Nmli.Mkl
 {
-    public static class ExclusiveExterns
-    {
-        internal const string dllName = Externs.dllName;
-
-        public static class AsArrays
-        {
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vsErf(int n, float[] a, float[] y);
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vdErf(int n, double[] a, double[] y);
-
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vsErfc(int n, float[] a, float[] y);
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vdErfc(int n, double[] a, double[] y);
-
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vsErfInv(int n, float[] a, float[] y);
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vdErfInv(int n, double[] a, double[] y);
-        }
-
-        public static class AsRefs
-        {
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vsErf(int n, ref float a, ref float y);
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vdErf(int n, ref double a, ref double y);
-
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vsErfc(int n, ref float a, ref float y);
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vdErfc(int n, ref double a, ref double y);
-
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vsErfInv(int n, ref float a, ref float y);
-
-            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            public static extern void vdErfInv(int n, ref double a, ref double y);
-        }
-    }
-
+    
 
     [SuppressUnmanagedCodeSecurity]
     internal static class Externs
