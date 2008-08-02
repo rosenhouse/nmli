@@ -108,6 +108,7 @@
     <Compile Include="WithOffsets\Interfaces.cs" />
     <Compile Include="WithOffsets\Libraries.cs" />
     <Compile Include="WithOffsets\Mkl\Blas.cs" />
+    <Compile Include="WithOffsets\Mkl\Vml.cs" />
     <Compile Include="WithOffsets\OA.cs" />
     <Compile Include="WithOffsets\Testbed.cs" />
     <Compile Include="Workspace.cs" />
