@@ -19,12 +19,13 @@ namespace Nmli.Experimental
 
         public static BigNum Normalize(double coefficient, int exponent)
         {
-            int deltaExp = (int)Math.Round(Math.Log(coefficient, 2));
+            int deltaExp = (int)Math.Round(Math.Log(Math.Abs(coefficient), 2));
             double newCoef = coefficient / Math.Pow(2, deltaExp);
 
             return new BigNum(newCoef, exponent + deltaExp);
         }
 
+        #region Casting
         public static BigNum OfDouble(double d) { return Normalize(d, 0); }
         public static BigNum OfSingle(float f) { return OfDouble(f); }
 
@@ -37,8 +38,9 @@ namespace Nmli.Experimental
 
         public static explicit operator double (BigNum bn) { return ToDouble(bn); }
         public static explicit operator float (BigNum bn) { return ToSingle(bn); }
+        #endregion
 
-
+        #region Arithmetic
         public static BigNum operator*(BigNum a, BigNum b)
         {
             // a = ac * 2^ae
@@ -97,6 +99,8 @@ namespace Nmli.Experimental
 
         public static BigNum Log(BigNum a) { return Log(a, Math.E); }
 
+        public static BigNum Log10(BigNum a) { return Log(a, 10); }
+
 
         public static BigNum Pow2(double exponent)
         {
@@ -112,9 +116,64 @@ namespace Nmli.Experimental
             return Normalize(Math.Pow(2, fracPart), intPart);
         }
 
+
         public static BigNum Pow(double a, double b)
         {
-            throw new NotImplementedException();
+            // x = a^b
+            // Log2[x] = b * Log2[a]
+            return Pow2(b * Math.Log(a, 2));
         }
+
+        public static BigNum Exp(double a) { return Pow(Math.E, a); }
+        #endregion
+
+        #region Comparison
+        public static bool operator ==(BigNum a, BigNum b)
+        {
+            return (a.exponent == b.exponent) && (a.coefficient == b.coefficient);
+        }
+
+        public static bool operator !=(BigNum a, BigNum b)
+        {
+            return (a.exponent != b.exponent) || (a.coefficient != b.coefficient);
+        }
+
+        public static bool operator ==(BigNum a, double b) { return ToDouble(a) == b; }
+
+        public static bool operator !=(BigNum a, double b) { return !(a == b); }
+
+        public static bool operator ==(double a, BigNum b) { return b == a; }
+
+        public static bool operator !=(double a, BigNum b) { return !(b == a); }
+
+        public static bool operator ==(BigNum a, float b) { return ToDouble(a) == b; }
+
+        public static bool operator !=(BigNum a, float b) { return !(a == b); }
+
+        public static bool operator ==(float a, BigNum b) { return b == a; }
+
+        public static bool operator !=(float a, BigNum b) { return !(b == a); }
+        #endregion
+
+
+        public override bool Equals(object obj)
+        {
+            Type t = obj.GetType();
+            if (t == typeof(BigNum))
+                return this == (BigNum)obj;
+            else if (t == typeof(double))
+                return this == (double)obj;
+            else if (t == typeof(float))
+                return this == (float)obj;
+            else
+                return false;
+        }
+        public override int GetHashCode()
+        {
+            return exponent.GetHashCode() ^ coefficient.GetHashCode();
+        }
+
+        public string ToString(string formatString) { return string.Format(formatString, coefficient, exponent); }
+        public override string ToString() { return ToString("{0}*2^{1}"); }
     }
 }
