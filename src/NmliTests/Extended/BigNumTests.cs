@@ -70,6 +70,9 @@ namespace NmliTests.Extended
             Assert.AreEqual(Math.Pow(a, b), (double)BigNum.Pow(a, b), delta);
             Assert.AreEqual(Math.Pow(b, a), (double)BigNum.Pow(b, a), delta);
 
+            Assert.AreEqual(Math.Exp(a), (double)BigNum.Exp(a), delta);
+            Assert.AreEqual(Math.Exp(b), (double)BigNum.Exp(b), delta);
+
             Assert.AreEqual(1 << 7, (double)BigNum.Pow2(7), delta);
         }
 
