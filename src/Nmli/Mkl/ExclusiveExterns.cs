@@ -34,11 +34,17 @@ namespace Nmli.Mkl
 
 
             [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void vsAbs(int n, float[] a, float[] y);
+            public static extern void vsAbs(int n, float[] a, float[] y);
 
             [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-            internal static extern void vdAbs(int n, double[] a, double[] y);
+            public static extern void vdAbs(int n, double[] a, double[] y);
 
+
+            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void vsRound(int n, float[] a, float[] y);
+
+            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+            public static extern void vdRound(int n, double[] a, double[] y);
         }
 
         public static class AsRefs

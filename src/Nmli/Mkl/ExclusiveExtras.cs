@@ -4,6 +4,15 @@ using System;
 namespace Nmli.Mkl
 {
     using Nmli.WithOffsets;
+
+    interface IExtras<N> { void Round(int n, N[] a, N[] y); }
+
+    class MklExtras : IExtras<float>, IExtras<double>
+    {
+        public void Round(int n, float[] a, float[] y) { ExclusiveExterns.AsArrays.vsRound(n, a, y); }
+        public void Round(int n, double[] a, double[] y) { ExclusiveExterns.AsArrays.vdRound(n, a, y); }
+    }
+
     public unsafe static class ExclusiveExtras<N>
     {
         static readonly IVml<N> vml = (IVml<N>)(new Nmli.WithOffsets.Mkl.Vml());
@@ -48,5 +57,11 @@ namespace Nmli.Mkl
             for (int c = 0; c < m; c++)
                 vml.Div(n, oa(source, c * n), diag_p, oa(target, c * n));
         }
+
+
+        static readonly IExtras<N> extras = (IExtras<N>)(new MklExtras());
+
+        public static void Round(int n, N[] a, N[] y) { extras.Round(n, a, y); }
     }
+
 }
