@@ -97,6 +97,6 @@ vdErfc
 vsErfInv
 vdErfInv
 
-vsround
-vdround
+vsRound
+vdRound
 
