@@ -144,6 +144,19 @@ namespace NmliTests
 
             }
 
+
+            [Test]
+            public void Round()
+            {
+                N[] to_round = new_array(-2.6, -2.5, -2.4, -0.3, 0, 0.1, 0.3, 0.7, 1.9, 50.4999);
+                N[] expected = new_array(-3,     -3,   -2,    0, 0, 0,   0,   1,   2,   50);
+
+                int n = to_round.Length;
+                N[] test = new N[n];
+                Nmli.Mkl.ExclusiveExtras<N>.Round(n, to_round, test);
+
+                AssertArrayEqual(expected, test);
+            }
         }
 
 
