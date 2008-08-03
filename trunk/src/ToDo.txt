@@ -1,3 +1,10 @@
+Ok, so lets think about perhaps re-architecting to cleanly separate 
+MKL- (or ACML)- specific functions from those which are available in both.
+
+Perhaps remove all object creation from client libraries, so they only
+use static methods on static classes--abuse generics to specify options??
+
+
 Partially-complete:
 
 -BLAS coverage
@@ -17,7 +24,6 @@ Unstarted:
 -Random number generators
 
 -FFTs
-
 
 
 
