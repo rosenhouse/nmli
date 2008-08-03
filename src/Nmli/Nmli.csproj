@@ -78,6 +78,7 @@
     <Compile Include="CollectionAgnostic\IIO.cs" />
     <Compile Include="CollectionAgnostic\ILapack.cs" />
     <Compile Include="CollectionAgnostic\IVml.cs" />
+    <Compile Include="Experimental\BigNum.cs" />
     <Compile Include="Experimental\TruncatedNormalSampler.cs" />
     <Compile Include="Extended\MatrixSolver1.cs" />
     <Compile Include="Extended\MultinormalPdf.cs" />
