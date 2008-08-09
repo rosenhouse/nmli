@@ -22,7 +22,6 @@ namespace Nmli.WithOffsets.Mkl
                 return Externs.cblas_ismax(n, px, incX);
         }
 
-
         public float nrm2(int n, OA<float> x, int incX)
         {
             fixed (float* px = &x.array[x.offset])

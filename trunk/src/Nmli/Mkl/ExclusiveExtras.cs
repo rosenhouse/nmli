@@ -46,7 +46,7 @@ namespace Nmli.Mkl
         /// <param name="source">The matrix to multiply (n rows by m columns)</param>
         /// <param name="target">Filled with the product (n rows by m columns)</param>
         /// <remarks>
-        /// Calls VML.Mul once for each column of R.
+        /// Calls VML.Mul once for each column of R.  Source and target may be the same array.
         /// </remarks>
         public static void DiagMult(int n, int m, N[] diag, N[] source, N[] target)
         {
@@ -65,7 +65,7 @@ namespace Nmli.Mkl
         /// <param name="source">The matrix to multiply (n rows by m columns)</param>
         /// <param name="target">Filled with the product (n rows by m columns)</param>
         /// <remarks>
-        /// Calls VML.Mul once for each column of R.
+        /// Calls VML.Mul once for each column of R.    Source and target may be the same array.
         /// </remarks>
         public static void DiagInvMult(int n, int m, N[] diag, N[] source, N[] target)
         {
