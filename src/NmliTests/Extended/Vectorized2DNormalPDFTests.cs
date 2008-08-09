@@ -14,34 +14,8 @@ namespace NmliTests
             protected readonly Vectorized2DNormalPDF<N> obj = new Vectorized2DNormalPDF<N>(Lib);
 
             [Test]
-            public void TestSquarer()
-            {
-                N[] toSquare = new N[] { of_dbl(-4), of_dbl(-3), of_dbl(-0.5), of_dbl(0), of_dbl(.7), of_dbl(5) };
-                N[] toAddTo = new N[]  { of_dbl(1),  of_dbl(-2), of_dbl(-1),   of_dbl(5), of_dbl(90), of_dbl(0) };
-                N alpha = of_dbl(-0.25);
-                N beta = of_dbl(3.9);
-
-                N[] expected = new N[toSquare.Length];
-                for (int i = 0; i < expected.Length; i++)
-                {
-                    N betay = sml.Multiply(beta, toAddTo[i]);
-                    N sqrd = sml.Multiply(toSquare[i], toSquare[i]);
-                    N alpha_sqrd = sml.Multiply(alpha, sqrd);
-                    N all = sml.Add(betay, alpha_sqrd);
-                    expected[i] = all;
-                }
-
-                obj.SquareScaleAdd(toSquare.Length, toSquare, alpha, toAddTo, beta);
-
-                AssertArrayEqual(expected, toAddTo, delta);
-
-            }
-
-            [Test]
             public void TestRSquareds()
             {
-                
-
                 N[] xs = new N[] { of_dbl(-2), of_dbl(0.5), of_dbl(1) };
                 N[] ys = new N[] { of_dbl(9), of_dbl(1.2), of_dbl(-8.2) };
                 N[] r2s = new N[xs.Length];
@@ -88,6 +62,28 @@ namespace NmliTests
                 
                 AssertArrayEqual(expected, output, delta);
             }
+
+
+            [Test]
+            public void TestAddConstantPairwise()
+            {
+                N[] original = new_array(-4.5, -2, 0.1, 0, -3, 4, 8.2, 9.9);
+                int n=original.Length/2;
+                N shiftX = of_dbl(2.1);
+                N shiftY = of_dbl(-10.5);
+                
+                N[] expected = new N[2*n];
+                for (int i = 0; i < n; i++)
+                {
+                    expected[2 * i] = sml.Add(original[2 * i], shiftX);
+                    expected[2 * i + 1] = sml.Add(original[2 * i + 1], shiftY);
+                }
+
+                obj.AddConstantPairwise(n, original, shiftX, shiftY);
+
+                AssertArrayEqual(expected, original);
+            }
+
         }
 
         [TestFixture]
