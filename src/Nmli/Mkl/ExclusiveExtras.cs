@@ -5,12 +5,29 @@ namespace Nmli.Mkl
 {
     using Nmli.WithOffsets;
 
-    interface IExtras<N> { void Round(int n, N[] a, N[] y); }
+    interface IExtras<N>
+    {
+        /// <summary>
+        /// Replaces y with the elements of a, rounded to the nearest integer
+        /// </summary>
+        /// <param name="n">Number of elements to round</param>
+        /// <param name="a">Elements to be rounded (length=n)</param>
+        /// <param name="y">Buffer to hold output (length=n)</param>
+        void Round(int n, N[] a, N[] y);
 
-    class MklExtras : IExtras<float>, IExtras<double>
+
+        
+    }
+
+    unsafe class MklExtras : IExtras<float>, IExtras<double>
     {
         public void Round(int n, float[] a, float[] y) { ExclusiveExterns.AsArrays.vsRound(n, a, y); }
         public void Round(int n, double[] a, double[] y) { ExclusiveExterns.AsArrays.vdRound(n, a, y); }
+
+
+
+        
+        
     }
 
     public unsafe static class ExclusiveExtras<N>
@@ -37,7 +54,6 @@ namespace Nmli.Mkl
             for (int c = 0; c < m; c++)
                 vml.Mul(n, diag_p, oa(source, c*n), oa(target, c*n));
         }
-
 
         /// <summary>
         /// Multiplies the inverse of a diagonal matrix by a rectangular matrix:
