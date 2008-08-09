@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 using System.Security;
+using Nmli.Complex;
 
 namespace Nmli.Mkl
 {
@@ -282,5 +283,23 @@ namespace Nmli.Mkl
 
         #endregion
 
+
+        internal static class Specialized
+        {
+
+
+
+            
+            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern void cblas_caxpy(int n, ref ComplexFloat alpha,
+                System.IntPtr x, int incX, System.IntPtr y, int incY);
+
+            [DllImport(dllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+            internal static extern void cblas_zaxpy(int n, ref ComplexDouble alpha,
+                System.IntPtr x, int incX, System.IntPtr y, int incY);
+
+
+
+        }
     }
 }

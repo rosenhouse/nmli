@@ -3,7 +3,7 @@ using System.Security;
 
 namespace Nmli.Mkl
 {
-    
+    using Nmli.Complex;
 
     [SuppressUnmanagedCodeSecurity]
     internal static class Externs

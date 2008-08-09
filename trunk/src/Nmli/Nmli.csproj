@@ -67,6 +67,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Acml\Blas.cs" />
@@ -78,6 +80,9 @@
     <Compile Include="CollectionAgnostic\IIO.cs" />
     <Compile Include="CollectionAgnostic\ILapack.cs" />
     <Compile Include="CollectionAgnostic\IVml.cs" />
+    <Compile Include="Complex\ComplexDouble.cs" />
+    <Compile Include="Complex\ComplexFloat.cs" />
+    <Compile Include="Complex\ComplexMath.cs" />
     <Compile Include="Experimental\BigNum.cs" />
     <Compile Include="Experimental\TruncatedNormalSampler.cs" />
     <Compile Include="Extended\MatrixSolver1.cs" />

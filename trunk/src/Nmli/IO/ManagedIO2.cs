@@ -129,21 +129,45 @@ namespace Nmli.IO
         public static void Copy<TIn, TOut>(Stream source, TOut[,] target) { sa_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(Stream source, TOut[,,] target) { sa_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(Stream source, TOut[,,,] target) { sa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(Stream source, TOut[,,,,] target) { sa_Copy<TIn, TOut>(source, target); }
 
         public static void Copy<TIn, TOut>(TIn[] source, Stream target) { as_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(TIn[,] source, Stream target) { as_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(TIn[,,] source, Stream target) { as_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(TIn[,,,] source, Stream target) { as_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,,] source, Stream target) { as_Copy<TIn, TOut>(source, target); }
+
 
         public static void Copy<TIn, TOut>(TIn[] source, TOut[] target) { aa_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(TIn[] source, TOut[,] target) { aa_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(TIn[] source, TOut[,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[] source, TOut[,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[] source, TOut[,,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+
         public static void Copy<TIn, TOut>(TIn[,] source, TOut[] target) { aa_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(TIn[,] source, TOut[,] target) { aa_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(TIn[,] source, TOut[,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,] source, TOut[,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,] source, TOut[,,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+
         public static void Copy<TIn, TOut>(TIn[,,] source, TOut[] target) { aa_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(TIn[,,] source, TOut[,] target) { aa_Copy<TIn, TOut>(source, target); }
         public static void Copy<TIn, TOut>(TIn[,,] source, TOut[,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,] source, TOut[,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,] source, TOut[,,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+
+        public static void Copy<TIn, TOut>(TIn[,,,] source, TOut[] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,] source, TOut[,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,] source, TOut[,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,] source, TOut[,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,] source, TOut[,,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+
+        public static void Copy<TIn, TOut>(TIn[,,,,] source, TOut[] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,,] source, TOut[,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,,] source, TOut[,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,,] source, TOut[,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+        public static void Copy<TIn, TOut>(TIn[,,,,] source, TOut[,,,,] target) { aa_Copy<TIn, TOut>(source, target); }
+
 
     }
 
