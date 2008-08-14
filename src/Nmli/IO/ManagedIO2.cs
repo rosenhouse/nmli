@@ -9,7 +9,7 @@ namespace Nmli.IO
     {
         protected delegate void StreamCopier(Stream source, Stream target, long numElements);
 
-        protected static int GetSize<T>() { return Marshal.SizeOf(typeof(T)); }
+        public static int GetSize<T>() { return Marshal.SizeOf(typeof(T)); }
         protected static bool IsF32<T>() { return (typeof(T) == typeof(float)); }
         protected static bool IsF64<T>() { return (typeof(T) == typeof(double)); }
 
