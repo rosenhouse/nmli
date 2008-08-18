@@ -5,17 +5,17 @@ using System.Runtime.InteropServices;
 namespace Nmli.IO
 {
 
-    public class ManagedIO2
+    public static class ManagedIO2
     {
-        protected delegate void StreamCopier(Stream source, Stream target, long numElements);
+        private delegate void StreamCopier(Stream source, Stream target, long numElements);
 
         public static int GetSize<T>() { return Marshal.SizeOf(typeof(T)); }
-        protected static bool IsF32<T>() { return (typeof(T) == typeof(float)); }
-        protected static bool IsF64<T>() { return (typeof(T) == typeof(double)); }
+        static bool IsF32<T>() { return (typeof(T) == typeof(float)); }
+        static bool IsF64<T>() { return (typeof(T) == typeof(double)); }
 
-        protected const string InvalidGenericTypeErrMsg = "Only valid generic types are float32 and float64";
+        const string InvalidGenericTypeErrMsg = "Only valid generic types are float32 and float64";
 
-        protected static void ss_CopyDirectly<T>(Stream source, Stream target, long numElements)
+        static void ss_CopyDirectly<T>(Stream source, Stream target, long numElements)
         {
             long numBytes = numElements * GetSize<T>();
 
@@ -36,7 +36,7 @@ namespace Nmli.IO
             target.Flush();
         }
 
-        protected static void ss_CopyF32ToF64(Stream source, Stream target, long numElements)
+        static void ss_CopyF32ToF64(Stream source, Stream target, long numElements)
         {
             BinaryReader br = new BinaryReader(source);
             BinaryWriter bw = new BinaryWriter(target);
@@ -48,7 +48,7 @@ namespace Nmli.IO
             target.Flush();
         }
 
-        protected static void ss_CopyF64ToF32(Stream source, Stream target, long numElements)
+        static void ss_CopyF64ToF32(Stream source, Stream target, long numElements)
         {
             BinaryReader br = new BinaryReader(source);
             BinaryWriter bw = new BinaryWriter(target);
@@ -61,7 +61,7 @@ namespace Nmli.IO
         }
 
 
-        protected static void ss_Copy<TIn, TOut>(Stream source, Stream target, long numElements)
+        static void ss_Copy<TIn, TOut>(Stream source, Stream target, long numElements)
         {
             if (typeof(TIn) == typeof(TOut))
                 ss_CopyDirectly<TIn>(source, target, numElements);
@@ -78,11 +78,26 @@ namespace Nmli.IO
             }
         }
 
+        /// <summary>
+        /// Encapsulates the given array as a memory stream and performs the given action on that stream.
+        /// </summary>
+        public static void ArrayAsStream<T>(T[] array, FileAccess access, Action<Stream> action)
+        {
+            StreamActionOnArray<T>(array, access, action);
+        }
 
         /// <summary>
-        /// Encapsulates the given array as a memory stream, and then performs the given action on that stream.
+        /// Encapsulates the given array as a memory stream and performs the given action on that stream.
         /// </summary>
-        protected static unsafe void EncapsulateArrayAndAct<TArray>(Array array, FileAccess fileAccess,
+        public static void ArrayAsStream<T>(T[,] array, FileAccess access, Action<Stream> action)
+        {
+            StreamActionOnArray<T>(array, access, action);
+        }
+
+        /// <summary>
+        /// Encapsulates the given array as a memory stream and performs the given action on that stream.
+        /// </summary>
+        static unsafe void StreamActionOnArray<TArray>(Array array, FileAccess fileAccess,
             Action<Stream> action)
         {
             long numElements = array.Length;
@@ -102,24 +117,24 @@ namespace Nmli.IO
         }
 
 
-        protected static void sa_Copy<TIn, TOut>(Stream source, Array target)
+        static void sa_Copy<TIn, TOut>(Stream source, Array target)
         {
-            EncapsulateArrayAndAct<TOut>(target, FileAccess.Write,
+            StreamActionOnArray<TOut>(target, FileAccess.Write,
                 delegate(Stream t) { ss_Copy<TIn, TOut>(source, t, target.Length); });
         }
 
-        protected static void as_Copy<TIn, TOut>(Array source, Stream target)
+        static void as_Copy<TIn, TOut>(Array source, Stream target)
         {
-            EncapsulateArrayAndAct<TIn>(source, FileAccess.Read,
+            StreamActionOnArray<TIn>(source, FileAccess.Read,
                 delegate(Stream s) { ss_Copy<TIn, TOut>(s, target, source.Length); });
         }
 
-        protected static void aa_Copy<TIn, TOut>(Array source, Array target)
+        static void aa_Copy<TIn, TOut>(Array source, Array target)
         {
             if (source.Length != target.Length)
                 throw new ArgumentException("Source and target must have the same length.");
 
-            EncapsulateArrayAndAct<TIn>(source, FileAccess.Read,
+            StreamActionOnArray<TIn>(source, FileAccess.Read,
                 delegate(Stream s) { sa_Copy<TIn, TOut>(s, target); });
         }
 
