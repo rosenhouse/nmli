@@ -126,5 +126,31 @@ namespace Nmli
                 throw;
             }
         }
+
+    }
+
+
+
+    public class DisposableCollection<T> : IDisposable where T : IDisposable
+    {
+        IEnumerable<T> collection;
+        public DisposableCollection(IEnumerable<T> collection)
+        {
+            this.collection = collection;
+        }
+
+        bool isDisposed = false;
+
+        public void Dispose()
+        {
+            if (!isDisposed)
+            {
+                foreach (T x in collection)
+                    x.Dispose();
+
+                isDisposed = true;
+                collection = null;
+            }
+        }
     }
 }
