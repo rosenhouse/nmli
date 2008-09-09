@@ -19,10 +19,15 @@ namespace Nmli.Experimental
 
         public static BigNum Normalize(double coefficient, int exponent)
         {
-            int deltaExp = (int)Math.Round(Math.Log(Math.Abs(coefficient), 2));
-            double newCoef = coefficient / Math.Pow(2, deltaExp);
+            if (coefficient == 0)
+                return new BigNum(0, 0);
+            else
+            {
+                int deltaExp = (int)Math.Round(Math.Log(Math.Abs(coefficient), 2));
+                double newCoef = coefficient / Math.Pow(2, deltaExp);
 
-            return new BigNum(newCoef, exponent + deltaExp);
+                return new BigNum(newCoef, exponent + deltaExp);
+            }
         }
 
         #region Casting
