@@ -175,5 +175,11 @@ namespace Nmli.Experimental
 
         public string ToString(string formatString) { return string.Format(formatString, coefficient, exponent); }
         public override string ToString() { return ToString("{0}*2^{1}"); }
+
+        public static bool IsNaNOrInfinity(BigNum x)
+        {
+            return double.IsNaN(x.coefficient) || double.IsInfinity(x.coefficient)
+                || (x.exponent == int.MinValue) || (x.exponent == int.MaxValue);
+        }
     }
 }
