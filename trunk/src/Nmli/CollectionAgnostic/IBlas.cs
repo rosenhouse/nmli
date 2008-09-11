@@ -217,7 +217,7 @@ namespace Nmli.CollectionAgnostic
         /// <param name="transa">Specifies whether and how to transpose matrix A</param>
         /// <param name="transb">Specifies whether and how to transpose matrix B</param>
         /// <param name="m">Num rows of op(A) and rows of C</param>
-        /// <param name="n">Num cols of op(C) and cols of C</param>
+        /// <param name="n">Num cols of op(B) and cols of C</param>
         /// <param name="k">Num cols of op(A) and rows of op(B)</param>
         /// <param name="alpha">Scalar of op(A)*op(B)</param>
         /// <param name="a">Matrix A</param>
