@@ -107,7 +107,9 @@ namespace Nmli.IO
             try
             {
                 byte* bp = (byte*)(Marshal.UnsafeAddrOfPinnedArrayElement(array, 0).ToPointer());
-                UnmanagedMemoryStream ums = new UnmanagedMemoryStream(bp, numBytes, numBytes, fileAccess );
+                CustomIO.UnmanagedMemoryStream ums = new CustomIO.UnmanagedMemoryStream(bp, numBytes, numBytes, fileAccess);
+                // we use our own copy of UnmanagedMemoryStream (copied from Mono Project sources)
+                // because the version available on Fedora 8 packages is broken.
                 action(ums);
             }
             finally
