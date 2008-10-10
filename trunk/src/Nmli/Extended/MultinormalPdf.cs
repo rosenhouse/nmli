@@ -21,13 +21,16 @@ namespace Nmli.Extended
         [ThreadStatic]
         static Workspace<N> scratch1;
 
+        [ThreadStatic]
+        static Workspace<N> scratch2;
+
         static readonly double ln2pi = Math.Log(2 * Math.PI);
 
         /// <summary>
         /// Computes the natural log of the probability density function of a multi-normal distribution
         /// </summary>
         /// <param name="x">The point at which to compute the probability density.  Unchanged on exit.</param>
-        /// <param name="mean">On input: The mean of the distribution.  On exit, (mean - x)</param>
+        /// <param name="mean">The mean of the distribution.  Unchanged on exit.</param>
         /// <param name="covariance">The covariance matrix of the distribution.  On exit: The inverse of this covariance matrix </param>
         /// <returns>The natural log of the PDF</returns>
         /// <remarks>
@@ -41,13 +44,14 @@ namespace Nmli.Extended
             if (mean.Length < n || covariance.Length < n * n)
                 throw new ArgumentOutOfRangeException("The mean and covariance arrays must have size n=" + n + " and n^2, respectively.");
 
-
-            // compute difference of x and mean, storing it in mean
-            blas.axpy(n, sml.Negate(_1), x, 1, mean, 1);
-
             // make a copy
-            N[] tempVector = Workspace<N>.Get(ref scratch1, n);
-            blas.copy(n, mean, 1, tempVector, 1);
+            N[] tempVector1 = Workspace<N>.Get(ref scratch1, n);
+            N[] tempVector2 = Workspace<N>.Get(ref scratch2, n);
+
+            // compute difference of x and mean, storing it in tempVector1
+            Array.Copy(mean, tempVector1, n);
+            blas.axpy(n, sml.Negate(_1), x, 1, tempVector1, 1);
+            Array.Copy(tempVector1, tempVector2, n);
 
 
             // Let A = covariance
@@ -56,12 +60,13 @@ namespace Nmli.Extended
             // First compute: y = A^-1 * (x-m)
             // Which is equivalent to solving for y in:
             //    A*y = (x-m)
-
-            int errCode = lapack.posv(UpLo.Upper, n, 1, covariance, n, tempVector, n);
+            int errCode = lapack.posv(UpLo.Upper, n, 1, covariance, n, tempVector1, n);
             if (errCode != 0)
                 throw new Exception("Failed with error " + errCode + " on posv solve attempt.");
+            // tempVector1 now contains solutions y
 
-            double d = sml.ToDouble(blas.dot(n, mean, 1, tempVector, 1));
+
+            double d = sml.ToDouble(blas.dot(n, tempVector2, 1, tempVector1, 1));
 
             // tempVector now contains y, and upper-triangle of covariance contains Cholesky-factor
             double lnDet = inverter.LnDeterminantOfFactoredMatrix(n, covariance);  // ln[determinant]
@@ -70,8 +75,10 @@ namespace Nmli.Extended
         }
 
 
+
+
         [ThreadStatic]
-        static Workspace<N> scratch2;
+        static Workspace<N> scratch3;
 
 
         /// <summary>
@@ -88,7 +95,7 @@ namespace Nmli.Extended
         public double LogPDF_IgnoreOffDiagonals(N[] x, N[] mean, N[] covariance)
         {
             int n = x.Length;
-            N[] variance = Workspace<N>.Get(ref scratch2, n);
+            N[] variance = Workspace<N>.Get(ref scratch3, n);
 
             // copy the diagonal of covariance into the vector variance
             blas.copy(n, covariance, n + 1, variance, 1);
@@ -114,19 +121,19 @@ namespace Nmli.Extended
             if (mean.Length < T || varianceVector.Length < T)
                 throw new ArgumentException("The mean and covariance arrays must be of appropriate size!");
 
-            N[] tempVector = Workspace<N>.Get(ref scratch1, T);
+            N[] tempVector1 = Workspace<N>.Get(ref scratch1, T);
+            N[] tempVector2 = Workspace<N>.Get(ref scratch2, T);
 
-            vml.Ln(T, varianceVector, tempVector);
-            double lnDet = sml.ToDouble(extras.Sum(T, tempVector));
+            vml.Ln(T, varianceVector, tempVector1);
+            double lnDet = sml.ToDouble(extras.Sum(T, tempVector1));
             // ln[determinant] = ln[prod variance diagonal x's] = sum_diagonal ln[x]
 
-            // mean := mean - x
-            vml.Sub(T, mean, x, mean);
-            //blas.axpy(T, sml.Negate(_1), x, 1, mean, 1);
+            // tempVector2 := mean - x
+            vml.Sub(T, mean, x, tempVector2);
 
             
-            // divide mean by variance elementwise and store in tempVector
-            vml.Div(T, mean, varianceVector, tempVector);
+            // divide difference by variance elementwise and store in tempVector
+            vml.Div(T, tempVector2, varianceVector, tempVector1);
 
             /*  we can replace these two calls (invert, then multiply) with a single
              *  call to divide, above
@@ -139,7 +146,7 @@ namespace Nmli.Extended
 
 
             // mean . tempvector dotproduct
-            N d = blas.dot(T, mean, 1, tempVector, 1);
+            N d = blas.dot(T, tempVector2, 1, tempVector1, 1);
 
             return -0.5 * (T * ln2pi + lnDet + sml.ToDouble(d));
         }
