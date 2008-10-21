@@ -26,6 +26,11 @@ namespace Nmli.Extended
 
         static readonly double ln2pi = Math.Log(2 * Math.PI);
 
+        public double LogPDF_FastFull(N[] x, N[] mean, N[] covariance)
+        {
+            return LogPDF_FastFull(x, mean, covariance, false);
+        }
+
         /// <summary>
         /// Computes the natural log of the probability density function of a multi-normal distribution
         /// </summary>
@@ -38,7 +43,7 @@ namespace Nmli.Extended
         /// not refine the solution.  So results are not as accurate as possible.
         /// </remarks>
         /// <remarks>Complexity: O(n^3)  where n=Length of x</remarks>
-        public double LogPDF_FastFull(N[] x, N[] mean, N[] covariance)
+        public double LogPDF_FastFull(N[] x, N[] mean, N[] covariance, bool debugOut)
         {
             int n = x.Length;
             if (mean.Length < n || covariance.Length < n * n)
@@ -70,6 +75,13 @@ namespace Nmli.Extended
 
             // tempVector now contains y, and upper-triangle of covariance contains Cholesky-factor
             double lnDet = inverter.LnDeterminantOfFactoredMatrix(n, covariance);  // ln[determinant]
+
+            if (debugOut)
+            {
+                Console.WriteLine("Multinormal PDF eval result: ln[det[cov]] = {0} ,  (x-m)^T cov^-1 (x-m) = {2}",
+                    lnDet, d);
+
+            }
 
             return -0.5 * (n * ln2pi + lnDet + d);
         }
