@@ -78,9 +78,8 @@ namespace Nmli.Extended
 
             if (debugOut)
             {
-                Console.WriteLine("Multinormal PDF eval result: ln[det[cov]] = {0} ,  (x-m)^T cov^-1 (x-m) = {2}",
+                Console.WriteLine("Multinormal PDF eval result: ln[det[cov]] = {0} ,  (x-m)^T cov^-1 (x-m) = {1}",
                     lnDet, d);
-
             }
 
             return -0.5 * (n * ln2pi + lnDet + d);
