@@ -29,6 +29,14 @@ namespace Nmli
             return Nmli.WithOffsets.OA.O(array, offset);
         }
 
+        protected Nmli.WithOffsets.OA<T> oa(T[] array, int offset, bool checkBounds)
+        {
+            if ((checkBounds) && (offset >= array.Length))
+                throw new IndexOutOfRangeException();
+
+            return Nmli.WithOffsets.OA.O(array, offset);
+        }
+
         protected T of_dbl(double d) { return sml.OfDouble(d); }
         protected double to_dbl(T x) { return sml.ToDouble(x); }
         protected int to_int(T x) { return sml.ToInt(x); }
