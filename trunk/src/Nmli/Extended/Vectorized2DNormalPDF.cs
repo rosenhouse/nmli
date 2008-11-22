@@ -32,7 +32,8 @@ namespace Nmli.Extended
             temp[0] = constX;
             blas.axpy(n, _1, temp, 0, a, 2);
 
-            // add second term
+            // add second term, using the
+            // wo_blas library and the oa(array, offset) function
             temp[0] = constY;
             wo_blas.axpy(n, _1, temp, 0, oa(a, 1), 2);
         }
